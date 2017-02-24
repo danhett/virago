@@ -1,27 +1,35 @@
-import netP5.*;
-import oscP5.*;
+/** 
+ * SONIA SABRI // VIRAGO
+ * Light controller application. Designed to allow precise control
+ * over both placed and wireless light units, using free commands 
+ * and pre-set cued styles. 
+ *
+ * @author Dan Hett (hellodanhett@gmail.com)
+ */
 import controlP5.*;
-import http.requests.*;
 import processing.serial.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-// Pebble locations
-String pebble1 = "http://192.168.0.111";
-String pebble2 = "http://192.168.0.222";
-
-Boolean canIssueCommand = true;
-GetRequest get1;
-GetRequest get2;
 ControlP5 cp5;
 Slider slider;
 
+Serial unit1;
+Serial unit2;
+  
 void setup() {
   size(1280, 800);
-  background(0);
+  background(50);
   
-  buildInterface();
+  buildSelectionControls();
+  buildPresetMenu();
+  pingUnits();  
 }
 
-void buildInterface() {
+/**
+ * Creates the light selection panel
+ */
+void buildSelectionControls() {
   cp5 = new ControlP5(this);
   
   // create the static lights
@@ -63,10 +71,70 @@ void buildInterface() {
                       .setColorBackground(color(0,155,0))
                       .setColorForeground(color(0,100,0))
                       .setColorActive(color(0,255,0)); 
+                      
+  stroke(125);
+  line(20,250,1260,250);
+}
+
+/**
+ * Creates the preset list
+ */
+void buildPresetMenu() {
+  String[] trees = { "SWITCH TO", "FADE TO", "GLIMMER", "RANDOM", "PULSE", "AUDIO REACT" };
+  
+  for(int i = 0; i < trees.length; i++) {
+    cp5.addToggle(trees[i]).setPosition(20, 280 + (i*70))
+                      .setSize(300,50)
+                      .setColorBackground(color(130,130,130))
+                      .setColorForeground(color(90,90,90))
+                      .setColorActive(color(255,255,0));
+  }
+  
+  for(int i = 0; i < 10; i++) {
+    cp5.addButton("CUE PRESET "+(i+1)).setPosition(860, 280 + (i*42))
+                      .setSize(400,30)
+                      .setColorBackground(color(130,130,130))
+                      .setColorForeground(color(90,90,90))
+                      .setColorActive(color(255,255,0));
+  }
+  
+  line(20,720,1260,720);
+}
+ 
+void pingUnits() {
+ // List all the available serial ports:
+  //printArray(Serial.list());
+  
+  // Open the port you are using at the rate you want:
+  unit1 = new Serial(this, Serial.list()[0], 115200);
+  unit2 = new Serial(this, Serial.list()[1], 115200);
+  
+  // Send a capital "A" out the serial port
+  unit1.write("Red one, standing by..." + stamp()); 
+  unit2.write("Red two, standing by..." + stamp()); 
+}
+
+String stamp() {
+  SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
+  
+  Date d = new Date();  
+  return sdf.format(d.getTime());
 }
 
 void draw() {
+  while (unit1.available() > 0) {
+    String inBuffer = unit1.readString();   
+    if (inBuffer != null) {
+      println(inBuffer);
+    }
+  }
   
+  while (unit2.available() > 0) {
+    String inBuffer = unit2.readString();   
+    if (inBuffer != null) {
+      println(inBuffer);
+    }
+  } 
 }
 
 public void controlEvent(ControlEvent theEvent) {
@@ -84,8 +152,8 @@ public void controlEvent(ControlEvent theEvent) {
 
 
 void makeRequest(String req) {
-  String[] lines = loadStrings(pebble1 + req); 
-  String[] lines2 = loadStrings(pebble2 + req); 
+  //String[] lines = loadStrings(pebble1 + req); 
+  //String[] lines2 = loadStrings(pebble2 + req); 
   
   /*
   get1 = new GetRequest(pebble1 + req);
