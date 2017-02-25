@@ -30,16 +30,16 @@ public void controlEvent(ControlEvent e) {
   String cmd = e.getController().getName();
 
   if(cmd.contains("cue")) {
-    println("cue!");
+    println("cue: " + cmd);
   }
   else if(cmd.contains("preset")) {
-    println("preset!");
+    println("preset: " + cmd);
   }
   else if(cmd.contains("static")) {
-    println("toggled a static button");
+    println("toggled static: " + cmd);
   }
   else if(cmd.contains("free")) {
-    println("toggled a free button");
+    println("toggled free: " + cmd);
   }
   else {
     switch(cmd) {
@@ -61,17 +61,8 @@ public void controlEvent(ControlEvent e) {
       case "go":
         println("GO!");
         break;
+    }
   }
-}
-
-  //if(btn == "RED")
-  //  makeRequest("/R");
-
-  //else if(btn == "GREEN")
-  //  makeRequest("/G");
-
-  //else if(btn == "BLUE")
-  //  makeRequest("/B");
 }
 
 void draw() {
