@@ -27,13 +27,41 @@ void setup() {
  * aren't stored in the root of the application!
  */
 public void controlEvent(ControlEvent e) {
-  switch(e.getController().getName()) {
-    case "alloff":
-      println("TURNING EVERYTHING OFF");
-      break;
-    case "allon":
-      println("TURNING EVERYTHING ON");
-      break;
+  String cmd = e.getController().getName();
+
+  if(cmd.contains("cue")) {
+    println("cue!");
+  }
+  else if(cmd.contains("preset")) {
+    println("preset!");
+  }
+  else if(cmd.contains("static")) {
+    println("toggled a static button");
+  }
+  else if(cmd.contains("free")) {
+    println("toggled a free button");
+  }
+  else {
+    switch(cmd) {
+      case "alloff":
+        println("TURNING EVERYTHING OFF");
+        break;
+      case "allon":
+        println("TURNING EVERYTHING ON");
+        break;
+      case "selectall":
+        println("SELECTING ALL BUTTONS");
+        break;
+      case "selectnone":
+        println("SELECTING NO BUTTONS");
+        break;
+      case "cancelcommands":
+        println("CANCELLING EVERYTHING");
+        break;
+      case "go":
+        println("GO!");
+        break;
+  }
 }
 
   //if(btn == "RED")
