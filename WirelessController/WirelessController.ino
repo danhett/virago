@@ -8,9 +8,11 @@
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
-// Buffer used to read LED data from Serial.
-// TODO: Direct access to the Adafruit_NeoPixel buffer would cut memory usage in half
 char colorValues[NUMPIXELS*3];
+int RED;
+int GREEN;
+int BLUE;
+int BRIGHTNESS;
 
 void setup() {
   // Init the NeoPixel library and turn off all the LEDs
@@ -58,16 +60,29 @@ void loop() {
 //    // update the strip
 //    strip.show();
 
-    String msg = Serial.readString();
-    Serial.println("UNIT TWO: " + msg);
+    //String msg = Serial.readString();
+
+    String first  = Serial.readStringUntil(',');
+    Serial.read(); 
+    String second = Serial.readStringUntil(',');
+    Serial.read();
+    String third  = Serial.readStringUntil(',');
+    Serial.read();
+    String fourth = Serial.readStringUntil('\0');
+    //parse your data here. example:
+    //double x = Double.parseDouble(first);
+
+    Serial.println("Unit two: ");
+    Serial.println("R: " + first + " G:" + second + " B:" + third + " Brightness:" + fourth);
     
     // Clear up the serial buffer
     while (Serial.available() > 0) Serial.read();
     
     // Let the sender know we're ready for more data
-    //Serial.println("READY");
+    //Serial.println("READY AGAIN");
   }
 }
+
 
 void flashAll(uint32_t color) {
   // Do a quick test/demo to show that things are working
