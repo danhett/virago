@@ -4,8 +4,10 @@ class Interface {
   ControlP5 cp5;
   Slider slider;
   Virago virago;
-  
+
   Interface(Virago ref) {  
+    println("[Interface]");
+
     virago = ref;
     init();
   } 
@@ -88,5 +90,18 @@ class Interface {
     }
 
     line(20, 720, 1260, 720);
+  }
+
+  public void controlEvent(ControlEvent theEvent) {
+    //String btn = theEvent.getController().getName();
+
+    //if(btn == "RED")
+    //  makeRequest("/R");
+
+    //else if(btn == "GREEN")
+    //  makeRequest("/G");
+
+    //else if(btn == "BLUE")
+    //  makeRequest("/B");
   }
 } 
