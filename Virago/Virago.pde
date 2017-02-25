@@ -21,6 +21,31 @@ void setup() {
   controls = new Interface(this);
 }
 
+/**
+ * These are events from the Interface class -
+ * for some reason Processing tips over if these
+ * aren't stored in the root of the application!
+ */
+public void controlEvent(ControlEvent e) {
+  switch(e.getController().getName()) {
+    case "alloff":
+      println("TURNING EVERYTHING OFF");
+      break;
+    case "allon":
+      println("TURNING EVERYTHING ON");
+      break;
+}
+
+  //if(btn == "RED")
+  //  makeRequest("/R");
+
+  //else if(btn == "GREEN")
+  //  makeRequest("/G");
+
+  //else if(btn == "BLUE")
+  //  makeRequest("/B");
+}
+
 void draw() {
 
 }
