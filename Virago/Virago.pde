@@ -36,10 +36,10 @@ public void controlEvent(ControlEvent e) {
     println("preset: " + cmd);
   }
   else if(cmd.contains("static")) {
-    println("toggled static: " + cmd);
+    //println("toggled static: " + cmd);
   }
   else if(cmd.contains("free")) {
-    println("toggled free: " + cmd);
+    //println("toggled free: " + cmd);
   }
   else {
     switch(cmd) {
@@ -50,10 +50,10 @@ public void controlEvent(ControlEvent e) {
         println("TURNING EVERYTHING ON");
         break;
       case "selectall":
-        println("SELECTING ALL BUTTONS");
+        controls.selectAll();
         break;
       case "selectnone":
-        println("SELECTING NO BUTTONS");
+        controls.selectNone();
         break;
       case "cancelcommands":
         println("CANCELLING EVERYTHING");

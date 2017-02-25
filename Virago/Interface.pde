@@ -12,9 +12,14 @@ class Interface {
   Slider slider;
   Virago virago;
   ControlFont font;
+  ArrayList<Toggle> staticToggles;
+  ArrayList<Toggle> freeToggles;
 
   Interface(Virago ref) {
     println("[Interface]");
+
+    staticToggles = new ArrayList<Toggle>();
+    freeToggles = new ArrayList<Toggle>();
 
     virago = ref;
     init();
@@ -36,20 +41,24 @@ class Interface {
 
     // create the static lights
     for (int i = 0; i < 12; i++) {
-      cp5.addToggle("static"+(i+1)).setPosition(20 + (i * 80), 20)
+      Toggle toggle = cp5.addToggle("static"+(i+1)).setPosition(20 + (i * 80), 20)
         .setSize(70, 70)
         .setColorBackground(color(255, 0, 0))
         .setColorForeground(color(155, 0, 0))
         .setColorActive(color(0, 255, 0));
+
+      staticToggles.add(toggle);
     }
 
     // create the free lights
     for (int i = 0; i < 5; i++) {
-      cp5.addToggle("free"+(i+1)).setPosition(20 + (i * 80), 130)
+      Toggle toggle = cp5.addToggle("free"+(i+1)).setPosition(20 + (i * 80), 130)
         .setSize(70, 70)
         .setColorBackground(color(125, 0, 0))
         .setColorForeground(color(100, 0, 0))
         .setColorActive(color(0, 255, 0));
+
+      freeToggles.add(toggle);
     }
 
     // create the shortcut buttons
@@ -114,6 +123,9 @@ class Interface {
     line(20, 710, 1260, 710);
   }
 
+  /**
+   * Creates the big cancel/go buttons at the bottom.
+   */
   public void buildTriggers() {
     cp5.addButton("cancelcommands").setPosition(20, 730)
       .setCaptionLabel("CANCEL COMMANDS")
@@ -133,4 +145,29 @@ class Interface {
   }
 
 
+  /**
+   * Turns on all the switches.
+   */
+  public void selectAll() {
+    for(Toggle toggle:staticToggles) {
+      toggle.setState(true);
+    }
+
+    for(Toggle toggle:freeToggles) {
+      toggle.setState(true);
+    }
+  }
+
+  /**
+   * Turns off all the switches.
+   */
+  public void selectNone() {
+    for(Toggle toggle:staticToggles) {
+      toggle.setState(false);
+    }
+
+    for(Toggle toggle:freeToggles) {
+      toggle.setState(false);
+    }
+  }
 }
