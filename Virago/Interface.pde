@@ -17,6 +17,7 @@ class Interface {
   Slider green;
   Slider blue;
   Slider brightness;
+  Slider speed;
 
   Interface(Virago ref) {
     println("[Interface]");
@@ -142,6 +143,16 @@ class Interface {
               .setColorForeground(color(255, 255, 255))
               .setRange(0.01, 1)
               .setValue(0.5)
+              .setColorCaptionLabel(color(255,255,255));
+
+      speed = cp5.addSlider("SPEED")
+              .setPosition(20, 540)
+              .setSize(400, 50)
+              .setColorBackground(color(55, 55, 55))
+              .setColorActive(color(255, 255, 255))
+              .setColorForeground(color(255, 255, 255))
+              .setRange(0, 500)
+              .setValue(100)
               .setColorCaptionLabel(color(255,255,255));
   }
 

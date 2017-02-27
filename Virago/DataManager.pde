@@ -14,6 +14,7 @@ class DataManager {
   String green;
   String blue;
   Float brightness;
+  String speed;
 
   DataManager(Virago ref, Interface controlsRef) {
     println("[Data Manager]");
@@ -62,11 +63,12 @@ class DataManager {
     red = str(round(controls.red.getValue() * brightness));
     green = str(round(controls.green.getValue() * brightness));
     blue = str(round(controls.blue.getValue() * brightness));
+    speed = str(round(controls.speed.getValue()));
 
-    unit1.write(red + "," + green + "," + blue);
+    unit1.write(red + "," + green + "," + blue + "," + speed);
     unit1.write(10);
 
-    unit2.write(red + "," + green + "," + blue);
+    unit2.write(red + "," + green + "," + blue + "," + speed);
     unit2.write(10);
   }
 

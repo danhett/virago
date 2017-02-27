@@ -13,10 +13,14 @@ int RED;
 int GREEN;
 int BLUE;
 int WHITE;
+int SPEED;
+int bright;
 
 void setup() {
+  bright = 128;
+  
   // Init the NeoPixel library and turn off all the LEDs
-  strip.setBrightness(128);
+  strip.setBrightness(bright);
   strip.begin();
   for (int i = 0; i < NUMPIXELS; i ++) {
     strip.setPixelColor(i, 0, 0, 0, 0);
@@ -35,13 +39,13 @@ void setup() {
 void loop() {
   if (Serial.available() > 0) {
     RED  = Serial.parseInt();
-    BLUE = Serial.parseInt();
     GREEN  = Serial.parseInt();
-    WHITE = Serial.parseInt();
+    BLUE = Serial.parseInt();
+    SPEED = Serial.parseInt();
     if (Serial.read() == '\n') {
-      //colourAll(RED, BLUE, GREEN, WHITE);
-      colorWipe(RED, BLUE, GREEN, WHITE, 100);
-      Serial.println("R: " + String(RED) + " G:" + String(BLUE) + " B:" + String(GREEN) + " Brightness:" + String(WHITE));
+      //colourAll(RED, BLUE, GREEN);
+      colorWipe(RED, GREEN, BLUE, SPEED);
+      Serial.println("R: " + String(RED) + " G:" + String(BLUE) + " B:" + String(GREEN) + " Speed:" + String(SPEED));
     }
   }
 }
@@ -54,9 +58,9 @@ void colourAll(int r, int g, int b, int w) {
   strip.show();
 }
 
-void colorWipe(int r, int g, int b, int w, uint8_t wait) {
+void colorWipe(int r, int g, int b, uint8_t wait) {
   for(uint16_t i=0; i<NUMPIXELS; i++) {
-    strip.setPixelColor(i, r, g, b, w);
+    strip.setPixelColor(i, r, g, b);
     strip.show();
     delay(wait);
   }
