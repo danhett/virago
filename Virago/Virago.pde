@@ -32,14 +32,11 @@ public void controlEvent(ControlEvent e) {
   if(cmd.contains("cue")) {
     println("cue: " + cmd);
   }
-  else if(cmd.contains("preset")) {
-    println("preset: " + cmd);
-  }
   else if(cmd.contains("static")) {
-    //println("toggled static: " + cmd);
+
   }
-  else if(cmd.contains("free")) {
-    //println("toggled free: " + cmd);
+  else if(cmd.contains("wireless")) {
+    
   }
   else {
     switch(cmd) {

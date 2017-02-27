@@ -48,6 +48,7 @@ class Interface {
     for (int i = 0; i < 12; i++) {
       Toggle toggle = cp5.addToggle("static"+(i+1)).setPosition(20 + (i * 80), 20)
         .setSize(70, 70)
+        .setState(true)
         .setColorBackground(color(255, 0, 0))
         .setColorForeground(color(155, 0, 0))
         .setColorActive(color(0, 255, 0));
@@ -57,8 +58,9 @@ class Interface {
 
     // create the free lights
     for (int i = 0; i < 5; i++) {
-      Toggle toggle = cp5.addToggle("free"+(i+1)).setPosition(20 + (i * 80), 130)
+      Toggle toggle = cp5.addToggle("wireless"+(i+1)).setPosition(20 + (i * 80), 130)
         .setSize(70, 70)
+        .setState(true)
         .setColorBackground(color(125, 0, 0))
         .setColorForeground(color(100, 0, 0))
         .setColorActive(color(0, 255, 0));

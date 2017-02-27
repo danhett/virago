@@ -7,8 +7,12 @@
 class DataManager {
   Virago virago;
   Interface controls;
-  Serial unit1;
-  Serial unit2;
+  Serial wireless1;
+  Serial wireless2;
+  Serial wireless3;
+  Serial wireless4;
+  Serial wireless5;
+  Serial strip; // the chained neopixels, all on one arduino
 
   String red;
   String green;
@@ -29,35 +33,30 @@ class DataManager {
     // List all the available serial ports:
     //printArray(Serial.list());
 
-    String port1 = "/dev/ttyACM0";
-    String port2 = "/dev/ttyACM1";
-
     // Open the port you are using at the rate you want:
-    unit1 = new Serial(virago, port1, 9600);
-    unit2 = new Serial(virago, port2, 9600);
+    wireless1 = new Serial(virago, "/dev/ttyACM0", 9600);
+    wireless2 = new Serial(virago, "/dev/ttyACM1", 9600);
+    //wireless3 = new Serial(virago, "/dev/ttyACM2", 9600);
+    //wireless4 = new Serial(virago, "/dev/ttyACM3", 9600);
+    //wireless5 = new Serial(virago, "/dev/ttyACM4", 9600);
+    //strip = new Serial(virago, "/dev/ttyACM5", 9600);
   }
 
   void update() {
+    /*
     while (unit1.available() > 0) {
       String inBuffer = unit1.readString();
       if (inBuffer != null) {
         println(inBuffer);
       }
     }
-
-    while (unit2.available() > 0) {
-      String inBuffer = unit2.readString();
-      if (inBuffer != null) {
-        println(inBuffer);
-      }
-    }
+    */
   }
 
   /**
    * Sends the instructions to the lights
    */
   void transmit() {
-
     brightness = controls.brightness.getValue();
 
     red = str(round(controls.red.getValue() * brightness));
@@ -65,11 +64,11 @@ class DataManager {
     blue = str(round(controls.blue.getValue() * brightness));
     speed = str(round(controls.speed.getValue()));
 
-    unit1.write(red + "," + green + "," + blue + "," + speed);
-    unit1.write(10);
+    wireless1.write(red + "," + green + "," + blue + "," + speed);
+    wireless1.write(10);
 
-    unit2.write(red + "," + green + "," + blue + "," + speed);
-    unit2.write(10);
+    wireless2.write(red + "," + green + "," + blue + "," + speed);
+    wireless2.write(10);
   }
 
   /**
