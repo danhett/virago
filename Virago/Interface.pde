@@ -9,11 +9,14 @@ import controlP5.*;
 
 class Interface {
   ControlP5 cp5;
-  Slider slider;
   Virago virago;
   ControlFont font;
   ArrayList<Toggle> staticToggles;
   ArrayList<Toggle> freeToggles;
+  Slider red;
+  Slider green;
+  Slider blue;
+  Slider brightness;
 
   Interface(Virago ref) {
     println("[Interface]");
@@ -28,6 +31,7 @@ class Interface {
   public void init() {
     buildSelectionControls();
     buildPresetMenu();
+    buildColorControls();
     buildTriggers();
   }
 
@@ -95,21 +99,56 @@ class Interface {
     line(20, 250, 1260, 250);
   }
 
+
+  /**
+   * Creates sliders to control our colors
+   */
+  public void buildColorControls() {
+    red = cp5.addSlider("RED")
+         .setPosition(20, 300)
+         .setSize(400, 50)
+         .setColorBackground(color(155, 0, 0))
+         .setColorActive(color(255, 0, 0))
+         .setColorForeground(color(255, 0, 0))
+         .setRange(0, 255)
+         .setValue(255)
+         .setColorCaptionLabel(color(255,255,255));
+
+     green = cp5.addSlider("GREEN")
+          .setPosition(20, 360)
+          .setSize(400, 50)
+          .setColorBackground(color(0, 155, 0))
+          .setColorActive(color(0, 255, 0))
+          .setColorForeground(color(0, 255, 0))
+          .setRange(0, 255)
+          .setValue(255)
+          .setColorCaptionLabel(color(255,255,255));
+
+      blue = cp5.addSlider("BLUE")
+               .setPosition(20, 420)
+               .setSize(400, 50)
+               .setColorBackground(color(0, 0, 155))
+               .setColorActive(color(0, 0, 255))
+               .setColorForeground(color(0, 0, 255))
+               .setRange(0, 255)
+               .setValue(255)
+               .setColorCaptionLabel(color(255,255,255));
+
+      brightness = cp5.addSlider("BRIGHTNESS")
+              .setPosition(20, 480)
+              .setSize(400, 50)
+              .setColorBackground(color(155, 155, 155))
+              .setColorActive(color(255, 255, 255))
+              .setColorForeground(color(255, 255, 255))
+              .setRange(0, 255)
+              .setValue(255)
+              .setColorCaptionLabel(color(255,255,255));
+  }
+
   /**
    * Creates the preset list
    */
   public void buildPresetMenu() {
-    String[] presets = { "SWITCH TO", "FADE TO", "GLIMMER", "RANDOM", "PULSE", "AUDIO REACT" };
-
-    for (int i = 0; i < presets.length; i++) {
-      cp5.addToggle("preset"+i).setPosition(20, 280 + (i*70))
-        .setCaptionLabel(presets[i])
-        .setSize(300, 50)
-        .setColorBackground(color(130, 130, 130))
-        .setColorForeground(color(90, 90, 90))
-        .setColorActive(color(255, 255, 0));
-    }
-
     for (int i = 0; i < 10; i++) {
       cp5.addButton("cue"+(i+1)).setPosition(860, 280 + (i*42))
         .setCaptionLabel("CUE PRESET "+(i+1))

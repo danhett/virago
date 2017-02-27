@@ -17,8 +17,8 @@ void setup() {
   size(1280, 800);
   background(50);
 
-  data = new DataManager(this);
   controls = new Interface(this);
+  data = new DataManager(this, controls);
 }
 
 /**
@@ -59,7 +59,7 @@ public void controlEvent(ControlEvent e) {
         println("CANCELLING EVERYTHING");
         break;
       case "go":
-        println("GO!");
+        data.transmit();
         break;
     }
   }
