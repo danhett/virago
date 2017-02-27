@@ -64,11 +64,30 @@ class DataManager {
     blue = str(round(controls.blue.getValue() * brightness));
     speed = str(round(controls.speed.getValue()));
 
-    wireless1.write(red + "," + green + "," + blue + "," + speed);
-    wireless1.write(10);
+    if(controls.freeToggles.get(0).getValue() == 1.0) {
+      wireless1.write(red + "," + green + "," + blue + "," + speed);
+      wireless1.write(10);
+    }
 
-    wireless2.write(red + "," + green + "," + blue + "," + speed);
-    wireless2.write(10);
+    if(controls.freeToggles.get(1).getValue() == 1.0) {
+      wireless2.write(red + "," + green + "," + blue + "," + speed);
+      wireless2.write(10);
+    }
+
+    if(controls.freeToggles.get(2).getValue() == 1.0) {
+      //wireless3.write(red + "," + green + "," + blue + "," + speed);
+      //wireless3.write(10);
+    }
+
+    if(controls.freeToggles.get(3).getValue() == 1.0) {
+      //wireless4.write(red + "," + green + "," + blue + "," + speed);
+      //wireless4.write(10);
+    }
+
+    if(controls.freeToggles.get(4).getValue() == 1.0) {
+      //wireless5.write(red + "," + green + "," + blue + "," + speed);
+      //wireless5.write(10);
+    }
   }
 
   /**
