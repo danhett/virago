@@ -67,4 +67,5 @@ public void controlEvent(ControlEvent e) {
 
 void draw() {
   data.update();
+  controls.update();
 }

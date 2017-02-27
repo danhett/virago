@@ -156,6 +156,12 @@ class Interface {
               .setColorCaptionLabel(color(255,255,255));
   }
 
+  void update() {
+    noStroke();
+    fill(red.getValue(), green.getValue(), blue.getValue());
+    rect(500, 300, 300, 300);
+  }
+
   /**
    * Creates the preset list
    */
