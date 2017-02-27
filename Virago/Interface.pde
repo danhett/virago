@@ -140,8 +140,8 @@ class Interface {
               .setColorBackground(color(155, 155, 155))
               .setColorActive(color(255, 255, 255))
               .setColorForeground(color(255, 255, 255))
-              .setRange(0, 255)
-              .setValue(255)
+              .setRange(0.01, 1)
+              .setValue(0.5)
               .setColorCaptionLabel(color(255,255,255));
   }
 
