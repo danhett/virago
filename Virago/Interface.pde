@@ -24,6 +24,7 @@ class Interface {
   AudioInput mic;
   Float audioLevel;
   Boolean usingLiveAudio = false;
+  Slider gainSlider;
 
   Interface(Virago ref) {
     println("[Interface]");
@@ -129,24 +130,24 @@ class Interface {
          .setColorCaptionLabel(color(255,255,255));
 
      green = cp5.addSlider("GREEN")
-          .setPosition(20, 340)
-          .setSize(400, 50)
-          .setColorBackground(color(0, 55, 0))
-          .setColorActive(color(0, 255, 0))
-          .setColorForeground(color(0, 255, 0))
-          .setRange(0, 255)
-          .setValue(100)
-          .setColorCaptionLabel(color(255,255,255));
+            .setPosition(20, 340)
+            .setSize(400, 50)
+            .setColorBackground(color(0, 55, 0))
+            .setColorActive(color(0, 255, 0))
+            .setColorForeground(color(0, 255, 0))
+            .setRange(0, 255)
+            .setValue(100)
+            .setColorCaptionLabel(color(255,255,255));
 
-      blue = cp5.addSlider("BLUE")
-               .setPosition(20, 400)
-               .setSize(400, 50)
-               .setColorBackground(color(0, 0, 55))
-               .setColorActive(color(0, 0, 255))
-               .setColorForeground(color(0, 0, 255))
-               .setRange(0, 255)
-               .setValue(255)
-               .setColorCaptionLabel(color(255,255,255));
+    blue = cp5.addSlider("BLUE")
+           .setPosition(20, 400)
+           .setSize(400, 50)
+           .setColorBackground(color(0, 0, 55))
+           .setColorActive(color(0, 0, 255))
+           .setColorForeground(color(0, 0, 255))
+           .setRange(0, 255)
+           .setValue(255)
+           .setColorCaptionLabel(color(255,255,255));
 
       brightness = cp5.addSlider("BRIGHTNESS")
               .setPosition(20, 460)
@@ -170,14 +171,14 @@ class Interface {
       .setColorForeground(color(155, 0, 0))
       .setColorActive(color(0, 255, 0));
 
-    Slider audioLimiter = cp5.addSlider("limiter")
+    gainSlider = cp5.addSlider("gain")
          .setPosition(90, 630)
-         .setSize(530, 20)
+         .setSize(300, 20)
          .setColorBackground(color(55, 55, 55))
          .setColorActive(color(255, 255, 255))
          .setColorForeground(color(255, 255, 255))
          .setRange(0, 1)
-         .setValue(0)
+         .setValue(1)
          .setColorCaptionLabel(color(255,255,255));
   }
 
@@ -187,15 +188,21 @@ class Interface {
   }
 
   void drawAudioLevel() {
-    audioLevel = getAudioLevel();
+    audioLevel = getAudioLevel() * gainSlider.getValue();
 
     // draw the background
     fill(55, 55, 55);
-    rect(90, 660, 530, 20);
+    rect(90, 660, 300, 20);
 
     // draw the audio level
-    fill(255, 0, 0);
-    rect(90, 660, audioLevel * 530, 20); // 530 is the box width
+    if(audioLevel * 300 < 100)
+      fill(0, 255, 0);
+    else if(audioLevel * 300 < 200)
+      fill(255, 255, 0);
+    else
+      fill(255, 0, 0);
+
+    rect(90, 660, audioLevel * 300, 20); // 300 is the box width
   }
 
   float getAudioLevel() {
