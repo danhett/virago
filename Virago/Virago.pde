@@ -32,12 +32,6 @@ public void controlEvent(ControlEvent e) {
   if(cmd.contains("cue")) {
     println("cue: " + cmd);
   }
-  else if(cmd.contains("static")) {
-
-  }
-  else if(cmd.contains("wireless")) {
-
-  }
   else {
     switch(cmd) {
       case "alloff":
@@ -57,6 +51,9 @@ public void controlEvent(ControlEvent e) {
         break;
       case "go":
         //data.transmit();
+        break;
+      case "AUDIO":
+        controls.toggleAudio();
         break;
     }
   }

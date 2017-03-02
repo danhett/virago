@@ -48,7 +48,7 @@ void loop() {
       Serial.println(RED);
       Serial.println(GREEN);
       Serial.println(BLUE);
-      colourBlock(BLOCK, RED, BLUE, GREEN);
+      colourBlock(BLOCK, RED, GREEN, BLUE);
     }
   }
 }

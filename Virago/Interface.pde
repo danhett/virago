@@ -19,10 +19,11 @@ class Interface {
   Slider green;
   Slider blue;
   Slider brightness;
-  Slider speed;
 
   Minim minim;
   AudioInput mic;
+  Float audioLevel;
+  Boolean usingLiveAudio = false;
 
   Interface(Virago ref) {
     println("[Interface]");
@@ -154,17 +155,7 @@ class Interface {
               .setColorActive(color(255, 255, 255))
               .setColorForeground(color(255, 255, 255))
               .setRange(0.01, 1)
-              .setValue(0.5)
-              .setColorCaptionLabel(color(255,255,255));
-
-      speed = cp5.addSlider("SPEED")
-              .setPosition(20, 520)
-              .setSize(400, 50)
-              .setColorBackground(color(55, 55, 55))
-              .setColorActive(color(255, 255, 255))
-              .setColorForeground(color(255, 255, 255))
-              .setRange(0, 500)
-              .setValue(100)
+              .setValue(0.2)
               .setColorCaptionLabel(color(255,255,255));
 
       stroke(125);
@@ -175,12 +166,11 @@ class Interface {
     Toggle audioToggle = cp5.addToggle("AUDIO").setPosition(20, 630)
       .setCaptionLabel("AUDIO REACT")
       .setSize(50, 50)
-      .setState(false)
       .setColorBackground(color(255, 0, 0))
       .setColorForeground(color(155, 0, 0))
       .setColorActive(color(0, 255, 0));
 
-    Slider audioLevel = cp5.addSlider("LIMITER")
+    Slider audioLimiter = cp5.addSlider("limiter")
          .setPosition(90, 630)
          .setSize(530, 20)
          .setColorBackground(color(55, 55, 55))
@@ -197,17 +187,23 @@ class Interface {
   }
 
   void drawAudioLevel() {
+    audioLevel = getAudioLevel();
+
     // draw the background
     fill(55, 55, 55);
     rect(90, 660, 530, 20);
 
     // draw the audio level
     fill(255, 0, 0);
-    rect(90, 660, getAudioLevel(), 20);
+    rect(90, 660, audioLevel * 530, 20); // 530 is the box width
   }
 
   float getAudioLevel() {
-    return mic.left.level() * 530; // 530 is the box width
+    return mic.left.level();
+  }
+
+  void toggleAudio() {
+    usingLiveAudio = !usingLiveAudio;
   }
 
   void drawColorPreview() {

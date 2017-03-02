@@ -68,7 +68,15 @@ class DataManager {
    * Sends the instructions to the lights
    */
   void transmit() {
-    brightness = controls.brightness.getValue();
+
+    // if we're not using live audio, check the reading on the dial
+    if(!controls.usingLiveAudio) {
+      brightness = controls.brightness.getValue();
+    }
+    // else listen for the microphone
+    else {
+      brightness = controls.audioLevel;
+    }
 
     red = str(round(controls.red.getValue() * brightness));
     green = str(round(controls.green.getValue() * brightness));
@@ -102,11 +110,10 @@ class DataManager {
     }
 
     // STATIC TOGGLES
-  //  for(i = 0; i < 8; i++) {
+    //for(i = 0; i < 3; i++) {
       if(controls.staticToggles.get(i).getValue() == 1.0) {
         strip.write(str(0) + "," + red + "," + green + "," + blue);
         strip.write(10);
-        strip.clear();
       }
     //}
   }
