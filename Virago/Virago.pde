@@ -56,7 +56,7 @@ public void controlEvent(ControlEvent e) {
         println("CANCELLING EVERYTHING");
         break;
       case "go":
-        data.transmit();
+        //data.transmit();
         break;
     }
   }

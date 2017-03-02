@@ -13,7 +13,6 @@ int RED;
 int GREEN;
 int BLUE;
 int WHITE;
-int SPEED;
 int bright;
 
 void setup() {
@@ -41,23 +40,23 @@ void loop() {
     RED  = Serial.parseInt();
     GREEN  = Serial.parseInt();
     BLUE = Serial.parseInt();
-    SPEED = Serial.parseInt();
     if (Serial.read() == '\n') {
-      //colourAll(RED, BLUE, GREEN);
-      colorWipe(RED, GREEN, BLUE, SPEED);
-      Serial.println("R: " + String(RED) + " G:" + String(BLUE) + " B:" + String(GREEN) + " Speed:" + String(SPEED));
+      colourAll(RED, GREEN, BLUE);
+      //colorWipe(RED, GREEN, BLUE, SPEED);
+      Serial.println("R: " + String(RED) + " G:" + String(GREEN) + " B:" + String(BLUE));
     }
   }
 }
 
 
-void colourAll(int r, int g, int b, int w) {
+void colourAll(int r, int g, int b) {
   for (int i = 0; i < NUMPIXELS; i++) {
-    strip.setPixelColor(i, r, g, b, w);
+    strip.setPixelColor(i, r, g, b);
   }
   strip.show();
 }
 
+// OLD
 void colorWipe(int r, int g, int b, uint8_t wait) {
   for(uint16_t i=0; i<NUMPIXELS; i++) {
     strip.setPixelColor(i, r, g, b);

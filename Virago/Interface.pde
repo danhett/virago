@@ -207,7 +207,6 @@ class Interface {
   }
 
   float getAudioLevel() {
-    println(mic.left.level());
     return mic.left.level() * 530; // 530 is the box width
   }
 
