@@ -48,6 +48,7 @@ class DataManager {
   }
 
   void update() {
+    /*
     if(LIVE) {
       while (wireless1.available() > 0) {
         String inBuffer = wireless1.readString();
@@ -56,8 +57,9 @@ class DataManager {
         }
       }
     }
+    */
 
-    if(frameCount % 30 == 0 && LIVE == true)
+    if(frameCount % 10 == 0 && LIVE == true)
       transmit();
   }
 
@@ -71,9 +73,7 @@ class DataManager {
     green = str(round(controls.green.getValue() * brightness));
     blue = str(round(controls.blue.getValue() * brightness));
 
-    // red = str(controls.red.getValue());
-    // green = str(controls.green.getValue());
-    // blue = str(controls.blue.getValue());
+    println(red, green, blue);
 
     if(controls.freeToggles.get(0).getValue() == 1.0) {
       wireless1.write(red + "," + green + "," + blue);

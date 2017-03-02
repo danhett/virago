@@ -42,8 +42,9 @@ void loop() {
     BLUE = Serial.parseInt();
     if (Serial.read() == '\n') {
       colourAll(RED, GREEN, BLUE);
+      delay(50);
       //colorWipe(RED, GREEN, BLUE, SPEED);
-      Serial.println("R: " + String(RED) + " G:" + String(GREEN) + " B:" + String(BLUE));
+      //Serial.println("R: " + String(RED) + " G:" + String(GREEN) + " B:" + String(BLUE));
     }
   }
 }
