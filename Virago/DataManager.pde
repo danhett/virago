@@ -5,6 +5,9 @@
  * @author Dan Hett (hellodanhett@gmail.com)
  */
 class DataManager {
+
+  Boolean LIVE = false;
+
   Virago virago;
   Interface controls;
   Serial wireless1;
@@ -25,7 +28,9 @@ class DataManager {
 
     virago = ref;
     controls = controlsRef;
-    handshake();
+
+    if(LIVE)
+      handshake();
   }
 
   // called on startup, says hello to all our connected devices
@@ -44,10 +49,12 @@ class DataManager {
 
   void update() {
     /*
-    while (unit1.available() > 0) {
-      String inBuffer = unit1.readString();
-      if (inBuffer != null) {
-        println(inBuffer);
+    if(LIVE) {
+      while (unit1.available() > 0) {
+        String inBuffer = unit1.readString();
+        if (inBuffer != null) {
+          println(inBuffer);
+        }
       }
     }
     */
@@ -64,29 +71,31 @@ class DataManager {
     blue = str(round(controls.blue.getValue() * brightness));
     speed = str(round(controls.speed.getValue()));
 
-    if(controls.freeToggles.get(0).getValue() == 1.0) {
-      wireless1.write(red + "," + green + "," + blue + "," + speed);
-      wireless1.write(10);
-    }
+    if(LIVE) {
+      if(controls.freeToggles.get(0).getValue() == 1.0) {
+        wireless1.write(red + "," + green + "," + blue + "," + speed);
+        wireless1.write(10);
+      }
 
-    if(controls.freeToggles.get(1).getValue() == 1.0) {
-      wireless2.write(red + "," + green + "," + blue + "," + speed);
-      wireless2.write(10);
-    }
+      if(controls.freeToggles.get(1).getValue() == 1.0) {
+        wireless2.write(red + "," + green + "," + blue + "," + speed);
+        wireless2.write(10);
+      }
 
-    if(controls.freeToggles.get(2).getValue() == 1.0) {
-      //wireless3.write(red + "," + green + "," + blue + "," + speed);
-      //wireless3.write(10);
-    }
+      if(controls.freeToggles.get(2).getValue() == 1.0) {
+        //wireless3.write(red + "," + green + "," + blue + "," + speed);
+        //wireless3.write(10);
+      }
 
-    if(controls.freeToggles.get(3).getValue() == 1.0) {
-      //wireless4.write(red + "," + green + "," + blue + "," + speed);
-      //wireless4.write(10);
-    }
+      if(controls.freeToggles.get(3).getValue() == 1.0) {
+        //wireless4.write(red + "," + green + "," + blue + "," + speed);
+        //wireless4.write(10);
+      }
 
-    if(controls.freeToggles.get(4).getValue() == 1.0) {
-      //wireless5.write(red + "," + green + "," + blue + "," + speed);
-      //wireless5.write(10);
+      if(controls.freeToggles.get(4).getValue() == 1.0) {
+        //wireless5.write(red + "," + green + "," + blue + "," + speed);
+        //wireless5.write(10);
+      }  
     }
   }
 

@@ -6,6 +6,8 @@
  * @author Dan Hett (hellodanhett@gmail.com)
  */
 import controlP5.*;
+import ddf.minim.analysis.*;
+import ddf.minim.*;
 
 class Interface {
   ControlP5 cp5;
@@ -19,6 +21,9 @@ class Interface {
   Slider brightness;
   Slider speed;
 
+  Minim minim;
+  AudioInput mic;
+
   Interface(Virago ref) {
     println("[Interface]");
 
@@ -26,6 +31,10 @@ class Interface {
     freeToggles = new ArrayList<Toggle>();
 
     virago = ref;
+
+    minim = new Minim(virago);
+    mic = minim.getLineIn();
+
     init();
   }
 
@@ -33,6 +42,7 @@ class Interface {
     buildSelectionControls();
     buildPresetMenu();
     buildColorControls();
+    buildAudioControls();
     buildTriggers();
   }
 
@@ -108,7 +118,7 @@ class Interface {
    */
   public void buildColorControls() {
     red = cp5.addSlider("RED")
-         .setPosition(20, 300)
+         .setPosition(20, 280)
          .setSize(400, 50)
          .setColorBackground(color(55, 0, 0))
          .setColorActive(color(255, 0, 0))
@@ -118,17 +128,17 @@ class Interface {
          .setColorCaptionLabel(color(255,255,255));
 
      green = cp5.addSlider("GREEN")
-          .setPosition(20, 360)
+          .setPosition(20, 340)
           .setSize(400, 50)
           .setColorBackground(color(0, 55, 0))
           .setColorActive(color(0, 255, 0))
           .setColorForeground(color(0, 255, 0))
           .setRange(0, 255)
-          .setValue(255)
+          .setValue(100)
           .setColorCaptionLabel(color(255,255,255));
 
       blue = cp5.addSlider("BLUE")
-               .setPosition(20, 420)
+               .setPosition(20, 400)
                .setSize(400, 50)
                .setColorBackground(color(0, 0, 55))
                .setColorActive(color(0, 0, 255))
@@ -138,7 +148,7 @@ class Interface {
                .setColorCaptionLabel(color(255,255,255));
 
       brightness = cp5.addSlider("BRIGHTNESS")
-              .setPosition(20, 480)
+              .setPosition(20, 460)
               .setSize(400, 50)
               .setColorBackground(color(55, 55, 55))
               .setColorActive(color(255, 255, 255))
@@ -148,7 +158,7 @@ class Interface {
               .setColorCaptionLabel(color(255,255,255));
 
       speed = cp5.addSlider("SPEED")
-              .setPosition(20, 540)
+              .setPosition(20, 520)
               .setSize(400, 50)
               .setColorBackground(color(55, 55, 55))
               .setColorActive(color(255, 255, 255))
@@ -156,12 +166,54 @@ class Interface {
               .setRange(0, 500)
               .setValue(100)
               .setColorCaptionLabel(color(255,255,255));
+
+      stroke(125);
+      line(20, 610, 820, 610);
+  }
+
+  void buildAudioControls() {
+    Toggle audioToggle = cp5.addToggle("AUDIO").setPosition(20, 630)
+      .setCaptionLabel("AUDIO REACT")
+      .setSize(50, 50)
+      .setState(false)
+      .setColorBackground(color(255, 0, 0))
+      .setColorForeground(color(155, 0, 0))
+      .setColorActive(color(0, 255, 0));
+
+    Slider audioLevel = cp5.addSlider("LIMITER")
+         .setPosition(90, 630)
+         .setSize(530, 20)
+         .setColorBackground(color(55, 55, 55))
+         .setColorActive(color(255, 255, 255))
+         .setColorForeground(color(255, 255, 255))
+         .setRange(0, 1)
+         .setValue(0)
+         .setColorCaptionLabel(color(255,255,255));
   }
 
   void update() {
-    noStroke();
+    drawColorPreview();
+    drawAudioLevel();
+  }
+
+  void drawAudioLevel() {
+    // draw the background
+    fill(55, 55, 55);
+    rect(90, 660, 530, 20);
+
+    // draw the audio level
+    fill(255, 0, 0);
+    rect(90, 660, getAudioLevel(), 20);
+  }
+
+  float getAudioLevel() {
+    println(mic.left.level());
+    return mic.left.level() * 530; // 530 is the box width
+  }
+
+  void drawColorPreview() {
     fill(red.getValue(), green.getValue(), blue.getValue());
-    rect(500, 300, 300, 300);
+    rect(500, 280, 300, 300);
   }
 
   /**

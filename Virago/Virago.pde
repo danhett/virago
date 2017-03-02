@@ -15,7 +15,7 @@ Interface controls;
 
 void setup() {
   size(1280, 800);
-  background(50);
+  background(30);
 
   controls = new Interface(this);
   data = new DataManager(this, controls);
@@ -36,7 +36,7 @@ public void controlEvent(ControlEvent e) {
 
   }
   else if(cmd.contains("wireless")) {
-    
+
   }
   else {
     switch(cmd) {
