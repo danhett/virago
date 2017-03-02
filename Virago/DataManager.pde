@@ -22,6 +22,7 @@ class DataManager {
   String blue;
   Float brightness;
   String speed;
+  int i;
 
   DataManager(Virago ref, Interface controlsRef) {
     println("[Data Manager]");
@@ -39,12 +40,12 @@ class DataManager {
     //printArray(Serial.list());
 
     // Open the port you are using at the rate you want:
-    wireless1 = new Serial(virago, "/dev/ttyACM0", 9600);
+    //wireless1 = new Serial(virago, "/dev/ttyACM0", 9600);
     //wireless2 = new Serial(virago, "/dev/ttyACM1", 9600);
     //wireless3 = new Serial(virago, "/dev/ttyACM2", 9600);
     //wireless4 = new Serial(virago, "/dev/ttyACM3", 9600);
     //wireless5 = new Serial(virago, "/dev/ttyACM4", 9600);
-    //strip = new Serial(virago, "/dev/ttyACM5", 9600);
+    strip = new Serial(virago, "/dev/ttyACM0", 9600);
   }
 
   void update() {
@@ -73,17 +74,16 @@ class DataManager {
     green = str(round(controls.green.getValue() * brightness));
     blue = str(round(controls.blue.getValue() * brightness));
 
-    println(red, green, blue);
-
     if(controls.freeToggles.get(0).getValue() == 1.0) {
-      wireless1.write(red + "," + green + "," + blue);
-      wireless1.write(10);
-      wireless1.clear();
+      //wireless1.write(red + "," + green + "," + blue);
+      //wireless1.write(10);
+      //wireless1.clear();
     }
 
     if(controls.freeToggles.get(1).getValue() == 1.0) {
-      //wireless2.write(red + "," + green + "," + blue + "," + speed);
+      //wireless2.write(red + "," + green + "," + blue);
       //wireless2.write(10);
+      //wireless2.clear();
     }
 
     if(controls.freeToggles.get(2).getValue() == 1.0) {
@@ -100,6 +100,15 @@ class DataManager {
       //wireless5.write(red + "," + green + "," + blue + "," + speed);
       //wireless5.write(10);
     }
+
+    // STATIC TOGGLES
+  //  for(i = 0; i < 8; i++) {
+      if(controls.staticToggles.get(i).getValue() == 1.0) {
+        strip.write(str(0) + "," + red + "," + green + "," + blue);
+        strip.write(10);
+        strip.clear();
+      }
+    //}
   }
 
   /**
