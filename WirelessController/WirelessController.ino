@@ -28,6 +28,7 @@ void setup() {
 
   // Initialize serial and wait for port to open:
   Serial.begin(9600);
+  Serial.setTimeout(3);
   while (!Serial) {
   }
   // Tell the computer that we're ready for data
@@ -42,7 +43,7 @@ void loop() {
     BLUE = Serial.parseInt();
     if (Serial.read() == '\n') {
       colourAll(RED, GREEN, BLUE);
-      delay(50);
+      
       //colorWipe(RED, GREEN, BLUE, SPEED);
       //Serial.println("R: " + String(RED) + " G:" + String(GREEN) + " B:" + String(BLUE));
     }

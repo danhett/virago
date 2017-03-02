@@ -59,7 +59,7 @@ class DataManager {
     }
     */
 
-    if(frameCount % 10 == 0 && LIVE == true)
+    if(frameCount % 3 == 0 && LIVE == true)
       transmit();
   }
 
@@ -78,6 +78,7 @@ class DataManager {
     if(controls.freeToggles.get(0).getValue() == 1.0) {
       wireless1.write(red + "," + green + "," + blue);
       wireless1.write(10);
+      wireless1.clear();
     }
 
     if(controls.freeToggles.get(1).getValue() == 1.0) {
