@@ -111,7 +111,7 @@ class DataManager {
 
     // STATIC TOGGLES
     //for(i = 0; i < 3; i++) {
-      if(controls.staticToggles.get(i).getValue() == 1.0) {
+      if(controls.staticToggles.get(0).getValue() == 1.0) {
         strip.write(str(0) + "," + red + "," + green + "," + blue);
         strip.write(10);
       }

@@ -15,6 +15,7 @@ Interface controls;
 
 void setup() {
   size(1280, 800);
+  //fullScreen();
   background(30);
 
   controls = new Interface(this);
