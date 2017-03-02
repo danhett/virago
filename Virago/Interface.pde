@@ -45,7 +45,6 @@ class Interface {
     buildPresetMenu();
     buildColorControls();
     buildAudioControls();
-    buildTriggers();
   }
 
   /**
@@ -223,37 +222,24 @@ class Interface {
    */
   public void buildPresetMenu() {
     for (int i = 0; i < 10; i++) {
-      cp5.addButton("cue"+(i+1)).setPosition(860, 280 + (i*42))
-        .setCaptionLabel("CUE PRESET "+(i+1))
-        .setSize(400, 30)
+      cp5.addButton("cue"+(i+1)).setPosition(840, 280 + (i*42))
+        .setCaptionLabel("LAUNCH CUE "+(i+1))
+        .setSize(300, 30)
         .setFont(font)
         .setColorBackground(color(130, 130, 130))
         .setColorForeground(color(90, 90, 90))
         .setColorActive(color(255, 255, 0));
+
+      cp5.addButton("save"+(i+1)).setPosition(1140, 280 + (i*42))
+        .setCaptionLabel("SAVE")
+        .setSize(120, 30)
+        .setFont(font)
+        .setColorBackground(color(0, 155, 0))
+        .setColorForeground(color(0, 100, 0))
+        .setColorActive(color(0, 255, 0));
     }
 
     line(20, 710, 1260, 710);
-  }
-
-  /**
-   * Creates the big cancel/go buttons at the bottom.
-   */
-  public void buildTriggers() {
-    cp5.addButton("cancelcommands").setPosition(20, 730)
-      .setCaptionLabel("CANCEL COMMANDS")
-      .setSize(610, 50)
-      .setFont(font)
-      .setColorBackground(color(125, 0, 0))
-      .setColorForeground(color(100, 0, 0))
-      .setColorActive(color(255, 0, 0));
-
-    cp5.addButton("go").setPosition(650, 730)
-      .setCaptionLabel("EXECUTE SEQUENCE")
-      .setSize(610, 50)
-      .setFont(font)
-      .setColorBackground(color(0, 155, 0))
-      .setColorForeground(color(0, 100, 0))
-      .setColorActive(color(0, 255, 0));
   }
 
 
