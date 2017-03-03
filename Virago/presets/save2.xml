@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
-  <static1>true</static1>
+  <static1>false</static1>
   <static2>false</static2>
   <static3>true</static3>
   <static4>false</static4>
-  <static5>true</static5>
+  <static5>false</static5>
   <static6>false</static6>
-  <static7>true</static7>
+  <static7>false</static7>
   <static8>false</static8>
-  <static9>true</static9>
+  <static9>false</static9>
   <static10>false</static10>
-  <static11>true</static11>
+  <static11>false</static11>
   <static12>false</static12>
-  <free1>true</free1>
-  <free2>true</free2>
-  <free3>true</free3>
-  <free4>true</free4>
-  <free5>true</free5>
+  <free1>false</free1>
+  <free2>false</free2>
+  <free3>false</free3>
+  <free4>false</free4>
+  <free5>false</free5>
   <red>248.62498</red>
   <green>1.9124999</green>
   <blue>255.0</blue>

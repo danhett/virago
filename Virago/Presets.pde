@@ -17,8 +17,9 @@ class Presets {
     controls = controlsRef;
   }
 
-  // To save:
-  // STATICS-ON WIRELESS-ON RED GREEN BLUE BRIGHTNESS AUDIO
+  /**
+   * Save an XML for the specified preset.
+   */
   public void savePreset(String presetName) {
     XML xml = new XML("settings");
 
@@ -37,7 +38,7 @@ class Presets {
     int j = 0;
     for(Toggle toggle:controls.freeToggles) {
       j++;
-      XML newChild = xml.addChild("free"+str(i));
+      XML newChild = xml.addChild("free"+str(j));
       if(toggle.getValue() == 1.0)
         newChild.setContent("true");
       else
@@ -66,5 +67,52 @@ class Presets {
 
     // write the file
     saveXML(xml, "presets/" + presetName + ".xml");
+  }
+
+  /**
+   * Load the preset back in, and update the interface
+   */
+  public void loadPreset(String presetName) {
+    XML xml = loadXML("presets/" + presetName.replace("cue", "save") + ".xml");
+
+    // restore the static toggles
+    int i = 0;
+    for(Toggle toggle:controls.staticToggles) {
+      i++;
+
+      if(xml.getChild("static"+i).getContent().contains("true")) {
+        toggle.setValue(true);
+      }
+      else {
+        toggle.setValue(false);
+      }
+    }
+
+    // restore the free toggles
+    int j = 0;
+    for(Toggle toggle:controls.freeToggles) {
+      j++;
+
+      if(xml.getChild("free"+j).getContent().contains("true")) {
+        toggle.setValue(true);
+      }
+      else {
+        toggle.setValue(false);
+      }
+    }
+
+    // restore RGB
+    controls.red.setValue(float(xml.getChild("red").getContent()));
+    controls.green.setValue(float(xml.getChild("green").getContent()));
+    controls.blue.setValue(float(xml.getChild("blue").getContent()));
+    controls.brightness.setValue(float(xml.getChild("brightness").getContent()));
+
+    // restore the audio toggle
+    if(xml.getChild("audio").getContent().contains("true")) {
+      controls.audioToggle.setValue(true);
+    }
+    else {
+      controls.audioToggle.setValue(false);
+    }
   }
 }

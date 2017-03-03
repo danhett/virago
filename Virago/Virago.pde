@@ -32,7 +32,7 @@ public void controlEvent(ControlEvent e) {
   String cmd = e.getController().getName();
 
   if(cmd.contains("cue")) {
-    println("cue: " + cmd);
+    presets.loadPreset(cmd);
   }
   if(cmd.contains("save")) {
     presets.savePreset(cmd);
@@ -50,12 +50,6 @@ public void controlEvent(ControlEvent e) {
         break;
       case "selectnone":
         controls.selectNone();
-        break;
-      case "cancelcommands":
-        println("CANCELLING EVERYTHING");
-        break;
-      case "go":
-        //data.transmit();
         break;
       case "AUDIO":
         controls.toggleAudio();
