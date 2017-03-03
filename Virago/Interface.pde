@@ -159,7 +159,7 @@ class Interface {
               .setColorCaptionLabel(color(255,255,255));
 
       stroke(125);
-      line(20, 610, 820, 610);
+      line(20, 610, 720, 610);
   }
 
   void buildAudioControls() {
@@ -214,7 +214,7 @@ class Interface {
 
   void drawColorPreview() {
     fill(red.getValue(), green.getValue(), blue.getValue());
-    rect(500, 280, 300, 300);
+    rect(500, 280, 200, 230);
   }
 
   /**

@@ -12,14 +12,15 @@ import java.util.Date;
 
 DataManager data;
 Interface controls;
+Presets presets;
 
 void setup() {
   size(1280, 800);
-  //fullScreen();
   background(30);
 
   controls = new Interface(this);
   data = new DataManager(this, controls);
+  presets = new Presets(this);
 }
 
 /**
@@ -32,6 +33,9 @@ public void controlEvent(ControlEvent e) {
 
   if(cmd.contains("cue")) {
     println("cue: " + cmd);
+  }
+  if(cmd.contains("save")) {
+    println("save: " + cmd);
   }
   else {
     switch(cmd) {
