@@ -19,6 +19,7 @@ class Interface {
   Slider green;
   Slider blue;
   Slider brightness;
+  int activePosition = 1;
 
   Minim minim;
   AudioInput mic;
@@ -110,8 +111,6 @@ class Interface {
       .setColorForeground(color(0, 100, 0))
       .setColorActive(color(0, 255, 0));
 
-    stroke(125);
-    line(20, 250, 1260, 250);
   }
 
 
@@ -158,9 +157,6 @@ class Interface {
               .setRange(0.01, 1)
               .setValue(0.2)
               .setColorCaptionLabel(color(255,255,255));
-
-      stroke(125);
-      line(20, 610, 720, 610);
   }
 
   void buildAudioControls() {
@@ -183,6 +179,18 @@ class Interface {
   }
 
   void update() {
+    background(30);
+
+    // draw the dividing lines
+    stroke(125);
+    line(20, 610, 720, 610);
+    line(20, 710, 720, 710);
+    line(20, 250, 1260, 250);
+
+    // draw the active selection
+    fill(255,255,0);
+    rect(800, 238 + (42*activePosition), 30, 30);
+
     drawColorPreview();
     drawAudioLevel();
   }
@@ -239,8 +247,10 @@ class Interface {
         .setColorForeground(color(0, 100, 0))
         .setColorActive(color(0, 255, 0));
     }
+  }
 
-    line(20, 710, 720, 710);
+  public void setActiveCue(String cmd) {
+    activePosition = int(cmd.replace("cue", ""));
   }
 
 

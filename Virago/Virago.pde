@@ -21,6 +21,9 @@ void setup() {
   controls = new Interface(this);
   data = new DataManager(this, controls);
   presets = new Presets(this, controls);
+
+  //presets.loadPreset("cue1");
+  //controls.setActiveCue("cue1");
 }
 
 /**
@@ -33,6 +36,7 @@ public void controlEvent(ControlEvent e) {
 
   if(cmd.contains("cue")) {
     presets.loadPreset(cmd);
+    controls.setActiveCue(cmd);
   }
   if(cmd.contains("save")) {
     presets.savePreset(cmd);
