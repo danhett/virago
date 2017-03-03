@@ -60,7 +60,7 @@ class DataManager {
     }
     */
 
-    if(frameCount % 3 == 0 && LIVE == true)
+    if(frameCount % 3 == 0)
       transmit();
   }
 
@@ -82,40 +82,42 @@ class DataManager {
     green = str(round(controls.green.getValue() * brightness));
     blue = str(round(controls.blue.getValue() * brightness));
 
-    if(controls.freeToggles.get(0).getValue() == 1.0) {
-      //wireless1.write(red + "," + green + "," + blue);
-      //wireless1.write(10);
-      //wireless1.clear();
-    }
-
-    if(controls.freeToggles.get(1).getValue() == 1.0) {
-      //wireless2.write(red + "," + green + "," + blue);
-      //wireless2.write(10);
-      //wireless2.clear();
-    }
-
-    if(controls.freeToggles.get(2).getValue() == 1.0) {
-      //wireless3.write(red + "," + green + "," + blue + "," + speed);
-      //wireless3.write(10);
-    }
-
-    if(controls.freeToggles.get(3).getValue() == 1.0) {
-      //wireless4.write(red + "," + green + "," + blue + "," + speed);
-      //wireless4.write(10);
-    }
-
-    if(controls.freeToggles.get(4).getValue() == 1.0) {
-      //wireless5.write(red + "," + green + "," + blue + "," + speed);
-      //wireless5.write(10);
-    }
-
-    // STATIC TOGGLES
-    //for(i = 0; i < 3; i++) {
-      if(controls.staticToggles.get(0).getValue() == 1.0) {
-        strip.write(str(0) + "," + red + "," + green + "," + blue);
-        strip.write(10);
+    if(LIVE) {
+      if(controls.freeToggles.get(0).getValue() == 1.0) {
+        //wireless1.write(red + "," + green + "," + blue);
+        //wireless1.write(10);
+        //wireless1.clear();
       }
-    //}
+
+      if(controls.freeToggles.get(1).getValue() == 1.0) {
+        //wireless2.write(red + "," + green + "," + blue);
+        //wireless2.write(10);
+        //wireless2.clear();
+      }
+
+      if(controls.freeToggles.get(2).getValue() == 1.0) {
+        //wireless3.write(red + "," + green + "," + blue + "," + speed);
+        //wireless3.write(10);
+      }
+
+      if(controls.freeToggles.get(3).getValue() == 1.0) {
+        //wireless4.write(red + "," + green + "," + blue + "," + speed);
+        //wireless4.write(10);
+      }
+
+      if(controls.freeToggles.get(4).getValue() == 1.0) {
+        //wireless5.write(red + "," + green + "," + blue + "," + speed);
+        //wireless5.write(10);
+      }
+
+      // STATIC TOGGLES
+      //for(i = 0; i < 3; i++) {
+        if(controls.staticToggles.get(0).getValue() == 1.0) {
+          strip.write(str(0) + "," + red + "," + green + "," + blue);
+          strip.write(10);
+        }
+      //}
+    }
   }
 
   /**

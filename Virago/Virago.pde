@@ -20,7 +20,7 @@ void setup() {
 
   controls = new Interface(this);
   data = new DataManager(this, controls);
-  presets = new Presets(this);
+  presets = new Presets(this, controls);
 }
 
 /**
@@ -35,7 +35,7 @@ public void controlEvent(ControlEvent e) {
     println("cue: " + cmd);
   }
   if(cmd.contains("save")) {
-    println("save: " + cmd);
+    presets.savePreset(cmd);
   }
   else {
     switch(cmd) {

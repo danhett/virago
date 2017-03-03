@@ -24,6 +24,7 @@ class Interface {
   AudioInput mic;
   Float audioLevel;
   Boolean usingLiveAudio = false;
+  Toggle audioToggle;
   Slider gainSlider;
 
   Interface(Virago ref) {
@@ -163,7 +164,7 @@ class Interface {
   }
 
   void buildAudioControls() {
-    Toggle audioToggle = cp5.addToggle("AUDIO").setPosition(20, 630)
+    audioToggle = cp5.addToggle("AUDIO").setPosition(20, 630)
       .setCaptionLabel("AUDIO REACT")
       .setSize(50, 50)
       .setColorBackground(color(255, 0, 0))
@@ -239,7 +240,7 @@ class Interface {
         .setColorActive(color(0, 255, 0));
     }
 
-    line(20, 710, 1260, 710);
+    line(20, 710, 720, 710);
   }
 
 
