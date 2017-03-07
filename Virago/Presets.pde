@@ -115,9 +115,13 @@ class Presets {
     // restore the audio toggle
     if(xml.getChild("audio").getContent().contains("true")) {
       controls.audioToggle.setValue(true);
+      controls.usingLiveAudio = true;
+      println("TRUE");
     }
     else {
       controls.audioToggle.setValue(false);
+      controls.usingLiveAudio = false;
+      println("FALSE");
     }
   }
 }
