@@ -6,7 +6,7 @@
  */
 class DataManager {
 
-  Boolean LIVE = false;
+  Boolean LIVE = true;
 
   Virago virago;
   Interface controls;
@@ -41,8 +41,8 @@ class DataManager {
     // printArray(Serial.list());
 
     // Open the port you are using at the rate you want
-    wireless = new Serial(virago, "/dev/ttyUSB0", 9600);
-    //strip = new Serial(virago, "/dev/ttyACM0", 9600);
+    //wireless = new Serial(virago, "/dev/ttyUSB0", 9600);
+    strip = new Serial(virago, "/dev/ttyACM0", 9600);
   }
 
   void update() {
@@ -79,8 +79,8 @@ class DataManager {
     blue = str(round(controls.blue.getValue() * brightness));
 
     if(LIVE) {
-      sendWireless();
-      //sendWired();
+      //sendWireless();
+      sendWired();
     }
   }
 
@@ -96,7 +96,7 @@ class DataManager {
     t = 0;
     for(Toggle toggle:controls.staticToggles) {
       if(toggle.getValue() == 1.0) {
-        commandChunk = red + "," + green + "," + blue + ",";
+        commandChunk = red + "," + green + "," + blue;
         command += commandChunk;
       }
 
@@ -104,7 +104,7 @@ class DataManager {
     }
 
     //println(command);
-    strip.write(command);
+    strip.write(commandChunk);
     strip.write(10);
   }
 

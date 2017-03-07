@@ -31,7 +31,7 @@ class Interface {
   float targetRed = 255;
   float targetGreen = 255;
   float targetBlue = 255;
-  float targetBrightness = 0.8;
+  float targetBrightness = 0.1;
 
   Interface(Virago ref) {
     println("[Interface]");

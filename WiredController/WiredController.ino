@@ -8,8 +8,8 @@
 #define PIN 6
 
 //change number of blocks and number of pixels:
-#define NUMBLOCKS 12
-#define NUMPIXELS 16
+#define NUMBLOCKS 8
+#define NUMPIXELS 8
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMBLOCKS * NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
@@ -19,15 +19,15 @@ int BLUE;
 int bright;
 int i = 0;
 
-int values[NUMBLOCKS*3]; // RGB
+int values[NUMBLOCKS * NUMPIXELS * 3]; // RGB
 
 void setup() {
-  bright = 200;
+  bright = 100;
 
   // Init the NeoPixel library and turn off all the LEDs
   strip.setBrightness(bright);
   strip.begin();
-  for (int i = 0; i < NUMBLOCKS * NUMPIXELS; i ++) {
+  for (int i = 0; i < NUMBLOCKS * NUMPIXELS; i++) {
     strip.setPixelColor(i, 0, 0, 0, 0);
   }
   strip.show();
@@ -44,14 +44,10 @@ void setup() {
 
 void loop() {
   if (Serial.available() > 0) {
-    for (int i = 0; i < NUMBLOCKS; i ++){
-      RED = Serial.parseInt();
-      RED = Serial.parseInt();
-      RED = Serial.parseInt();
-    }
-      //values[i] = 255; //Serial.parseInt(); // RED
-      //values[(i * NUMPIXELS)+1] = 255; //Serial.parseInt(); // GREEN
-      //values[(i * NUMPIXELS)+2] = 0; //Serial.parseInt(); // BLUE
+    RED = Serial.parseInt();
+    GREEN = Serial.parseInt();
+    BLUE = Serial.parseInt();
+    
     if (Serial.read() == '\n') {
       doLights();
     }
@@ -60,11 +56,11 @@ void loop() {
 
 void doLights() {
   i = 0;
-  //colourBlock(0,0,0,200);
+  //colourBlock(1,0,0,200);
   
   for (int i = 0; i < NUMBLOCKS; i++){
-    //colourBlock(i, values[i*NUMPIXELS], values[(i*NUMPIXELS)+1], values[(i*NUMPIXELS)+2]);
-    colourBlock(i, 0, 0, 255);
+    //colourBlock(i, values[i], values[i+1], values[i+2]);
+    colourBlock(i, RED, GREEN, BLUE);
   }
 }
 
