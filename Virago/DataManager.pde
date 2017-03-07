@@ -6,7 +6,7 @@
  */
 class DataManager {
 
-  Boolean LIVE = true;
+  Boolean LIVE = false;
 
   Virago virago;
   Interface controls;
@@ -43,13 +43,9 @@ class DataManager {
     // List all the available serial ports:
     //printArray(Serial.list());
 
-    // Open the port you are using at the rate you want:
-    //wireless1 = new Serial(virago, "/dev/ttyACM0", 9600);
-    //wireless2 = new Serial(virago, "/dev/ttyACM1", 9600);
-    //wireless3 = new Serial(virago, "/dev/ttyACM2", 9600);
-    //wireless4 = new Serial(virago, "/dev/ttyACM3", 9600);
-    //wireless5 = new Serial(virago, "/dev/ttyACM4", 9600);
-    strip = new Serial(virago, "/dev/ttyACM0", 9600);
+    // Open the port you are using at the rate you want
+    //wireless = new Serial(virago, "/dev/ttyACM0", 9600);
+    //strip = new Serial(virago, "/dev/ttyACM0", 9600);
   }
 
   void update() {
@@ -87,52 +83,33 @@ class DataManager {
     blue = str(round(controls.blue.getValue() * brightness));
 
     if(LIVE) {
-      if(controls.freeToggles.get(0).getValue() == 1.0) {
-        //wireless1.write(red + "," + green + "," + blue);
-        //wireless1.write(10);
-        //wireless1.clear();
-      }
-
-      if(controls.freeToggles.get(1).getValue() == 1.0) {
-        //wireless2.write(red + "," + green + "," + blue);
-        //wireless2.write(10);
-        //wireless2.clear();
-      }
-
-      if(controls.freeToggles.get(2).getValue() == 1.0) {
-        //wireless3.write(red + "," + green + "," + blue + "," + speed);
-        //wireless3.write(10);
-      }
-
-      if(controls.freeToggles.get(3).getValue() == 1.0) {
-        //wireless4.write(red + "," + green + "," + blue + "," + speed);
-        //wireless4.write(10);
-      }
-
-      if(controls.freeToggles.get(4).getValue() == 1.0) {
-        //wireless5.write(red + "," + green + "," + blue + "," + speed);
-        //wireless5.write(10);
-      }
-
-      // STATIC TOGGLES
-      command = "";
-      t = 0;
-      for(Toggle toggle:controls.staticToggles) {
-        //if(toggle.getValue() == 1.0) {
-          commandChunk = red + "," + green + "," + blue + ",";
-          command += commandChunk;
-        //}
-
-        t++;
-      }
-      //command = 0 + "," + 255 + "," + 200 + "," + 0 + ",";
-      //command += 1 + "," + 255 + "," + 200 + "," + 0;
-      //command = "0,100,0,200,1,100,0,200";
-
-      //println(command);
-      strip.write(command);
-      strip.write(10);
+      sendWireless();
+      //sendWired();
     }
+  }
+
+  // WIRELESS LIGHTS
+  void sendWireless() {
+    wireless.write(0 + "," + red + "," + green + "," + blue);
+    wireless.write(10);
+  }
+
+  // WIRED LIGHTS
+  void sendWired() {
+    command = "";
+    t = 0;
+    for(Toggle toggle:controls.staticToggles) {
+      if(toggle.getValue() == 1.0) {
+        commandChunk = red + "," + green + "," + blue + ",";
+        command += commandChunk;
+      }
+
+      t++;
+    }
+
+    //println(command);
+    strip.write(command);
+    strip.write(10);
   }
 
   /**
