@@ -13,7 +13,6 @@
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMBLOCKS * NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
-int BLOCK;
 int RED;
 int GREEN;
 int BLUE;
@@ -38,17 +37,25 @@ void setup() {
   Serial.println("READY");
 }
 
-void loop() {  
+
+// WE'RE EXPECTING A STRING LIKE '255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255'
+//WITH A NEWLINE CHARACTER AT THE END
+//IT ARRIVES EVERY 5-10MS WHATEVER YOU DECIDE
+//YOUR PARSE IT DOWN UNTIL THE NEWLINE
+//ON THE NEWLINE YOU USE THE VALUES TO AFFECT THE NEOPIXELS
+//I WILL ENDEVAOUR TO FIND THE CODE I WROTE BEFORE, AS I ESSENTIALLY DID A SIMILAR THING, SENDING DIFFERENT VALUES TO 8 'BLOCKS'
+//OF NEOPIXELS, EACH ATTACHED TO A SPEAKER. IT'S ON A DRIVE AT HOME THOUGH, SO YOU MAY NOT GET IT TIL TOMORROW!
+void loop() {
   if (Serial.available() > 0) {
-    //for (int i = 0; i < NUMBLOCKS; i++) {
-      BLOCK = Serial.parseInt();
-      RED  = Serial.parseInt();
-      GREEN  = Serial.parseInt();
+    for (int i = 0; i < NUMBLOCKS; i ++){
+      RED = Serial.parseInt();
+      GREEN = Serial.parseInt();
       BLUE = Serial.parseInt();
-      colourBlock(BLOCK, RED, GREEN, BLUE);
-    //}
-   // }
-  }
+      //append these to an array
+    }
+    if (Serial.read() == '\n') {
+      //we've got an array here full of values per block, iterate and change colours
+    }
 }
 
 //address blocks (0-7) with RGB
