@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+  <static1>false</static1>
+  <static2>true</static2>
+  <static3>false</static3>
+  <static4>true</static4>
+  <static5>false</static5>
+  <static6>true</static6>
+  <static7>false</static7>
+  <static8>true</static8>
+  <static9>false</static9>
+  <static10>true</static10>
+  <static11>false</static11>
+  <static12>true</static12>
+  <free1>false</free1>
+  <free2>false</free2>
+  <free3>false</free3>
+  <free4>false</free4>
+  <free5>false</free5>
+  <red>255.0</red>
+  <green>100.0</green>
+  <blue>255.0</blue>
+  <brightness>0.2</brightness>
+  <audio>false</audio>
+</settings>
