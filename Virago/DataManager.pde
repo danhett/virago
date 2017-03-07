@@ -6,7 +6,7 @@
  */
 class DataManager {
 
-  Boolean LIVE = false;
+  Boolean LIVE = true;
 
   Virago virago;
   Interface controls;
@@ -23,6 +23,10 @@ class DataManager {
   Float brightness;
   String speed;
   int i;
+  int t;
+
+  String commandChunk;
+  String command; // one huge command for the strip
 
   DataManager(Virago ref, Interface controlsRef) {
     println("[Data Manager]");
@@ -111,12 +115,25 @@ class DataManager {
       }
 
       // STATIC TOGGLES
-      //for(i = 0; i < 3; i++) {
-        if(controls.staticToggles.get(0).getValue() == 1.0) {
-          strip.write(str(0) + "," + red + "," + green + "," + blue);
-          strip.write(10);
+      command = "";
+      t = 0;
+      for(Toggle toggle:controls.staticToggles) {
+        if(toggle.getValue() == 1.0) {
+          commandChunk = str(t) + "," + red + "," + green + "," + blue;
+          command += commandChunk;
         }
-      //}
+        else {
+          commandChunk = str(t) + ",0,0,0";
+          command += commandChunk;
+        }
+
+        command += ",";
+
+        t++;
+      }
+
+      strip.write(command);
+      strip.write(10);
     }
   }
 

@@ -36,20 +36,13 @@ void setup() {
   Serial.println("READY");
 }
 
-
-void loop() {
-  if (Serial.available() > 0) {
+void loop() {  
+  if (Serial.available() > 0) {    
     BLOCK = Serial.parseInt();
     RED  = Serial.parseInt();
     GREEN  = Serial.parseInt();
     BLUE = Serial.parseInt();
-    if (Serial.read() == '\n') {
-      Serial.println(BLOCK);
-      Serial.println(RED);
-      Serial.println(GREEN);
-      Serial.println(BLUE);
-      colourBlock(BLOCK, RED, GREEN, BLUE);
-    }
+    colourBlock(BLOCK, RED, GREEN, BLUE);
   }
 }
 
@@ -58,7 +51,6 @@ void colourBlock(int block, int r, int g, int b) {
   int blockStartLED = block * NUMPIXELS;
   int blockLastLED = blockStartLED + NUMPIXELS;
   for (int i = blockStartLED; i < blockLastLED; i++) {
-    Serial.println(i);
     strip.setPixelColor(i, r, g, b);
   }
   strip.show();
