@@ -22,6 +22,8 @@ class DataManager {
   int t;
   int w;
 
+  int mode;
+
   String commandChunk;
   String command; // one huge command for the strip
 
@@ -93,14 +95,14 @@ class DataManager {
   // WIRED LIGHTS
   void sendWired() {
     command = "";
-    t = 0;
+
+    mode = 2;
+
     for(Toggle toggle:controls.staticToggles) {
       if(toggle.getValue() == 1.0) {
-        commandChunk = red + "," + green + "," + blue;
+        commandChunk = mode + "," + red + "," + green + "," + blue;
         command += commandChunk;
       }
-
-      t++;
     }
 
     //println(command);
