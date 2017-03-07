@@ -33,6 +33,10 @@ class Interface {
   float targetBlue = 255;
   float targetBrightness = 0.1;
 
+  Button mode1;
+  Button mode2;
+  Button mode3;
+
   Interface(Virago ref) {
     println("[Interface]");
 
@@ -52,6 +56,7 @@ class Interface {
     buildPresetMenu();
     buildColorControls();
     buildAudioControls();
+    buildModeControls();
   }
 
   /**
@@ -231,6 +236,30 @@ class Interface {
   void drawColorPreview() {
     fill(red.getValue(), green.getValue(), blue.getValue());
     rect(500, 280, 200, 230);
+  }
+
+  public void buildModeControls() {
+    mode1 = cp5.addButton("MODE1").setPosition(20, 725)
+      .setCaptionLabel("ALL LIGHTS")
+      .setSize(100, 50)
+      .setColorBackground(color(130, 130, 130))
+      .setColorForeground(color(90, 90, 90))
+      .setColorActive(color(255, 255, 0));
+
+    mode2 = cp5.addButton("MODE2").setPosition(130, 725)
+      .setCaptionLabel("ODD ONES")
+      .setSize(100, 50)
+      .setColorBackground(color(130, 130, 130))
+      .setColorForeground(color(90, 90, 90))
+      .setColorActive(color(255, 255, 0));
+
+    mode3 = cp5.addButton("MODE3").setPosition(240, 725)
+      .setCaptionLabel("PAIRS")
+      .setSize(100, 50)
+      .setColorBackground(color(130, 130, 130))
+      .setColorForeground(color(90, 90, 90))
+      .setColorActive(color(255, 255, 0));
+
   }
 
   /**

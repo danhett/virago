@@ -58,6 +58,24 @@ public void controlEvent(ControlEvent e) {
       case "AUDIO":
         controls.toggleAudio();
         break;
+      case "MODE1":
+        data.mode = 0;
+        // controls.mode1.setState(true);
+        // controls.mode2.setState(false);
+        // controls.mode3.setState(false);
+        break;
+      case "MODE2":
+        data.mode = 1;
+        // controls.mode1.setState(false);
+        // controls.mode2.setState(true);
+        // controls.mode3.setState(false);
+        break;
+      case "MODE3":
+        data.mode = 2;
+        // controls.mode1.setState(false);
+        // controls.mode2.setState(false);
+        // controls.mode3.setState(true);
+        break;
     }
   }
 }

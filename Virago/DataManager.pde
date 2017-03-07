@@ -43,7 +43,7 @@ class DataManager {
     // printArray(Serial.list());
 
     // Open the port you are using at the rate you want
-    //wireless = new Serial(virago, "/dev/ttyUSB0", 9600);
+    wireless = new Serial(virago, "/dev/ttyUSB0", 115200);
     strip = new Serial(virago, "/dev/ttyACM0", 9600);
   }
 
@@ -81,22 +81,20 @@ class DataManager {
     blue = str(round(controls.blue.getValue() * brightness));
 
     if(LIVE) {
-      //sendWireless();
+      sendWireless();
       sendWired();
     }
   }
 
   // WIRELESS LIGHTS
   void sendWireless() {
-      wireless.write("1" + "," + int(random(255)) + "," + int(random(255)) + "," + int(random(255)));
-      wireless.write(10);
+    wireless.write("0" + "," + int(random(255)) + "," + int(random(255)) + "," + int(random(255)));
+    wireless.write(10);
   }
 
   // WIRED LIGHTS
   void sendWired() {
     command = "";
-
-    mode = 2;
 
     for(Toggle toggle:controls.staticToggles) {
       if(toggle.getValue() == 1.0) {
