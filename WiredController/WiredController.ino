@@ -1,3 +1,5 @@
+#include <Keyboard.h>
+
 #include <Adafruit_NeoPixel.h>
 #ifdef __AVR__
   #include <avr/power.h>
@@ -6,8 +8,8 @@
 #define PIN 6
 
 //change number of blocks and number of pixels:
-#define NUMBLOCKS 8
-#define NUMPIXELS 8
+#define NUMBLOCKS 12
+#define NUMPIXELS 16
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMBLOCKS * NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
@@ -37,12 +39,15 @@ void setup() {
 }
 
 void loop() {  
-  if (Serial.available() > 0) {    
-    BLOCK = Serial.parseInt();
-    RED  = Serial.parseInt();
-    GREEN  = Serial.parseInt();
-    BLUE = Serial.parseInt();
-    colourBlock(BLOCK, RED, GREEN, BLUE);
+  if (Serial.available() > 0) {
+    //for (int i = 0; i < NUMBLOCKS; i++) {
+      BLOCK = Serial.parseInt();
+      RED  = Serial.parseInt();
+      GREEN  = Serial.parseInt();
+      BLUE = Serial.parseInt();
+      colourBlock(BLOCK, RED, GREEN, BLUE);
+    //}
+   // }
   }
 }
 

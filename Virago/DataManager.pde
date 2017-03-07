@@ -118,20 +118,22 @@ class DataManager {
       command = "";
       t = 0;
       for(Toggle toggle:controls.staticToggles) {
-        if(toggle.getValue() == 1.0) {
-          commandChunk = str(t) + "," + red + "," + green + "," + blue;
+        //if(toggle.getValue() == 1.0) {
+          commandChunk = t + "," + red + "," + green + "," + blue + "\n";
           command += commandChunk;
-        }
-        else {
-          commandChunk = str(t) + ",0,0,0";
-          command += commandChunk;
-        }
+        //}
 
-        command += ",";
+        //if(t < 11) command += ",";
 
         t++;
       }
 
+      command = 0 + "," + 255 + "," + 200 + "," + 0 + ",";
+      command += 1 + "," + 255 + "," + 200 + "," + 0;
+
+      //command = "0,100,0,200,1,100,0,200";
+
+      println(command);
       strip.write(command);
       strip.write(10);
     }
