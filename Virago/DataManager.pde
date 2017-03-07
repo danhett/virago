@@ -55,8 +55,8 @@ class DataManager {
   void update() {
     /*
     if(LIVE) {
-      while (wireless1.available() > 0) {
-        String inBuffer = wireless1.readString();
+      while (strip.available() > 0) {
+        String inBuffer = strip.readString();
         if (inBuffer != null) {
           println(inBuffer);
         }
@@ -119,21 +119,17 @@ class DataManager {
       t = 0;
       for(Toggle toggle:controls.staticToggles) {
         //if(toggle.getValue() == 1.0) {
-          commandChunk = t + "," + red + "," + green + "," + blue + "\n";
+          commandChunk = red + "," + green + "," + blue + ",";
           command += commandChunk;
         //}
 
-        //if(t < 11) command += ",";
-
         t++;
       }
-
-      command = 0 + "," + 255 + "," + 200 + "," + 0 + ",";
-      command += 1 + "," + 255 + "," + 200 + "," + 0;
-
+      //command = 0 + "," + 255 + "," + 200 + "," + 0 + ",";
+      //command += 1 + "," + 255 + "," + 200 + "," + 0;
       //command = "0,100,0,200,1,100,0,200";
 
-      println(command);
+      //println(command);
       strip.write(command);
       strip.write(10);
     }

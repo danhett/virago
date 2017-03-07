@@ -17,9 +17,12 @@ int RED;
 int GREEN;
 int BLUE;
 int bright;
+int i = 0;
+
+int values[NUMBLOCKS*3]; // RGB
 
 void setup() {
-  bright = 128;
+  bright = 200;
 
   // Init the NeoPixel library and turn off all the LEDs
   strip.setBrightness(bright);
@@ -38,24 +41,28 @@ void setup() {
 }
 
 
-// WE'RE EXPECTING A STRING LIKE '255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255'
-//WITH A NEWLINE CHARACTER AT THE END
-//IT ARRIVES EVERY 5-10MS WHATEVER YOU DECIDE
-//YOUR PARSE IT DOWN UNTIL THE NEWLINE
-//ON THE NEWLINE YOU USE THE VALUES TO AFFECT THE NEOPIXELS
-//I WILL ENDEVAOUR TO FIND THE CODE I WROTE BEFORE, AS I ESSENTIALLY DID A SIMILAR THING, SENDING DIFFERENT VALUES TO 8 'BLOCKS'
-//OF NEOPIXELS, EACH ATTACHED TO A SPEAKER. IT'S ON A DRIVE AT HOME THOUGH, SO YOU MAY NOT GET IT TIL TOMORROW!
+
 void loop() {
   if (Serial.available() > 0) {
-    for (int i = 0; i < NUMBLOCKS; i ++){
-      RED = Serial.parseInt();
-      GREEN = Serial.parseInt();
-      BLUE = Serial.parseInt();
-      //append these to an array
-    }
+      
+      //values[i] = 255; //Serial.parseInt(); // RED
+      //values[(i * NUMPIXELS)+1] = 255; //Serial.parseInt(); // GREEN
+      //values[(i * NUMPIXELS)+2] = 0; //Serial.parseInt(); // BLUE
+      i++;
     if (Serial.read() == '\n') {
-      //we've got an array here full of values per block, iterate and change colours
+      doLights();
     }
+  }
+}
+
+void doLights() {
+  i = 0;
+  //colourBlock(0,0,0,200);
+  
+  for (int i = 0; i < NUMBLOCKS; i++){
+    //colourBlock(i, values[i*NUMPIXELS], values[(i*NUMPIXELS)+1], values[(i*NUMPIXELS)+2]);
+    colourBlock(i, 0, 0, 255);
+  }
 }
 
 //address blocks (0-7) with RGB
