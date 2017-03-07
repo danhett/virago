@@ -44,11 +44,14 @@ void setup() {
 
 void loop() {
   if (Serial.available() > 0) {
-      
+    for (int i = 0; i < NUMBLOCKS; i ++){
+      RED = Serial.parseInt();
+      RED = Serial.parseInt();
+      RED = Serial.parseInt();
+    }
       //values[i] = 255; //Serial.parseInt(); // RED
       //values[(i * NUMPIXELS)+1] = 255; //Serial.parseInt(); // GREEN
       //values[(i * NUMPIXELS)+2] = 0; //Serial.parseInt(); // BLUE
-      i++;
     if (Serial.read() == '\n') {
       doLights();
     }

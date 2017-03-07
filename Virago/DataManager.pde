@@ -10,11 +10,7 @@ class DataManager {
 
   Virago virago;
   Interface controls;
-  Serial wireless1;
-  Serial wireless2;
-  Serial wireless3;
-  Serial wireless4;
-  Serial wireless5;
+  Serial wireless;
   Serial strip; // the chained neopixels, all on one arduino
 
   String red;
@@ -24,6 +20,7 @@ class DataManager {
   String speed;
   int i;
   int t;
+  int w;
 
   String commandChunk;
   String command; // one huge command for the strip
@@ -41,18 +38,18 @@ class DataManager {
   // called on startup, says hello to all our connected devices
   void handshake() {
     // List all the available serial ports:
-    //printArray(Serial.list());
+    // printArray(Serial.list());
 
     // Open the port you are using at the rate you want
-    //wireless = new Serial(virago, "/dev/ttyACM0", 9600);
+    wireless = new Serial(virago, "/dev/ttyUSB0", 9600);
     //strip = new Serial(virago, "/dev/ttyACM0", 9600);
   }
 
   void update() {
     /*
     if(LIVE) {
-      while (strip.available() > 0) {
-        String inBuffer = strip.readString();
+      while (wireless.available() > 0) {
+        String inBuffer = wireless.readString();
         if (inBuffer != null) {
           println(inBuffer);
         }
@@ -68,7 +65,6 @@ class DataManager {
    * Sends the instructions to the lights
    */
   void transmit() {
-
     // if we're not using live audio, check the reading on the dial
     if(!controls.usingLiveAudio) {
       brightness = controls.brightness.getValue();
@@ -90,8 +86,8 @@ class DataManager {
 
   // WIRELESS LIGHTS
   void sendWireless() {
-    wireless.write(0 + "," + red + "," + green + "," + blue);
-    wireless.write(10);
+      wireless.write("1" + "," + int(random(255)) + "," + int(random(255)) + "," + int(random(255)));
+      wireless.write(10);
   }
 
   // WIRED LIGHTS

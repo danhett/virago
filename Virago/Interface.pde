@@ -19,7 +19,7 @@ class Interface {
   Slider green;
   Slider blue;
   Slider brightness;
-  int activePosition = 1;
+  int activePosition;
 
   Minim minim;
   AudioInput mic;
@@ -27,6 +27,11 @@ class Interface {
   Boolean usingLiveAudio = false;
   Toggle audioToggle;
   Slider gainSlider;
+
+  float targetRed = 255;
+  float targetGreen = 255;
+  float targetBlue = 255;
+  float targetBrightness = 0.8;
 
   Interface(Virago ref) {
     println("[Interface]");
@@ -135,7 +140,7 @@ class Interface {
             .setColorActive(color(0, 255, 0))
             .setColorForeground(color(0, 255, 0))
             .setRange(0, 255)
-            .setValue(100)
+            .setValue(255)
             .setColorCaptionLabel(color(255,255,255));
 
     blue = cp5.addSlider("BLUE")
@@ -145,7 +150,7 @@ class Interface {
            .setColorActive(color(0, 0, 255))
            .setColorForeground(color(0, 0, 255))
            .setRange(0, 255)
-           .setValue(255)
+           .setValue(0)
            .setColorCaptionLabel(color(255,255,255));
 
       brightness = cp5.addSlider("BRIGHTNESS")
@@ -155,7 +160,7 @@ class Interface {
               .setColorActive(color(255, 255, 255))
               .setColorForeground(color(255, 255, 255))
               .setRange(0.01, 1)
-              .setValue(0.2)
+              .setValue(0.8)
               .setColorCaptionLabel(color(255,255,255));
   }
 
@@ -193,6 +198,8 @@ class Interface {
 
     drawColorPreview();
     drawAudioLevel();
+
+    //fadeToTargets();
   }
 
   void drawAudioLevel() {
@@ -251,6 +258,13 @@ class Interface {
 
   public void setActiveCue(String cmd) {
     activePosition = int(cmd.replace("cue", ""));
+  }
+
+  public void fadeToTargets() {
+    red.setValue(targetRed);
+    green.setValue(targetGreen);
+    blue.setValue(targetBlue);
+    brightness.setValue(targetBrightness);
   }
 
 

@@ -30,7 +30,7 @@ void setup() {
 
   // Initialize serial and wait for port to open:
   Serial.begin(9600);
-  Serial.setTimeout(3);
+  Serial.setTimeout(10);
   while (!Serial) {
   }
   // Tell the computer that we're ready for data
