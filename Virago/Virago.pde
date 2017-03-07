@@ -20,7 +20,7 @@ void setup() {
 
   controls = new Interface(this);
   data = new DataManager(this, controls);
-  presets = new Presets(this, controls);
+  presets = new Presets(this, controls, data);
 
   //presets.loadPreset("cue1");
   //controls.setActiveCue("cue1");

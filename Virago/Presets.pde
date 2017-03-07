@@ -9,12 +9,14 @@
 class Presets {
   Virago virago;
   Interface controls;
+  DataManager data;
 
-  Presets(Virago ref, Interface controlsRef) {
+  Presets(Virago ref, Interface controlsRef, DataManager dataRef) {
     println("[Presets]");
 
     virago = ref;
     controls = controlsRef;
+    data = dataRef;
   }
 
   /**
@@ -64,6 +66,10 @@ class Presets {
       audio.setContent("true");
     else
       audio.setContent("false");
+
+    // save the mode
+    XML mode = xml.addChild("mode");
+    mode.setContent(str(data.mode));
 
     // write the file
     saveXML(xml, "presets/" + presetName + ".xml");
@@ -121,5 +127,8 @@ class Presets {
       controls.audioToggle.setValue(false);
       controls.usingLiveAudio = false;
     }
+
+    // restore the mode
+    data.mode = int(xml.getChild("mode").getContent());
   }
 }
