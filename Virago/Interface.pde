@@ -28,6 +28,9 @@ class Interface {
   Toggle audioToggle;
   Slider gainSlider;
 
+  Toggle randomToggle;
+  Boolean usingRandomness = false;
+
   Button mode1;
   Button mode2;
   Button mode3;
@@ -191,6 +194,20 @@ class Interface {
          .setRange(0, 1)
          .setValue(1)
          .setColorCaptionLabel(color(255,255,255));
+
+     randomToggle = cp5.addToggle("RANDOM").setPosition(500, 630)
+       .setCaptionLabel("RANDOMNESS")
+       .setSize(50, 50)
+       .setColorBackground(color(255, 0, 0))
+       .setColorForeground(color(155, 0, 0))
+       .setColorActive(color(0, 255, 0));
+  }
+
+  void updateRandomSetting() {
+    if(randomToggle.getValue() == 1.0)
+      usingRandomness = true;
+    else
+      usingRandomness = false;
   }
 
   void update() {

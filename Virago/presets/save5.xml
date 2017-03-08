@@ -23,4 +23,5 @@
   <brightness>0.2</brightness>
   <audio>true</audio>
   <mode>1</mode>
+  <random>false</random>
 </settings>

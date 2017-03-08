@@ -67,6 +67,9 @@ public void controlEvent(ControlEvent e) {
       case "MODE3":
         data.mode = 2;
         break;
+      case "RANDOM":
+        controls.updateRandomSetting();
+        break;
     }
   }
 }

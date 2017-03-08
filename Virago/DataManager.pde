@@ -97,7 +97,10 @@ class DataManager {
   void sendWired() {
     command = "";
 
-    random = 1;
+    if(controls.usingRandomness)
+      random = 1;
+    else
+      random = 0;
 
     for(Toggle toggle:controls.staticToggles) {
       if(toggle.getValue() == 1.0) {
