@@ -14,9 +14,10 @@
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMBLOCKS * NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 int MODE;
-int RED;
-int GREEN;
-int BLUE;
+int RANDOM;
+int _RED;
+int _GREEN;
+int _BLUE;
 int bright;
 int i = 0;
 
@@ -46,9 +47,10 @@ void setup() {
 void loop() {
   if (Serial.available() > 0) {
     MODE = Serial.parseInt();
-    RED = Serial.parseInt();
-    GREEN = Serial.parseInt();
-    BLUE = Serial.parseInt();
+    RANDOM = Serial.parseInt();
+    _RED = Serial.parseInt();
+    _GREEN = Serial.parseInt();
+    _BLUE = Serial.parseInt();
     
     if (Serial.read() == '\n') {
       doLights();
@@ -61,41 +63,60 @@ void doLights() {
   // All the lights on
   if(MODE == 0) {
     for (int i = 0; i < NUMBLOCKS; i++){
-      colourBlock(i, RED, GREEN, BLUE);
+      colourBlock(i, RED(), GREEN(), BLUE());
     }
   }
 
   // Specific strips
   if(MODE == 1) {
     colourBlock(0, 0, 0, 0);
-    colourBlock(1, RED, GREEN, BLUE);
+    colourBlock(1, RED(), GREEN(), BLUE());
     colourBlock(2, 0, 0, 0);
     colourBlock(3, 0, 0, 0);
     colourBlock(4, 0, 0, 0);
-    colourBlock(5, RED, GREEN, BLUE);
+    colourBlock(5, RED(), GREEN(), BLUE());
     colourBlock(6, 0, 0, 0);
     colourBlock(7, 0, 0, 0);
-    colourBlock(8, RED, GREEN, BLUE);
+    colourBlock(8, RED(), GREEN(), BLUE());
     colourBlock(9, 0, 0, 0);
     colourBlock(10, 0, 0, 0);
-    colourBlock(11, RED, GREEN, BLUE);
+    colourBlock(11, RED(), GREEN(), BLUE());
   }
   
   // Pairs
   if(MODE == 2) {
-    colourBlock(0, RED, GREEN, BLUE);
-    colourBlock(1, RED, GREEN, BLUE);
+    colourBlock(0, RED(), GREEN(), BLUE());
+    colourBlock(1, RED(), GREEN(), BLUE());
     colourBlock(2, 0, 0, 0);
-    colourBlock(3, RED, GREEN, BLUE);
-    colourBlock(4, RED, GREEN, BLUE);
+    colourBlock(3, RED(), GREEN(), BLUE());
+    colourBlock(4, RED(), GREEN(), BLUE());
     colourBlock(5, 0, 0, 0);
-    colourBlock(6, RED, GREEN, BLUE);
-    colourBlock(7, RED, GREEN, BLUE);
+    colourBlock(6, RED(), GREEN(), BLUE());
+    colourBlock(7, RED(), GREEN(), BLUE());
     colourBlock(8, 0, 0, 0);
-    colourBlock(9, RED, GREEN, BLUE);
-    colourBlock(10, RED, GREEN, BLUE);
+    colourBlock(9, RED(), GREEN(), BLUE());
+    colourBlock(10, RED(), GREEN(), BLUE());
     colourBlock(11, 0, 0, 0);
   }
+}
+
+int RED() {
+  if(RANDOM == 1)
+    return random(_RED);
+     
+  return _RED;
+}
+int GREEN() {
+  if(RANDOM == 1)
+    return random(_GREEN);
+  
+  return _GREEN;
+}
+int BLUE() {
+  if(RANDOM == 1)
+    return random(_BLUE);
+  
+  return _BLUE;
 }
 
 //address blocks (0-7) with RGB

@@ -23,6 +23,7 @@ class DataManager {
   int w;
 
   int mode;
+  int random;
 
   String commandChunk;
   String command; // one huge command for the strip
@@ -96,9 +97,11 @@ class DataManager {
   void sendWired() {
     command = "";
 
+    random = 1;
+
     for(Toggle toggle:controls.staticToggles) {
       if(toggle.getValue() == 1.0) {
-        commandChunk = mode + "," + red + "," + green + "," + blue;
+        commandChunk = mode + "," + random + "," + red + "," + green + "," + blue;
         command += commandChunk;
       }
     }
