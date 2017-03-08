@@ -8,8 +8,8 @@
 #define PIN 6
 
 //change number of blocks and number of pixels:
-#define NUMBLOCKS 8
-#define NUMPIXELS 8
+#define NUMBLOCKS 12
+#define NUMPIXELS 16
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMBLOCKS * NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
@@ -24,7 +24,7 @@ int i = 0;
 int values[NUMBLOCKS * NUMPIXELS * 3]; // RGB
 
 void setup() {
-  bright = 100;
+  bright = 230;
 
   // Init the NeoPixel library and turn off all the LEDs
   strip.setBrightness(bright);
@@ -35,7 +35,7 @@ void setup() {
   strip.show();
 
   // Initialize serial and wait for port to open:
-  Serial.begin(9600);
+  Serial.begin(115200);
   while (!Serial) {
   }
   // Tell the computer that we're ready for data

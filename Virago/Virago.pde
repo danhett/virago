@@ -37,6 +37,7 @@ public void controlEvent(ControlEvent e) {
   if(cmd.contains("cue")) {
     presets.loadPreset(cmd);
     controls.setActiveCue(cmd);
+    //data.transmit();
   }
   if(cmd.contains("save")) {
     presets.savePreset(cmd);
