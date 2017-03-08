@@ -22,6 +22,9 @@ class DataManager {
   int i;
   int t;
   int w;
+  int wirelessRed;
+  int wirelessGreen;
+  int wirelessBlue;
 
   int mode;
   int random;
@@ -29,7 +32,7 @@ class DataManager {
   String wiredCommand;
   String wirelessCommand;
   String lastWirelessCommand = "";
-  int speed = 100;
+  int speed = 50;
 
   DataManager(Virago ref, Interface controlsRef) {
     println("[Data Manager]");
@@ -79,9 +82,9 @@ class DataManager {
     }
   }
 
-  void proxySendWireless() {
+  void proxySendWireless(Boolean ignoreBrightness) {
     if(WIRELESS_LIVE) {
-      sendWireless();
+      sendWireless(ignoreBrightness);
     }
   }
 
@@ -105,25 +108,28 @@ class DataManager {
    * Sends a signal to the wireless units.
    * These are numbered 1-5, or send a zero to address them all.
    */
-  void sendWireless() {
+  void sendWireless(Boolean ignoreBrightness) {
     brightness = controls.brightness.getValue();
-    applyColours();
+
+    if(ignoreBrightness) {
+      wirelessRed = 0;
+      wirelessGreen = 0;
+      wirelessBlue = 0;
+    }
+    else {
+      wirelessRed = int(controls.targetRed * controls.targetBrightness);
+      wirelessGreen = int(controls.targetGreen * controls.targetBrightness);
+      wirelessBlue = int(controls.targetBlue * controls.targetBrightness);
+    }
 
     wirelessCommand = "0" + ","
-                    + int(controls.targetRed) + ","
-                    + int(controls.targetGreen) + ","
-                    + int(controls.targetBlue) + ","
+                    + wirelessRed + ","
+                    + wirelessGreen + ","
+                    + wirelessBlue + ","
                     + speed;
 
-    println("W: " + wirelessCommand);
-    println("L: " + lastWirelessCommand);
-    println("----");
-
-    //if(wirelessCommand != lastWirelessCommand) {
-      //lastWirelessCommand = wirelessCommand;
-      wireless.write(wirelessCommand);
-      wireless.write(10);
-    //}
+    wireless.write(wirelessCommand);
+    wireless.write(10);
   }
 
   void applyColours() {

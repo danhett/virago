@@ -37,7 +37,7 @@ public void controlEvent(ControlEvent e) {
   if(cmd.contains("cue")) {
     presets.loadPreset(cmd);
     controls.setActiveCue(cmd);
-    data.proxySendWireless();
+    data.proxySendWireless(false);
   }
   if(cmd.contains("save")) {
     presets.savePreset(cmd);
@@ -46,9 +46,11 @@ public void controlEvent(ControlEvent e) {
     switch(cmd) {
       case "alloff":
         controls.fadeAllDown();
+        data.proxySendWireless(true);
         break;
       case "allon":
         controls.fadeAllUp();
+        data.proxySendWireless(false);
         break;
       case "selectall":
         controls.selectAll();
