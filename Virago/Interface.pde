@@ -346,7 +346,7 @@ class Interface {
 
     for (int i = 0; i < cueNames.length; i++) {
       cp5.addButton("cue"+(i+1)).setPosition(780, 20 + (i*25))
-        .setCaptionLabel(cueNames[i])
+        .setCaptionLabel((i+1) + ": " + cueNames[i])
         .setSize(360, 20)
         .setFont(font)
         .setColorBackground(color(130, 130, 130))
