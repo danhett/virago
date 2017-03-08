@@ -61,43 +61,57 @@ void doLights() {
   // All the lights on
   if(MODE == 0) {
     for (int i = 0; i < NUMBLOCKS; i++){
-      colourBlock(i, RED(), GREEN(), BLUE());
+      on(i);
     }
   }
 
   // Specific strips
   if(MODE == 1) {
-    colourBlock(0, 0, 0, 0);
-    colourBlock(1, RED(), GREEN(), BLUE());
-    colourBlock(2, 0, 0, 0);
-    colourBlock(3, 0, 0, 0);
-    colourBlock(4, 0, 0, 0);
-    colourBlock(5, RED(), GREEN(), BLUE());
-    colourBlock(6, 0, 0, 0);
-    colourBlock(7, 0, 0, 0);
-    colourBlock(8, RED(), GREEN(), BLUE());
-    colourBlock(9, 0, 0, 0);
-    colourBlock(10, 0, 0, 0);
-    colourBlock(11, RED(), GREEN(), BLUE());
+    off(0);
+    on(1);
+    off(2);
+    off(3);
+    off(4);
+    on(5);
+    off(6);
+    off(7);
+    on(8);
+    off(9);
+    off(10);
+    on(11);
   }
   
   // Pairs
   if(MODE == 2) {
-    colourBlock(0, RED(), GREEN(), BLUE());
-    colourBlock(1, RED(), GREEN(), BLUE());
-    colourBlock(2, 0, 0, 0);
-    colourBlock(3, RED(), GREEN(), BLUE());
-    colourBlock(4, RED(), GREEN(), BLUE());
-    colourBlock(5, 0, 0, 0);
-    colourBlock(6, RED(), GREEN(), BLUE());
-    colourBlock(7, RED(), GREEN(), BLUE());
-    colourBlock(8, 0, 0, 0);
-    colourBlock(9, RED(), GREEN(), BLUE());
-    colourBlock(10, RED(), GREEN(), BLUE());
-    colourBlock(11, 0, 0, 0);
+    on(0);
+    on(1);
+    off(2);
+    on(3);
+    on(4);
+    off(5);
+    on(6);
+    on(7);
+    off(8);
+    on(9);
+    on(10);
+    off(11);
   }
 }
 
+/**
+ * Turns everything on/off
+ */
+void on(id) {
+  colourBlock(id, RED(), GREEN(), BLUE());
+}
+void off(id) {
+  colourBlock(id, 0, 0, 0);
+}
+
+
+/** 
+ * Return either a given value, or a randomised version of it
+ */
 int RED() {
   if(RANDOM == 1)
     return random(_RED);
@@ -117,7 +131,10 @@ int BLUE() {
   return _BLUE;
 }
 
-//address blocks (0-7) with RGB
+
+/** 
+ * Colour the blocks by strip/block
+ */
 void colourBlock(int block, int r, int g, int b) {
   int blockStartLED = block * NUMPIXELS;
   int blockLastLED = blockStartLED + NUMPIXELS;
