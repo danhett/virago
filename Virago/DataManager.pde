@@ -19,7 +19,6 @@ class DataManager {
   String green;
   String blue;
   Float brightness;
-  String speed;
   int i;
   int t;
   int w;
@@ -27,8 +26,10 @@ class DataManager {
   int mode;
   int random;
 
-  String commandChunk;
-  String command; // one huge command for the strip
+  String wiredCommand;
+  String wirelessCommand;
+  String lastWirelessCommand = "";
+  int speed = 100;
 
   DataManager(Virago ref, Interface controlsRef) {
     println("[Data Manager]");
@@ -41,9 +42,6 @@ class DataManager {
 
   // called on startup, says hello to all our connected devices
   void handshake() {
-    // List all the available serial ports:
-    // printArray(Serial.list());
-
     if(WIRED_LIVE) {
       strip = new Serial(virago, "/dev/ttyACM0", 115200);
     }
@@ -74,9 +72,7 @@ class DataManager {
         brightness = 0.0;
     }
 
-    red = str(round(controls.red.getValue() * brightness));
-    green = str(round(controls.green.getValue() * brightness));
-    blue = str(round(controls.blue.getValue() * brightness));
+    applyColours();
 
     if(WIRED_LIVE) {
       sendWired();
@@ -87,30 +83,42 @@ class DataManager {
   }
 
   /**
-   * Sends a signal to the wireless units.
-   * These are numbered 1-5, or send a zero to address them all.
-   */
-  void sendWireless() {
-    wireless.write("0" + "," + int(random(255)) + "," + int(random(255)) + "," + int(random(255)));
-    wireless.write(10);
-  }
-
-  /**
    * Sends an update signal to the wired unit.
    * These are numbered 1-5, or send a zero to address them all.
    */
   void sendWired() {
-    command = "";
-
     if(controls.usingRandomness)
       random = 1;
     else
       random = 0;
 
-    commandChunk = mode + "," + random + "," + red + "," + green + "," + blue;
+    wiredCommand = mode + "," + random + "," + red + "," + green + "," + blue;
 
-    //println(commandChunk);
-    strip.write(commandChunk);
+    strip.write(wiredCommand);
     strip.write(10);
+  }
+
+  /**
+   * Sends a signal to the wireless units.
+   * These are numbered 1-5, or send a zero to address them all.
+   */
+  void sendWireless() {
+    brightness = controls.audioLevel;
+    applyColours();
+
+    wirelessCommand = "0" + "," + red + "," + green + "," + blue + "," + speed;
+
+    if(wirelessCommand != lastWirelessCommand) {
+      println("writing to wireless units");
+      lastWirelessCommand = wirelessCommand;
+      wireless.write(wirelessCommand);
+      wireless.write(10);
+    }
+  }
+
+  void applyColours() {
+    red = str(round(controls.red.getValue() * brightness));
+    green = str(round(controls.green.getValue() * brightness));
+    blue = str(round(controls.blue.getValue() * brightness));
   }
 }
