@@ -17,10 +17,10 @@
   <free3>true</free3>
   <free4>true</free4>
   <free5>true</free5>
-  <red>17.85</red>
-  <green>16.574999</green>
+  <red>17.0</red>
+  <green>15.125</green>
   <blue>255.0</blue>
-  <brightness>0.2</brightness>
-  <audio>true</audio>
+  <brightness>0.19000001</brightness>
+  <audio>false</audio>
   <mode>2</mode>
 </settings>

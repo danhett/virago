@@ -37,8 +37,8 @@ class Interface {
   Float targetBlue = 255.0;
   Float targetBrightness = 0.8;
   int rate = 2;
-  Float brightnessRate = 0.005;
-
+  Float brightnessRate = 0.01;
+  Float savedBrightness;
   Boolean dragging = false;
 
   Interface(Virago ref) {
@@ -270,6 +270,14 @@ class Interface {
       targetBlue = blue.getValue();
       targetBrightness = brightness.getValue();
     }
+  }
+
+  public void fadeAllDown() {
+    savedBrightness = targetBrightness;
+    targetBrightness = 0.0;
+  }
+  public void fadeAllUp() {
+    targetBrightness = savedBrightness;
   }
 
   public void buildModeControls() {

@@ -44,10 +44,10 @@ public void controlEvent(ControlEvent e) {
   else {
     switch(cmd) {
       case "alloff":
-        println("TURNING EVERYTHING OFF");
+        controls.fadeAllDown();
         break;
       case "allon":
-        println("TURNING EVERYTHING ON");
+        controls.fadeAllUp();
         break;
       case "selectall":
         controls.selectAll();
