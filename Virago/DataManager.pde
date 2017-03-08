@@ -45,7 +45,7 @@ class DataManager {
 
     // Open the port you are using at the rate you want
     // wireless = new Serial(virago, "/dev/ttyUSB0", 115200);
-    strip = new Serial(virago, "/dev/ttyACM1", 115200);
+    strip = new Serial(virago, "/dev/ttyACM0", 115200);
   }
 
   void update() {
@@ -74,7 +74,10 @@ class DataManager {
     }
     // else listen for the microphone
     else {
-      brightness = controls.audioLevel;
+      if(controls.audioLevel > controls.lowThreshold)
+        brightness = controls.audioLevel;
+      else
+        brightness = 0.0;
     }
 
     red = str(round(controls.red.getValue() * brightness));

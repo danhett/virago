@@ -27,6 +27,7 @@ class Interface {
   Boolean usingLiveAudio = false;
   Toggle audioToggle;
   Slider gainSlider;
+  Float lowThreshold = 0.3;
 
   Toggle randomToggle;
   Boolean usingRandomness = false;
