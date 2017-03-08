@@ -6,7 +6,7 @@
  */
 class DataManager {
 
-  Boolean WIRED_LIVE = false;
+  Boolean WIRED_LIVE = true;
   Boolean WIRELESS_LIVE = false;
   int frameCountRate = 5;
 
@@ -104,7 +104,7 @@ class DataManager {
     else
       random = 0;
 
-    wiredCommand = mode + "," + random + "," + red + "," + green + "," + blue + "," + speed;
+    wiredCommand = mode + "," + random + "," + red + "," + green + "," + blue;
 
     strip.write(wiredCommand);
     strip.write(10);
