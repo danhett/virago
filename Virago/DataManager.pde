@@ -104,7 +104,7 @@ class DataManager {
     else
       random = 0;
 
-    wiredCommand = mode + "," + random + "," + red + "," + green + "," + blue;
+    wiredCommand = mode + "," + random + "," + red + "," + green + "," + blue + "," + speed;
 
     strip.write(wiredCommand);
     strip.write(10);
