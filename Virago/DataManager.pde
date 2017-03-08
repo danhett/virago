@@ -27,6 +27,7 @@ class DataManager {
   int wirelessBlue;
 
   int mode;
+  int wirelessMode;
   int random;
 
   String wiredCommand;
@@ -88,6 +89,11 @@ class DataManager {
     }
   }
 
+  void setWirelessMode(String cmd) {
+    wirelessMode = int(cmd.replace("wireless", ""));
+    println(wirelessMode);
+  }
+
   /**
    * Sends an update signal to the wired unit.
    * These are numbered 1-5, or send a zero to address them all.
@@ -122,7 +128,7 @@ class DataManager {
       wirelessBlue = int(controls.targetBlue * controls.targetBrightness);
     }
 
-    wirelessCommand = "0" + ","
+    wirelessCommand = wirelessMode + ","
                     + wirelessRed + ","
                     + wirelessGreen + ","
                     + wirelessBlue + ","

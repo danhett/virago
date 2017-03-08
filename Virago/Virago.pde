@@ -42,6 +42,9 @@ public void controlEvent(ControlEvent e) {
   if(cmd.contains("save")) {
     presets.savePreset(cmd);
   }
+  if(cmd.contains("wireless")) {
+    data.setWirelessMode(cmd);
+  }
   else {
     switch(cmd) {
       case "alloff":

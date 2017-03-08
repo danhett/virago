@@ -23,5 +23,6 @@
   <brightness>0.99</brightness>
   <audio>true</audio>
   <mode>0</mode>
+  <wirelessMode>0</wirelessMode>
   <random>false</random>
 </settings>

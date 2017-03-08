@@ -87,16 +87,26 @@ class Interface {
       staticToggles.add(toggle);
     }
 
+    String[] wirelessNames = {
+      "ALL",
+      "W1",
+      "W2",
+      "W3",
+      "W4",
+      "W5",
+      "PAIR1",
+      "PAIR2",
+    };
     // create the free lights
-    for (int i = 0; i < 5; i++) {
-      Toggle toggle = cp5.addToggle("wireless"+(i+1)).setPosition(20 + (i * 80), 130)
+    for (int i = 0; i < 8; i++) {
+      Button button = cp5.addButton("wireless"+i).setPosition(20 + (i * 80), 130)
         .setSize(70, 70)
-        .setState(true)
+        .setCaptionLabel(wirelessNames[i])
         .setColorBackground(color(125, 0, 0))
         .setColorForeground(color(100, 0, 0))
         .setColorActive(color(0, 255, 0));
 
-      freeToggles.add(toggle);
+      //freeToggles.add(toggle);
     }
 
     // create the shortcut buttons

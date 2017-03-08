@@ -71,6 +71,10 @@ class Presets {
     XML mode = xml.addChild("mode");
     mode.setContent(str(data.mode));
 
+    // save the wireless mode
+    XML wirelessMode = xml.addChild("wirelessMode");
+    wirelessMode.setContent(str(data.wirelessMode));
+
     // save the randomness on/off setting
     XML random = xml.addChild("random");
     if(controls.randomToggle.getValue() == 1.0)
@@ -131,6 +135,9 @@ class Presets {
 
     // restore the mode
     data.mode = int(xml.getChild("mode").getContent());
+
+    // restore the wirelessMode
+    data.wirelessMode = int(xml.getChild("wirelessMode").getContent());
 
     // restore the randomness
     if(xml.getChild("random").getContent().contains("true")) {
