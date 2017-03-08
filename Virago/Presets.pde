@@ -108,15 +108,15 @@ class Presets {
     }
 
     // restore RGB
-    controls.red.setValue(float(xml.getChild("red").getContent()));
-    controls.green.setValue(float(xml.getChild("green").getContent()));
-    controls.blue.setValue(float(xml.getChild("blue").getContent()));
-    controls.brightness.setValue(float(xml.getChild("brightness").getContent()));
+    //controls.red.setValue(float(xml.getChild("red").getContent()));
+    //controls.green.setValue(float(xml.getChild("green").getContent()));
+    //controls.blue.setValue(float(xml.getChild("blue").getContent()));
+    //controls.brightness.setValue(float(xml.getChild("brightness").getContent()));
 
-    //controls.targetRed = float(xml.getChild("red").getContent());
-    //controls.targetGreen = float(xml.getChild("green").getContent());
-    //controls.targetBlue = float(xml.getChild("blue").getContent());
-    //controls.targetBrightness = float(xml.getChild("brightness").getContent());
+    controls.targetRed = float(xml.getChild("red").getContent());
+    controls.targetGreen = float(xml.getChild("green").getContent());
+    controls.targetBlue = float(xml.getChild("blue").getContent());
+    controls.targetBrightness = float(xml.getChild("brightness").getContent());
 
     // restore the audio toggle
     if(xml.getChild("audio").getContent().contains("true")) {

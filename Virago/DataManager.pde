@@ -6,7 +6,7 @@
  */
 class DataManager {
 
-  Boolean LIVE = true;
+  Boolean LIVE = false;
 
   Virago virago;
   Interface controls;
@@ -43,7 +43,7 @@ class DataManager {
     // printArray(Serial.list());
 
     // Open the port you are using at the rate you want
-    //wireless = new Serial(virago, "/dev/ttyUSB0", 115200);
+    // wireless = new Serial(virago, "/dev/ttyUSB0", 115200);
     strip = new Serial(virago, "/dev/ttyACM0", 9600);
   }
 
@@ -88,7 +88,7 @@ class DataManager {
 
   // WIRELESS LIGHTS
   void sendWireless() {
-    wireless.write("0" + "," + int(random(255)) + "," + int(random(255)) + "," + int(random(255)));
+    wireless.write("4" + "," + int(random(255)) + "," + int(random(255)) + "," + int(random(255)));
     wireless.write(10);
   }
 

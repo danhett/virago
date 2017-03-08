@@ -28,14 +28,18 @@ class Interface {
   Toggle audioToggle;
   Slider gainSlider;
 
-  float targetRed = 255;
-  float targetGreen = 255;
-  float targetBlue = 255;
-  float targetBrightness = 0.1;
-
   Button mode1;
   Button mode2;
   Button mode3;
+
+  Float targetRed = 255.0;
+  Float targetGreen = 255.0;
+  Float targetBlue = 255.0;
+  Float targetBrightness = 0.8;
+  int rate = 2;
+  Float brightnessRate = 0.005;
+
+  Boolean dragging = false;
 
   Interface(Virago ref) {
     println("[Interface]");
@@ -135,7 +139,7 @@ class Interface {
          .setColorActive(color(255, 0, 0))
          .setColorForeground(color(255, 0, 0))
          .setRange(0, 255)
-         .setValue(255)
+         .setValue(targetRed)
          .setColorCaptionLabel(color(255,255,255));
 
      green = cp5.addSlider("GREEN")
@@ -145,7 +149,7 @@ class Interface {
             .setColorActive(color(0, 255, 0))
             .setColorForeground(color(0, 255, 0))
             .setRange(0, 255)
-            .setValue(255)
+            .setValue(targetGreen)
             .setColorCaptionLabel(color(255,255,255));
 
     blue = cp5.addSlider("BLUE")
@@ -155,7 +159,7 @@ class Interface {
            .setColorActive(color(0, 0, 255))
            .setColorForeground(color(0, 0, 255))
            .setRange(0, 255)
-           .setValue(0)
+           .setValue(targetBlue)
            .setColorCaptionLabel(color(255,255,255));
 
       brightness = cp5.addSlider("BRIGHTNESS")
@@ -165,9 +169,10 @@ class Interface {
               .setColorActive(color(255, 255, 255))
               .setColorForeground(color(255, 255, 255))
               .setRange(0.01, 1)
-              .setValue(0.2)
+              .setValue(targetBrightness)
               .setColorCaptionLabel(color(255,255,255));
   }
+
 
   void buildAudioControls() {
     audioToggle = cp5.addToggle("AUDIO").setPosition(20, 630)
@@ -203,8 +208,7 @@ class Interface {
 
     drawColorPreview();
     drawAudioLevel();
-
-    //fadeToTargets();
+    updateColorValues();
   }
 
   void drawAudioLevel() {
@@ -236,6 +240,36 @@ class Interface {
   void drawColorPreview() {
     fill(red.getValue(), green.getValue(), blue.getValue());
     rect(500, 280, 200, 230);
+  }
+
+  public void updateColorValues() {
+    if(!dragging) {
+      if(red.getValue() < targetRed)
+        red.setValue(red.getValue() + rate);
+      if(red.getValue() > targetRed)
+        red.setValue(red.getValue() - rate);
+
+      if(blue.getValue() < targetBlue)
+        blue.setValue(blue.getValue() + rate);
+      if(blue.getValue() > targetBlue)
+        blue.setValue(blue.getValue() - rate);
+
+      if(green.getValue() < targetGreen)
+        green.setValue(green.getValue() + rate);
+      if(green.getValue() > targetGreen)
+        green.setValue(green.getValue() - rate);
+
+      if(brightness.getValue() < targetBrightness)
+        brightness.setValue(brightness.getValue() + brightnessRate);
+      if(brightness.getValue() > targetBrightness)
+        brightness.setValue(brightness.getValue() - brightnessRate);
+    }
+    else {
+      targetRed = red.getValue();
+      targetGreen = green.getValue();
+      targetBlue = blue.getValue();
+      targetBrightness = brightness.getValue();
+    }
   }
 
   public void buildModeControls() {
@@ -288,14 +322,6 @@ class Interface {
   public void setActiveCue(String cmd) {
     activePosition = int(cmd.replace("cue", ""));
   }
-
-  public void fadeToTargets() {
-    red.setValue(targetRed);
-    green.setValue(targetGreen);
-    blue.setValue(targetBlue);
-    brightness.setValue(targetBrightness);
-  }
-
 
   /**
    * Turns on all the switches.
