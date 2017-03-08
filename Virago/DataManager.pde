@@ -7,7 +7,7 @@
 class DataManager {
 
   Boolean WIRED_LIVE = true;
-  Boolean WIRELESS_LIVE = false;
+  Boolean WIRELESS_LIVE = true;
   int frameCountRate = 5;
 
   Virago virago;
@@ -77,6 +77,9 @@ class DataManager {
     if(WIRED_LIVE) {
       sendWired();
     }
+  }
+
+  void proxySendWireless() {
     if(WIRELESS_LIVE) {
       sendWireless();
     }
@@ -103,17 +106,24 @@ class DataManager {
    * These are numbered 1-5, or send a zero to address them all.
    */
   void sendWireless() {
-    brightness = controls.audioLevel;
+    brightness = controls.brightness.getValue();
     applyColours();
 
-    wirelessCommand = "0" + "," + red + "," + green + "," + blue + "," + speed;
+    wirelessCommand = "0" + ","
+                    + int(controls.targetRed) + ","
+                    + int(controls.targetGreen) + ","
+                    + int(controls.targetBlue) + ","
+                    + speed;
 
-    if(wirelessCommand != lastWirelessCommand) {
-      println("writing to wireless units");
-      lastWirelessCommand = wirelessCommand;
+    println("W: " + wirelessCommand);
+    println("L: " + lastWirelessCommand);
+    println("----");
+
+    //if(wirelessCommand != lastWirelessCommand) {
+      //lastWirelessCommand = wirelessCommand;
       wireless.write(wirelessCommand);
       wireless.write(10);
-    }
+    //}
   }
 
   void applyColours() {
