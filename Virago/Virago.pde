@@ -79,6 +79,12 @@ public void controlEvent(ControlEvent e) {
       case "RANDOM":
         controls.updateRandomSetting();
         break;
+      case "SLOWPULSE":
+        controls.updateSlowPulseSetting();
+        break;
+      case "FASTPULSE":
+        controls.updateFastPulseSetting();
+        break;
     }
   }
 }

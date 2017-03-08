@@ -31,6 +31,10 @@ class Interface {
 
   Toggle randomToggle;
   Boolean usingRandomness = false;
+  Toggle slowPulseToggle;
+  Boolean usingSlowPulse = false;
+  Toggle fastPulseToggle;
+  Boolean usingFastPulse = false;
 
   Button mode1;
   Button mode2;
@@ -197,7 +201,21 @@ class Interface {
          .setColorCaptionLabel(color(255,255,255));
 
      randomToggle = cp5.addToggle("RANDOM").setPosition(500, 630)
-       .setCaptionLabel("RANDOMNESS")
+       .setCaptionLabel("RANDOM")
+       .setSize(50, 50)
+       .setColorBackground(color(255, 0, 0))
+       .setColorForeground(color(155, 0, 0))
+       .setColorActive(color(0, 255, 0));
+
+     slowPulseToggle = cp5.addToggle("SLOWPULSE").setPosition(560, 630)
+       .setCaptionLabel("SLOW PULSE")
+       .setSize(50, 50)
+       .setColorBackground(color(255, 0, 0))
+       .setColorForeground(color(155, 0, 0))
+       .setColorActive(color(0, 255, 0));
+
+     fastPulseToggle = cp5.addToggle("FASTPULSE").setPosition(620, 630)
+       .setCaptionLabel("FAST PULSE")
        .setSize(50, 50)
        .setColorBackground(color(255, 0, 0))
        .setColorForeground(color(155, 0, 0))
@@ -209,6 +227,20 @@ class Interface {
       usingRandomness = true;
     else
       usingRandomness = false;
+  }
+
+  void updateSlowPulseSetting() {
+    if(slowPulseToggle.getValue() == 1.0)
+      usingSlowPulse = true;
+    else
+      usingSlowPulse = false;
+  }
+
+  void updateFastPulseSetting() {
+    if(fastPulseToggle.getValue() == 1.0)
+      usingFastPulse = true;
+    else
+      usingFastPulse = false;
   }
 
   void update() {

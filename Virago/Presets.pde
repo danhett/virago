@@ -82,6 +82,20 @@ class Presets {
     else
       random.setContent("false");
 
+    // save the slowPulse on/off setting
+    XML slowPulse = xml.addChild("slowPulse");
+    if(controls.slowPulseToggle.getValue() == 1.0)
+      slowPulse.setContent("true");
+    else
+      slowPulse.setContent("false");
+
+    // save the fastPulse on/off setting
+    XML fastPulse = xml.addChild("fastPulse");
+    if(controls.fastPulseToggle.getValue() == 1.0)
+      fastPulse.setContent("true");
+    else
+      fastPulse.setContent("false");
+
     // write the file
     saveXML(xml, "presets/" + presetName + ".xml");
   }
@@ -147,6 +161,26 @@ class Presets {
     else {
       controls.randomToggle.setValue(false);
       controls.usingRandomness = false;
+    }
+
+    // restore the slowpulse
+    if(xml.getChild("slowPulse").getContent().contains("true")) {
+      controls.slowPulseToggle.setValue(true);
+      controls.usingSlowPulse = true;
+    }
+    else {
+      controls.slowPulseToggle.setValue(false);
+      controls.usingSlowPulse = false;
+    }
+
+    // restore the fastpulse
+    if(xml.getChild("fastPulse").getContent().contains("true")) {
+      controls.fastPulseToggle.setValue(true);
+      controls.usingFastPulse = true;
+    }
+    else {
+      controls.fastPulseToggle.setValue(false);
+      controls.usingFastPulse = false;
     }
   }
 }
