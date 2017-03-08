@@ -208,7 +208,7 @@ class Interface {
     // draw the active selection
     if(activePosition > 0) {
       fill(255,255,255);
-      rect(800, 238 + (42*activePosition), 30, 30);
+      rect(760, (25*activePosition)-5, 20, 20);
     }
 
     drawColorPreview();
@@ -314,30 +314,46 @@ class Interface {
    */
   public void buildPresetMenu() {
     String[] cueNames = {
-      "This is a cue",
-      "Another cue",
-      "Do a thing",
-      "Cool cue point",
-      "This does stuff",
-      "Do more things",
-      "Awesome cue",
-      "Cue thing",
-      "Make stuff happen",
-      "This makes cool things",
-      "Light up stuff",
-      "Woo yay lights"
+      "CONVO1",
+      "CONVO2",
+      "CONVO3",
+      "CONVO4",
+      "CONVO5",
+      "CONVO6",
+      "CONVO7",
+      "CONVO8",
+      "W6",
+      "LRUNWAY",
+      "WRUNWAY",
+      "ALL_LOW_ORANGE",
+      "W0TEAL",
+      "W0ORANGE",
+      "W0PINK",
+      "W3TEAL",
+      "W3TEALBOOM",
+      "W8KILL",
+      "TABLAVOX",
+      "SOLOPAIR1",
+      "SOLOPAIR2",
+      "SOLOPAIR3",
+      "SOLOPAIR4",
+      "SOLOPAIR5",
+      "W0GRAVE",
+      "SAFETY",
+      "W0PULSE",
+      "FOOTWORK"
     };
 
-    for (int i = 0; i <= 30; i++) {
-      cp5.addButton("cue"+(i+1)).setPosition(750, 20 + (i*25))
-        .setCaptionLabel("cue " + i)
-        .setSize(390, 20)
+    for (int i = 0; i < cueNames.length; i++) {
+      cp5.addButton("cue"+(i+1)).setPosition(780, 20 + (i*25))
+        .setCaptionLabel(cueNames[i])
+        .setSize(360, 20)
         .setFont(font)
         .setColorBackground(color(130, 130, 130))
         .setColorForeground(color(90, 90, 90))
         .setColorActive(color(255, 255, 0));
 
-      cp5.addButton("save"+(i+1)).setPosition(1140, 20 + (i*25))
+      cp5.addButton("save"+(i+1)).setPosition(1145, 20 + (i*25))
         .setCaptionLabel("SAVE")
         .setSize(120, 20)
         .setFont(font)
