@@ -99,15 +99,30 @@ class Interface {
     }
 
 
-    cp5.addButton("allon").setPosition(20, 150)
-      .setCaptionLabel("ALL ON")
+    cp5.addButton("fadeon").setPosition(20, 100)
+      .setCaptionLabel("FADE ON")
       .setSize(95, 50)
       .setFont(font)
       .setColorBackground(color(0, 155, 0))
       .setColorForeground(color(0, 100, 0))
       .setColorActive(color(0, 255, 0));
-    cp5.addButton("alloff").setPosition(125, 150)
-      .setCaptionLabel("ALL OFF")
+    cp5.addButton("fadeoff").setPosition(125, 100)
+      .setCaptionLabel("FADE OFF")
+      .setSize(95, 50)
+      .setFont(font)
+      .setColorBackground(color(0, 155, 0))
+      .setColorForeground(color(0, 100, 0))
+      .setColorActive(color(0, 255, 0));
+
+    cp5.addButton("instaon").setPosition(300, 100)
+      .setCaptionLabel("INSTA ON")
+      .setSize(95, 50)
+      .setFont(font)
+      .setColorBackground(color(0, 155, 0))
+      .setColorForeground(color(0, 100, 0))
+      .setColorActive(color(0, 255, 0));
+    cp5.addButton("instaoff").setPosition(405, 100)
+      .setCaptionLabel("INSTA OFF")
       .setSize(95, 50)
       .setFont(font)
       .setColorBackground(color(0, 155, 0))
@@ -277,12 +292,25 @@ class Interface {
     }
   }
 
+  /**
+   * Slowly fade up and down
+   */
   public void fadeAllDown() {
     savedBrightness = targetBrightness;
     targetBrightness = 0.0;
   }
   public void fadeAllUp() {
     targetBrightness = savedBrightness;
+  }
+
+  /**
+   * Instantly turn on and off
+   */
+  public void forceAllDown() {
+
+  }
+  public void forceAllUp() {
+    
   }
 
   public void buildModeControls() {
@@ -341,7 +369,8 @@ class Interface {
       "W0GRAVE",
       "SAFETY",
       "W0PULSE",
-      "FOOTWORK"
+      "FOOTWORK",
+      "W0FKA"
     };
 
     for (int i = 0; i < cueNames.length; i++) {
@@ -365,31 +394,5 @@ class Interface {
 
   public void setActiveCue(String cmd) {
     activePosition = int(cmd.replace("cue", ""));
-  }
-
-  /**
-   * Turns on all the switches.
-   */
-  public void selectAll() {
-    for(Toggle toggle:staticToggles) {
-      toggle.setState(true);
-    }
-
-    for(Toggle toggle:freeToggles) {
-      toggle.setState(true);
-    }
-  }
-
-  /**
-   * Turns off all the switches.
-   */
-  public void selectNone() {
-    for(Toggle toggle:staticToggles) {
-      toggle.setState(false);
-    }
-
-    for(Toggle toggle:freeToggles) {
-      toggle.setState(false);
-    }
   }
 }

@@ -48,19 +48,21 @@ public void controlEvent(ControlEvent e) {
   }
   else {
     switch(cmd) {
-      case "alloff":
+      case "fadeoff":
         controls.fadeAllDown();
         data.proxySendWireless(true);
         break;
-      case "allon":
+      case "fadeon":
         controls.fadeAllUp();
         data.proxySendWireless(false);
         break;
-      case "selectall":
-        controls.selectAll();
+      case "instaoff":
+        controls.forceAllDown();
+        data.proxySendWireless(true);
         break;
-      case "selectnone":
-        controls.selectNone();
+      case "instaon":
+        controls.forceAllUp();
+        data.proxySendWireless(false);
         break;
       case "AUDIO":
         controls.toggleAudio();
