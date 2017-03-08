@@ -18,9 +18,9 @@
   <free4>true</free4>
   <free5>true</free5>
   <red>255.0</red>
-  <green>22.3125</green>
-  <blue>0.0</blue>
-  <brightness>0.19315001</brightness>
+  <green>21.0</green>
+  <blue>26.0</blue>
+  <brightness>1.0</brightness>
   <audio>false</audio>
   <mode>0</mode>
   <random>false</random>

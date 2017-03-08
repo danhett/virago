@@ -6,7 +6,9 @@
  */
 class DataManager {
 
-  Boolean LIVE = false;
+  Boolean WIRED_LIVE = true;
+  Boolean WIRELESS_LIVE = false;
+  int frameCountRate = 5;
 
   Virago virago;
   Interface controls;
@@ -34,8 +36,7 @@ class DataManager {
     virago = ref;
     controls = controlsRef;
 
-    if(LIVE)
-      handshake();
+    handshake();
   }
 
   // called on startup, says hello to all our connected devices
@@ -43,24 +44,17 @@ class DataManager {
     // List all the available serial ports:
     // printArray(Serial.list());
 
-    // Open the port you are using at the rate you want
-    // wireless = new Serial(virago, "/dev/ttyUSB0", 115200);
-    strip = new Serial(virago, "/dev/ttyACM0", 115200);
+    if(WIRED_LIVE) {
+      strip = new Serial(virago, "/dev/ttyACM0", 115200);
+    }
+
+    if(WIRELESS_LIVE) {
+      wireless = new Serial(virago, "/dev/ttyUSB0", 115200);
+    }
   }
 
   void update() {
-    /*
-    if(LIVE) {
-      while (wireless.available() > 0) {
-        String inBuffer = wireless.readString();
-        if (inBuffer != null) {
-          println(inBuffer);
-        }
-      }
-    }
-    */
-
-    if(frameCount % 5 == 0)
+    if(frameCount % frameCountRate == 0)
       transmit();
   }
 
@@ -84,19 +78,27 @@ class DataManager {
     green = str(round(controls.green.getValue() * brightness));
     blue = str(round(controls.blue.getValue() * brightness));
 
-    if(LIVE) {
-      //sendWireless();
+    if(WIRED_LIVE) {
       sendWired();
+    }
+    if(WIRELESS_LIVE) {
+      sendWireless();
     }
   }
 
-  // WIRELESS LIGHTS
+  /**
+   * Sends a signal to the wireless units.
+   * These are numbered 1-5, or send a zero to address them all.
+   */
   void sendWireless() {
-    //wireless.write("4" + "," + int(random(255)) + "," + int(random(255)) + "," + int(random(255)));
-    //wireless.write(10);
+    wireless.write("0" + "," + int(random(255)) + "," + int(random(255)) + "," + int(random(255)));
+    wireless.write(10);
   }
 
-  // WIRED LIGHTS
+  /**
+   * Sends an update signal to the wired unit.
+   * These are numbered 1-5, or send a zero to address them all.
+   */
   void sendWired() {
     command = "";
 
@@ -107,18 +109,8 @@ class DataManager {
 
     commandChunk = mode + "," + random + "," + red + "," + green + "," + blue;
 
-    println(commandChunk);
+    //println(commandChunk);
     strip.write(commandChunk);
     strip.write(10);
-  }
-
-  /**
-   * Add a timestamp to responses
-   */
-  String stamp() {
-    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
-
-    Date d = new Date();
-    return sdf.format(d.getTime());
   }
 }
