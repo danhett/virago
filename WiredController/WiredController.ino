@@ -101,10 +101,10 @@ void doLights() {
 /**
  * Turns everything on/off
  */
-void on(id) {
+void on(int id) {
   colourBlock(id, RED(), GREEN(), BLUE());
 }
-void off(id) {
+void off(int id) {
   colourBlock(id, 0, 0, 0);
 }
 
