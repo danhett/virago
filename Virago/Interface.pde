@@ -258,7 +258,9 @@ class Interface {
   }
 
   void drawColorPreview() {
-    fill(red.getValue(), green.getValue(), blue.getValue());
+    fill(red.getValue() * brightness.getValue(),
+         green.getValue() * brightness.getValue(),
+         blue.getValue() * brightness.getValue());
     rect(500, 280, 200, 230);
   }
 
@@ -310,7 +312,7 @@ class Interface {
 
   }
   public void forceAllUp() {
-    
+
   }
 
   public void buildModeControls() {
