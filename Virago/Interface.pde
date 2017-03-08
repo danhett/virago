@@ -172,7 +172,7 @@ class Interface {
               .setColorBackground(color(55, 55, 55))
               .setColorActive(color(255, 255, 255))
               .setColorForeground(color(255, 255, 255))
-              .setRange(0.01, 1)
+              .setRange(0.0, 1)
               .setValue(targetBrightness)
               .setColorCaptionLabel(color(255,255,255));
   }
@@ -221,8 +221,10 @@ class Interface {
     line(20, 250, 1260, 250);
 
     // draw the active selection
-    fill(255,255,0);
-    rect(800, 238 + (42*activePosition), 30, 30);
+    if(activePosition > 0) {
+      fill(255,255,255);
+      rect(800, 238 + (42*activePosition), 30, 30);
+    }
 
     drawColorPreview();
     drawAudioLevel();
