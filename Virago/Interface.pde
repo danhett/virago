@@ -75,18 +75,6 @@ class Interface {
     PFont pfont = createFont("Courier",14,true); // use true/false for smooth/no-smooth
     font = new ControlFont(pfont,16);
 
-    // create the static lights
-    for (int i = 0; i < 12; i++) {
-      Toggle toggle = cp5.addToggle("static"+(i+1)).setPosition(20 + (i * 80), 20)
-        .setSize(70, 70)
-        .setState(true)
-        .setColorBackground(color(255, 0, 0))
-        .setColorForeground(color(155, 0, 0))
-        .setColorActive(color(0, 255, 0));
-
-      staticToggles.add(toggle);
-    }
-
     String[] wirelessNames = {
       "ALL",
       "W1",
@@ -96,10 +84,11 @@ class Interface {
       "W5",
       "PAIR1",
       "PAIR2",
+      "BOOM DIE"
     };
     // create the free lights
-    for (int i = 0; i < 8; i++) {
-      Button button = cp5.addButton("wireless"+i).setPosition(20 + (i * 80), 130)
+    for (int i = 0; i < 9; i++) {
+      Button button = cp5.addButton("wireless"+i).setPosition(20 + (i * 80), 20)
         .setSize(70, 70)
         .setCaptionLabel(wirelessNames[i])
         .setColorBackground(color(125, 0, 0))
@@ -109,29 +98,15 @@ class Interface {
       //freeToggles.add(toggle);
     }
 
-    // create the shortcut buttons
-    cp5.addButton("selectall").setPosition(1060, 20)
-      .setCaptionLabel("SELECT ALL")
-      .setSize(200, 50)
-      .setFont(font)
-      .setColorBackground(color(0, 155, 0))
-      .setColorForeground(color(0, 100, 0))
-      .setColorActive(color(0, 255, 0));
-    cp5.addButton("selectnone").setPosition(1060, 80)
-      .setCaptionLabel("SELECT NONE")
-      .setSize(200, 50)
-      .setFont(font)
-      .setColorBackground(color(125, 0, 0))
-      .setColorForeground(color(100, 0, 0))
-      .setColorActive(color(255, 0, 0));
-    cp5.addButton("allon").setPosition(1060, 150)
+
+    cp5.addButton("allon").setPosition(20, 150)
       .setCaptionLabel("ALL ON")
       .setSize(95, 50)
       .setFont(font)
       .setColorBackground(color(0, 155, 0))
       .setColorForeground(color(0, 100, 0))
       .setColorActive(color(0, 255, 0));
-    cp5.addButton("alloff").setPosition(1165, 150)
+    cp5.addButton("alloff").setPosition(125, 150)
       .setCaptionLabel("ALL OFF")
       .setSize(95, 50)
       .setFont(font)
@@ -228,7 +203,7 @@ class Interface {
     stroke(125);
     line(20, 610, 720, 610);
     line(20, 710, 720, 710);
-    line(20, 250, 1260, 250);
+    line(20, 250, 720, 250);
 
     // draw the active selection
     if(activePosition > 0) {
@@ -353,18 +328,18 @@ class Interface {
       "Woo yay lights"
     };
 
-    for (int i = 0; i < 10; i++) {
-      cp5.addButton("cue"+(i+1)).setPosition(840, 280 + (i*42))
-        .setCaptionLabel(cueNames[i])
-        .setSize(300, 30)
+    for (int i = 0; i <= 30; i++) {
+      cp5.addButton("cue"+(i+1)).setPosition(750, 20 + (i*25))
+        .setCaptionLabel("cue " + i)
+        .setSize(390, 20)
         .setFont(font)
         .setColorBackground(color(130, 130, 130))
         .setColorForeground(color(90, 90, 90))
         .setColorActive(color(255, 255, 0));
 
-      cp5.addButton("save"+(i+1)).setPosition(1140, 280 + (i*42))
+      cp5.addButton("save"+(i+1)).setPosition(1140, 20 + (i*25))
         .setCaptionLabel("SAVE")
-        .setSize(120, 30)
+        .setSize(120, 20)
         .setFont(font)
         .setColorBackground(color(0, 155, 0))
         .setColorForeground(color(0, 100, 0))
