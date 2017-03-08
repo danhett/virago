@@ -13,14 +13,16 @@ import java.util.Date;
 DataManager data;
 Interface controls;
 Presets presets;
+Animation anim;
 
 void setup() {
-  //size(1280, 800);
-  fullScreen();
+  size(1280, 800);
+  //fullScreen();
   background(30);
 
+  anim = new Animation(this);
   controls = new Interface(this);
-  data = new DataManager(this, controls);
+  data = new DataManager(this, controls, anim);
   presets = new Presets(this, controls, data);
 
   //presets.loadPreset("cue1");
@@ -99,4 +101,5 @@ void mouseReleased() {
 void draw() {
   data.update();
   controls.update();
+  anim.update();
 }

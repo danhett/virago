@@ -12,6 +12,7 @@ class DataManager {
 
   Virago virago;
   Interface controls;
+  Animation anim;
   Serial wireless;
   Serial strip; // the chained neopixels, all on one arduino
 
@@ -35,11 +36,12 @@ class DataManager {
   String lastWirelessCommand = "";
   int speed = 50;
 
-  DataManager(Virago ref, Interface controlsRef) {
+  DataManager(Virago ref, Interface controlsRef, Animation animRef) {
     println("[Data Manager]");
 
     virago = ref;
     controls = controlsRef;
+    anim = animRef;
 
     handshake();
   }
@@ -64,16 +66,27 @@ class DataManager {
    * Sends the instructions to the lights
    */
   void transmit() {
+
     // if we're not using live audio, check the reading on the dial
     if(!controls.usingLiveAudio) {
       brightness = controls.brightness.getValue();
     }
     // else listen for the microphone
     else {
-      if(controls.audioLevel > controls.lowThreshold)
-        brightness = controls.audioLevel;
-      else
-        brightness = 0.0;
+      if(controls.usingLiveAudio) {
+        if(controls.audioLevel > controls.lowThreshold)
+          brightness = controls.audioLevel;
+        else
+          brightness = 0.0;
+      }
+    }
+
+    // override everything if pulse is being used
+    if(controls.usingSlowPulse) {
+      brightness = anim.slow;
+    }
+    if(controls.usingFastPulse) {
+      brightness = anim.fast;
     }
 
     applyColours();
