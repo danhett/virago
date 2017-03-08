@@ -190,7 +190,7 @@ class Interface {
       .setColorForeground(color(155, 0, 0))
       .setColorActive(color(0, 255, 0));
 
-    gainSlider = cp5.addSlider("gain")
+    gainSlider = cp5.addSlider("LIMITER")
          .setPosition(90, 630)
          .setSize(300, 20)
          .setColorBackground(color(55, 55, 55))

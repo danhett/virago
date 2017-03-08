@@ -83,10 +83,10 @@ class DataManager {
 
     // override everything if pulse is being used
     if(controls.usingSlowPulse) {
-      brightness = anim.slow;
+      brightness = anim.slow * controls.gainSlider.getValue();
     }
     if(controls.usingFastPulse) {
-      brightness = anim.fast;
+      brightness = anim.fast * controls.gainSlider.getValue();
     }
 
     applyColours();
