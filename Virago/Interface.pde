@@ -36,10 +36,10 @@ class Interface {
   Button mode2;
   Button mode3;
 
-  Float targetRed = 255.0;
+  Float targetRed = 0.0;
   Float targetGreen = 0.0;
   Float targetBlue = 0.0;
-  Float targetBrightness = 0.8;
+  Float targetBrightness = 0.0;
   int rate = 2;
   Float brightnessRate = 0.01;
   Float savedBrightness;
