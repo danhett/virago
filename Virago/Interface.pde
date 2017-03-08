@@ -36,8 +36,8 @@ class Interface {
   Button mode3;
 
   Float targetRed = 255.0;
-  Float targetGreen = 255.0;
-  Float targetBlue = 255.0;
+  Float targetGreen = 0.0;
+  Float targetBlue = 0.0;
   Float targetBrightness = 0.8;
   int rate = 2;
   Float brightnessRate = 0.01;
@@ -325,9 +325,24 @@ class Interface {
    * Creates the preset list
    */
   public void buildPresetMenu() {
+    String[] cueNames = {
+      "This is a cue",
+      "Another cue",
+      "Do a thing",
+      "Cool cue point",
+      "This does stuff",
+      "Do more things",
+      "Awesome cue",
+      "Cue thing",
+      "Make stuff happen",
+      "This makes cool things",
+      "Light up stuff",
+      "Woo yay lights"
+    };
+
     for (int i = 0; i < 10; i++) {
       cp5.addButton("cue"+(i+1)).setPosition(840, 280 + (i*42))
-        .setCaptionLabel("LAUNCH CUE "+(i+1))
+        .setCaptionLabel(cueNames[i])
         .setSize(300, 30)
         .setFont(font)
         .setColorBackground(color(130, 130, 130))

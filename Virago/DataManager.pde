@@ -6,7 +6,7 @@
  */
 class DataManager {
 
-  Boolean LIVE = true;
+  Boolean LIVE = false;
 
   Virago virago;
   Interface controls;
