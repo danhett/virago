@@ -26,7 +26,7 @@ class Interface {
   Float audioLevel;
   Boolean usingLiveAudio = false;
   Toggle audioToggle;
-  Slider gainSlider;
+  Slider limiterSlider;
   Float lowThreshold = 0.2;
 
   Toggle randomToggle;
@@ -190,7 +190,7 @@ class Interface {
       .setColorForeground(color(155, 0, 0))
       .setColorActive(color(0, 255, 0));
 
-    gainSlider = cp5.addSlider("LIMITER")
+    limiterSlider = cp5.addSlider("LIMITER")
          .setPosition(90, 630)
          .setSize(300, 20)
          .setColorBackground(color(55, 55, 55))
@@ -264,7 +264,7 @@ class Interface {
   }
 
   void drawAudioLevel() {
-    audioLevel = getAudioLevel() * gainSlider.getValue();
+    audioLevel = getAudioLevel() * limiterSlider.getValue();
 
     // draw the background
     fill(55, 55, 55);

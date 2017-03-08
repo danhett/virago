@@ -47,7 +47,7 @@ class Presets {
         newChild.setContent("false");
     }
 
-    // save the R/G/B and brightness
+    // save the R/G/B, brightness and limiter
     XML red = xml.addChild("red");
     red.setContent(str(controls.red.getValue()));
 
@@ -59,6 +59,9 @@ class Presets {
 
     XML brightness = xml.addChild("brightness");
     brightness.setContent(str(controls.brightness.getValue()));
+
+    XML limiter = xml.addChild("limiter");
+    limiter.setContent(str(controls.limiterSlider.getValue()));
 
     // save the audio on/off setting
     XML audio = xml.addChild("audio");
@@ -136,6 +139,7 @@ class Presets {
     controls.targetGreen = float(xml.getChild("green").getContent());
     controls.targetBlue = float(xml.getChild("blue").getContent());
     controls.targetBrightness = float(xml.getChild("brightness").getContent());
+    controls.limiterSlider.setValue(float(xml.getChild("limiter").getContent()));
 
     // restore the audio toggle
     if(xml.getChild("audio").getContent().contains("true")) {
