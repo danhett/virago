@@ -6,61 +6,59 @@
  */
 class DataManager {
 
-  Boolean LIVE = false;
+  Boolean WIRED_LIVE = false;
+  Boolean WIRELESS_LIVE = false;
+  int frameCountRate = 5;
 
   Virago virago;
   Interface controls;
-  Serial wireless1;
-  Serial wireless2;
-  Serial wireless3;
-  Serial wireless4;
-  Serial wireless5;
+  Animation anim;
+  Serial wireless;
   Serial strip; // the chained neopixels, all on one arduino
 
   String red;
   String green;
   String blue;
   Float brightness;
-  String speed;
   int i;
+  int t;
+  int w;
+  int wirelessRed;
+  int wirelessGreen;
+  int wirelessBlue;
 
-  DataManager(Virago ref, Interface controlsRef) {
+  int mode;
+  int wirelessMode;
+  int random;
+
+  String wiredCommand;
+  String wirelessCommand;
+  String lastWirelessCommand = "";
+  int speed = 50;
+
+  DataManager(Virago ref, Interface controlsRef, Animation animRef) {
     println("[Data Manager]");
 
     virago = ref;
     controls = controlsRef;
+    anim = animRef;
 
-    if(LIVE)
-      handshake();
+    handshake();
   }
 
   // called on startup, says hello to all our connected devices
   void handshake() {
-    // List all the available serial ports:
-    //printArray(Serial.list());
+    if(WIRED_LIVE) {
+      strip = new Serial(virago, "/dev/ttyACM0", 115200);
+    }
 
-    // Open the port you are using at the rate you want:
-    //wireless1 = new Serial(virago, "/dev/ttyACM0", 9600);
-    //wireless2 = new Serial(virago, "/dev/ttyACM1", 9600);
-    //wireless3 = new Serial(virago, "/dev/ttyACM2", 9600);
-    //wireless4 = new Serial(virago, "/dev/ttyACM3", 9600);
-    //wireless5 = new Serial(virago, "/dev/ttyACM4", 9600);
-    strip = new Serial(virago, "/dev/ttyACM0", 9600);
+    if(WIRELESS_LIVE) {
+      wireless = new Serial(virago, "/dev/ttyUSB0", 115200);
+    }
   }
 
   void update() {
-    /*
-    if(LIVE) {
-      while (wireless1.available() > 0) {
-        String inBuffer = wireless1.readString();
-        if (inBuffer != null) {
-          println(inBuffer);
-        }
-      }
-    }
-    */
-
-    if(frameCount % 3 == 0)
+    if(frameCount % frameCountRate == 0)
       transmit();
   }
 
@@ -75,58 +73,87 @@ class DataManager {
     }
     // else listen for the microphone
     else {
-      brightness = controls.audioLevel;
+      if(controls.usingLiveAudio) {
+        if(controls.audioLevel > controls.lowThreshold)
+          brightness = controls.audioLevel;
+        else
+          brightness = 0.0;
+      }
     }
 
-    red = str(round(controls.red.getValue() * brightness));
-    green = str(round(controls.green.getValue() * brightness));
-    blue = str(round(controls.blue.getValue() * brightness));
+    // override everything if pulse is being used
+    if(controls.usingSlowPulse) {
+      brightness = anim.slow * controls.limiterSlider.getValue();
+    }
+    if(controls.usingFastPulse) {
+      brightness = anim.fast * controls.limiterSlider.getValue();
+    }
 
-    if(LIVE) {
-      if(controls.freeToggles.get(0).getValue() == 1.0) {
-        //wireless1.write(red + "," + green + "," + blue);
-        //wireless1.write(10);
-        //wireless1.clear();
-      }
+    applyColours();
 
-      if(controls.freeToggles.get(1).getValue() == 1.0) {
-        //wireless2.write(red + "," + green + "," + blue);
-        //wireless2.write(10);
-        //wireless2.clear();
-      }
-
-      if(controls.freeToggles.get(2).getValue() == 1.0) {
-        //wireless3.write(red + "," + green + "," + blue + "," + speed);
-        //wireless3.write(10);
-      }
-
-      if(controls.freeToggles.get(3).getValue() == 1.0) {
-        //wireless4.write(red + "," + green + "," + blue + "," + speed);
-        //wireless4.write(10);
-      }
-
-      if(controls.freeToggles.get(4).getValue() == 1.0) {
-        //wireless5.write(red + "," + green + "," + blue + "," + speed);
-        //wireless5.write(10);
-      }
-
-      // STATIC TOGGLES
-      //for(i = 0; i < 3; i++) {
-        if(controls.staticToggles.get(0).getValue() == 1.0) {
-          strip.write(str(0) + "," + red + "," + green + "," + blue);
-          strip.write(10);
-        }
-      //}
+    if(WIRED_LIVE) {
+      sendWired();
     }
   }
 
-  /**
-   * Add a timestamp to responses
-   */
-  String stamp() {
-    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
+  void proxySendWireless(Boolean ignoreBrightness) {
+    if(WIRELESS_LIVE) {
+      sendWireless(ignoreBrightness);
+    }
+  }
 
-    Date d = new Date();
-    return sdf.format(d.getTime());
+  void setWirelessMode(String cmd) {
+    wirelessMode = int(cmd.replace("wireless", ""));
+    println(wirelessMode);
+  }
+
+  /**
+   * Sends an update signal to the wired unit.
+   * These are numbered 1-5, or send a zero to address them all.
+   */
+  void sendWired() {
+    if(controls.usingRandomness)
+      random = 1;
+    else
+      random = 0;
+
+    wiredCommand = mode + "," + random + "," + red + "," + green + "," + blue;
+
+    strip.write(wiredCommand);
+    strip.write(10);
+  }
+
+  /**
+   * Sends a signal to the wireless units.
+   * These are numbered 1-5, or send a zero to address them all.
+   */
+  void sendWireless(Boolean ignoreBrightness) {
+    brightness = controls.brightness.getValue();
+
+    if(ignoreBrightness) {
+      wirelessRed = 0;
+      wirelessGreen = 0;
+      wirelessBlue = 0;
+    }
+    else {
+      wirelessRed = int(controls.targetRed * controls.targetBrightness);
+      wirelessGreen = int(controls.targetGreen * controls.targetBrightness);
+      wirelessBlue = int(controls.targetBlue * controls.targetBrightness);
+    }
+
+    wirelessCommand = wirelessMode + ","
+                    + wirelessRed + ","
+                    + wirelessGreen + ","
+                    + wirelessBlue + ","
+                    + speed;
+
+    wireless.write(wirelessCommand);
+    wireless.write(10);
+  }
+
+  void applyColours() {
+    red = str(round(controls.red.getValue() * brightness));
+    green = str(round(controls.green.getValue() * brightness));
+    blue = str(round(controls.blue.getValue() * brightness));
   }
 }

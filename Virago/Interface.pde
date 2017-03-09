@@ -19,14 +19,35 @@ class Interface {
   Slider green;
   Slider blue;
   Slider brightness;
-  int activePosition = 1;
+  int activePosition;
 
   Minim minim;
   AudioInput mic;
   Float audioLevel;
   Boolean usingLiveAudio = false;
   Toggle audioToggle;
-  Slider gainSlider;
+  Slider limiterSlider;
+  Float lowThreshold = 0.2;
+
+  Toggle randomToggle;
+  Boolean usingRandomness = false;
+  Toggle slowPulseToggle;
+  Boolean usingSlowPulse = false;
+  Toggle fastPulseToggle;
+  Boolean usingFastPulse = false;
+
+  Button mode1;
+  Button mode2;
+  Button mode3;
+
+  Float targetRed = 0.0;
+  Float targetGreen = 0.0;
+  Float targetBlue = 0.0;
+  Float targetBrightness = 0.0;
+  int rate = 2;
+  Float brightnessRate = 0.01;
+  Float savedBrightness;
+  Boolean dragging = false;
 
   Interface(Virago ref) {
     println("[Interface]");
@@ -47,6 +68,7 @@ class Interface {
     buildPresetMenu();
     buildColorControls();
     buildAudioControls();
+    buildModeControls();
   }
 
   /**
@@ -57,54 +79,54 @@ class Interface {
     PFont pfont = createFont("Courier",14,true); // use true/false for smooth/no-smooth
     font = new ControlFont(pfont,16);
 
-    // create the static lights
-    for (int i = 0; i < 12; i++) {
-      Toggle toggle = cp5.addToggle("static"+(i+1)).setPosition(20 + (i * 80), 20)
-        .setSize(70, 70)
-        .setState(true)
-        .setColorBackground(color(255, 0, 0))
-        .setColorForeground(color(155, 0, 0))
-        .setColorActive(color(0, 255, 0));
-
-      staticToggles.add(toggle);
-    }
-
+    String[] wirelessNames = {
+      "ALL",
+      "W1",
+      "W2",
+      "W3",
+      "W4",
+      "W5",
+      "PAIR1",
+      "PAIR2",
+      "BOOM DIE"
+    };
     // create the free lights
-    for (int i = 0; i < 5; i++) {
-      Toggle toggle = cp5.addToggle("wireless"+(i+1)).setPosition(20 + (i * 80), 130)
+    for (int i = 0; i < 9; i++) {
+      Button button = cp5.addButton("wireless"+i).setPosition(20 + (i * 80), 20)
         .setSize(70, 70)
-        .setState(true)
+        .setCaptionLabel(wirelessNames[i])
         .setColorBackground(color(125, 0, 0))
         .setColorForeground(color(100, 0, 0))
         .setColorActive(color(0, 255, 0));
 
-      freeToggles.add(toggle);
+      //freeToggles.add(toggle);
     }
 
-    // create the shortcut buttons
-    cp5.addButton("selectall").setPosition(1060, 20)
-      .setCaptionLabel("SELECT ALL")
-      .setSize(200, 50)
-      .setFont(font)
-      .setColorBackground(color(0, 155, 0))
-      .setColorForeground(color(0, 100, 0))
-      .setColorActive(color(0, 255, 0));
-    cp5.addButton("selectnone").setPosition(1060, 80)
-      .setCaptionLabel("SELECT NONE")
-      .setSize(200, 50)
-      .setFont(font)
-      .setColorBackground(color(125, 0, 0))
-      .setColorForeground(color(100, 0, 0))
-      .setColorActive(color(255, 0, 0));
-    cp5.addButton("allon").setPosition(1060, 150)
-      .setCaptionLabel("ALL ON")
+
+    cp5.addButton("fadeon").setPosition(20, 100)
+      .setCaptionLabel("FADE ON")
       .setSize(95, 50)
       .setFont(font)
       .setColorBackground(color(0, 155, 0))
       .setColorForeground(color(0, 100, 0))
       .setColorActive(color(0, 255, 0));
-    cp5.addButton("alloff").setPosition(1165, 150)
-      .setCaptionLabel("ALL OFF")
+    cp5.addButton("fadeoff").setPosition(125, 100)
+      .setCaptionLabel("FADE OFF")
+      .setSize(95, 50)
+      .setFont(font)
+      .setColorBackground(color(0, 155, 0))
+      .setColorForeground(color(0, 100, 0))
+      .setColorActive(color(0, 255, 0));
+
+    cp5.addButton("instaon").setPosition(300, 100)
+      .setCaptionLabel("INSTA ON")
+      .setSize(95, 50)
+      .setFont(font)
+      .setColorBackground(color(0, 155, 0))
+      .setColorForeground(color(0, 100, 0))
+      .setColorActive(color(0, 255, 0));
+    cp5.addButton("instaoff").setPosition(405, 100)
+      .setCaptionLabel("INSTA OFF")
       .setSize(95, 50)
       .setFont(font)
       .setColorBackground(color(0, 155, 0))
@@ -125,7 +147,7 @@ class Interface {
          .setColorActive(color(255, 0, 0))
          .setColorForeground(color(255, 0, 0))
          .setRange(0, 255)
-         .setValue(255)
+         .setValue(targetRed)
          .setColorCaptionLabel(color(255,255,255));
 
      green = cp5.addSlider("GREEN")
@@ -135,7 +157,7 @@ class Interface {
             .setColorActive(color(0, 255, 0))
             .setColorForeground(color(0, 255, 0))
             .setRange(0, 255)
-            .setValue(100)
+            .setValue(targetGreen)
             .setColorCaptionLabel(color(255,255,255));
 
     blue = cp5.addSlider("BLUE")
@@ -145,7 +167,7 @@ class Interface {
            .setColorActive(color(0, 0, 255))
            .setColorForeground(color(0, 0, 255))
            .setRange(0, 255)
-           .setValue(255)
+           .setValue(targetBlue)
            .setColorCaptionLabel(color(255,255,255));
 
       brightness = cp5.addSlider("BRIGHTNESS")
@@ -154,10 +176,11 @@ class Interface {
               .setColorBackground(color(55, 55, 55))
               .setColorActive(color(255, 255, 255))
               .setColorForeground(color(255, 255, 255))
-              .setRange(0.01, 1)
-              .setValue(0.2)
+              .setRange(0.0, 1)
+              .setValue(targetBrightness)
               .setColorCaptionLabel(color(255,255,255));
   }
+
 
   void buildAudioControls() {
     audioToggle = cp5.addToggle("AUDIO").setPosition(20, 630)
@@ -167,7 +190,7 @@ class Interface {
       .setColorForeground(color(155, 0, 0))
       .setColorActive(color(0, 255, 0));
 
-    gainSlider = cp5.addSlider("gain")
+    limiterSlider = cp5.addSlider("LIMITER")
          .setPosition(90, 630)
          .setSize(300, 20)
          .setColorBackground(color(55, 55, 55))
@@ -176,6 +199,48 @@ class Interface {
          .setRange(0, 1)
          .setValue(1)
          .setColorCaptionLabel(color(255,255,255));
+
+     randomToggle = cp5.addToggle("RANDOM").setPosition(500, 630)
+       .setCaptionLabel("RANDOM")
+       .setSize(50, 50)
+       .setColorBackground(color(255, 0, 0))
+       .setColorForeground(color(155, 0, 0))
+       .setColorActive(color(0, 255, 0));
+
+     slowPulseToggle = cp5.addToggle("SLOWPULSE").setPosition(560, 630)
+       .setCaptionLabel("SLOW PULSE")
+       .setSize(50, 50)
+       .setColorBackground(color(255, 0, 0))
+       .setColorForeground(color(155, 0, 0))
+       .setColorActive(color(0, 255, 0));
+
+     fastPulseToggle = cp5.addToggle("FASTPULSE").setPosition(620, 630)
+       .setCaptionLabel("FAST PULSE")
+       .setSize(50, 50)
+       .setColorBackground(color(255, 0, 0))
+       .setColorForeground(color(155, 0, 0))
+       .setColorActive(color(0, 255, 0));
+  }
+
+  void updateRandomSetting() {
+    if(randomToggle.getValue() == 1.0)
+      usingRandomness = true;
+    else
+      usingRandomness = false;
+  }
+
+  void updateSlowPulseSetting() {
+    if(slowPulseToggle.getValue() == 1.0)
+      usingSlowPulse = true;
+    else
+      usingSlowPulse = false;
+  }
+
+  void updateFastPulseSetting() {
+    if(fastPulseToggle.getValue() == 1.0)
+      usingFastPulse = true;
+    else
+      usingFastPulse = false;
   }
 
   void update() {
@@ -185,18 +250,21 @@ class Interface {
     stroke(125);
     line(20, 610, 720, 610);
     line(20, 710, 720, 710);
-    line(20, 250, 1260, 250);
+    line(20, 250, 720, 250);
 
     // draw the active selection
-    fill(255,255,0);
-    rect(800, 238 + (42*activePosition), 30, 30);
+    if(activePosition > 0) {
+      fill(255,255,255);
+      rect(760, (25*activePosition)-5, 20, 20);
+    }
 
     drawColorPreview();
     drawAudioLevel();
+    updateColorValues();
   }
 
   void drawAudioLevel() {
-    audioLevel = getAudioLevel() * gainSlider.getValue();
+    audioLevel = getAudioLevel() * limiterSlider.getValue();
 
     // draw the background
     fill(55, 55, 55);
@@ -222,26 +290,135 @@ class Interface {
   }
 
   void drawColorPreview() {
-    fill(red.getValue(), green.getValue(), blue.getValue());
+    fill(red.getValue() * brightness.getValue(),
+         green.getValue() * brightness.getValue(),
+         blue.getValue() * brightness.getValue());
     rect(500, 280, 200, 230);
+  }
+
+  public void updateColorValues() {
+    if(!dragging) {
+      if(red.getValue() < targetRed)
+        red.setValue(red.getValue() + rate);
+      if(red.getValue() > targetRed)
+        red.setValue(red.getValue() - rate);
+
+      if(blue.getValue() < targetBlue)
+        blue.setValue(blue.getValue() + rate);
+      if(blue.getValue() > targetBlue)
+        blue.setValue(blue.getValue() - rate);
+
+      if(green.getValue() < targetGreen)
+        green.setValue(green.getValue() + rate);
+      if(green.getValue() > targetGreen)
+        green.setValue(green.getValue() - rate);
+
+      if(brightness.getValue() < targetBrightness)
+        brightness.setValue(brightness.getValue() + brightnessRate);
+      if(brightness.getValue() > targetBrightness)
+        brightness.setValue(brightness.getValue() - brightnessRate);
+    }
+    else {
+      targetRed = red.getValue();
+      targetGreen = green.getValue();
+      targetBlue = blue.getValue();
+      targetBrightness = brightness.getValue();
+    }
+  }
+
+  /**
+   * Slowly fade up and down
+   */
+  public void fadeAllDown() {
+    savedBrightness = targetBrightness;
+    targetBrightness = 0.0;
+  }
+  public void fadeAllUp() {
+    targetBrightness = savedBrightness;
+  }
+
+  /**
+   * Instantly turn on and off
+   */
+  public void forceAllDown() {
+
+  }
+  public void forceAllUp() {
+
+  }
+
+  public void buildModeControls() {
+    mode1 = cp5.addButton("MODE1").setPosition(20, 725)
+      .setCaptionLabel("ALL LIGHTS")
+      .setSize(100, 50)
+      .setColorBackground(color(130, 130, 130))
+      .setColorForeground(color(90, 90, 90))
+      .setColorActive(color(255, 255, 0));
+
+    mode2 = cp5.addButton("MODE2").setPosition(130, 725)
+      .setCaptionLabel("ODD ONES")
+      .setSize(100, 50)
+      .setColorBackground(color(130, 130, 130))
+      .setColorForeground(color(90, 90, 90))
+      .setColorActive(color(255, 255, 0));
+
+    mode3 = cp5.addButton("MODE3").setPosition(240, 725)
+      .setCaptionLabel("PAIRS")
+      .setSize(100, 50)
+      .setColorBackground(color(130, 130, 130))
+      .setColorForeground(color(90, 90, 90))
+      .setColorActive(color(255, 255, 0));
+
   }
 
   /**
    * Creates the preset list
    */
   public void buildPresetMenu() {
-    for (int i = 0; i < 10; i++) {
-      cp5.addButton("cue"+(i+1)).setPosition(840, 280 + (i*42))
-        .setCaptionLabel("LAUNCH CUE "+(i+1))
-        .setSize(300, 30)
+    String[] cueNames = {
+      "CONVO1",
+      "CONVO2",
+      "CONVO3",
+      "CONVO4",
+      "CONVO5",
+      "CONVO6",
+      "CONVO7",
+      "CONVO8",
+      "W6",
+      "LRUNWAY",
+      "WRUNWAY",
+      "ALL_LOW_ORANGE",
+      "W0TEAL",
+      "W0ORANGE",
+      "W0PINK",
+      "W3TEAL",
+      "W3TEALBOOM",
+      "W8KILL",
+      "TABLAVOX",
+      "SOLOPAIR1",
+      "SOLOPAIR2",
+      "SOLOPAIR3",
+      "SOLOPAIR4",
+      "SOLOPAIR5",
+      "W0GRAVE",
+      "SAFETY",
+      "W0PULSE",
+      "FOOTWORK",
+      "W0FKA"
+    };
+
+    for (int i = 0; i < cueNames.length; i++) {
+      cp5.addButton("cue"+(i+1)).setPosition(780, 20 + (i*25))
+        .setCaptionLabel((i+1) + ": " + cueNames[i])
+        .setSize(360, 20)
         .setFont(font)
         .setColorBackground(color(130, 130, 130))
         .setColorForeground(color(90, 90, 90))
         .setColorActive(color(255, 255, 0));
 
-      cp5.addButton("save"+(i+1)).setPosition(1140, 280 + (i*42))
+      cp5.addButton("save"+(i+1)).setPosition(1145, 20 + (i*25))
         .setCaptionLabel("SAVE")
-        .setSize(120, 30)
+        .setSize(120, 20)
         .setFont(font)
         .setColorBackground(color(0, 155, 0))
         .setColorForeground(color(0, 100, 0))
@@ -251,32 +428,5 @@ class Interface {
 
   public void setActiveCue(String cmd) {
     activePosition = int(cmd.replace("cue", ""));
-  }
-
-
-  /**
-   * Turns on all the switches.
-   */
-  public void selectAll() {
-    for(Toggle toggle:staticToggles) {
-      toggle.setState(true);
-    }
-
-    for(Toggle toggle:freeToggles) {
-      toggle.setState(true);
-    }
-  }
-
-  /**
-   * Turns off all the switches.
-   */
-  public void selectNone() {
-    for(Toggle toggle:staticToggles) {
-      toggle.setState(false);
-    }
-
-    for(Toggle toggle:freeToggles) {
-      toggle.setState(false);
-    }
   }
 }
