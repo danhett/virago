@@ -119,8 +119,10 @@ class DataManager {
 
     wiredCommand = mode + "," + random + "," + red + "," + green + "," + blue;
 
-    strip.write(wiredCommand);
-    strip.write(10);
+    if(controls.sendingToWired) {
+      strip.write(wiredCommand);
+      strip.write(10);
+    }
   }
 
   /**
@@ -147,8 +149,10 @@ class DataManager {
                     + wirelessBlue + ","
                     + speed;
 
-    wireless.write(wirelessCommand);
-    wireless.write(10);
+    if(controls.sendingToWireless) {
+      wireless.write(wirelessCommand);
+      wireless.write(10);
+    }
   }
 
   void applyColours() {

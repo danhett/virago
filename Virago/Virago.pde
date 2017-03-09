@@ -87,6 +87,12 @@ public void controlEvent(ControlEvent e) {
       case "FASTPULSE":
         controls.updateFastPulseSetting();
         break;
+      case "WIREDTOGGLE":
+        controls.updateSendToWired();
+        break;
+      case "WIRELESSTOGGLE":
+        controls.updateSendToWireless();
+        break;
     }
   }
 }

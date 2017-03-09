@@ -49,6 +49,11 @@ class Interface {
   Float savedBrightness;
   Boolean dragging = false;
 
+  Toggle wiredToggle;
+  Boolean sendingToWired = true;
+  Toggle wirelessToggle;
+  Boolean sendingToWireless = true;
+
   Interface(Virago ref) {
     println("[Interface]");
 
@@ -73,20 +78,18 @@ class Interface {
   }
 
   void buildTargetControls() {
-    Toggle wiredToggle = cp5.addToggle("WIREDTOGGLE").setPosition(20, 20)
+    wiredToggle = cp5.addToggle("WIREDTOGGLE").setPosition(20, 20)
       .setSize(350, 80)
       .setFont(font)
       .setCaptionLabel("WIRED")
-      .setState(true)
       .setColorBackground(color(255, 0, 0))
       .setColorForeground(color(155, 0, 0))
       .setColorActive(color(0, 255, 0));
 
-    Toggle wirelessToggle = cp5.addToggle("WIRELESSTOGGLE").setPosition(380, 20)
+    wirelessToggle = cp5.addToggle("WIRELESSTOGGLE").setPosition(380, 20)
       .setSize(350, 80)
       .setFont(font)
       .setCaptionLabel("WIRELESS")
-      .setState(true)
       .setColorBackground(color(255, 0, 0))
       .setColorForeground(color(155, 0, 0))
       .setColorActive(color(0, 255, 0));
@@ -262,6 +265,20 @@ class Interface {
       usingFastPulse = true;
     else
       usingFastPulse = false;
+  }
+
+  void updateSendToWired() {
+    if(wiredToggle.getValue() == 1.0)
+      sendingToWired = true;
+    else
+      sendingToWired = false;
+  }
+
+  void updateSendToWireless() {
+    if(wirelessToggle.getValue() == 1.0)
+      sendingToWireless = true;
+    else
+      sendingToWireless = false;
   }
 
   void update() {

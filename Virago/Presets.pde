@@ -99,6 +99,20 @@ class Presets {
     else
       fastPulse.setContent("false");
 
+    // save the SEND TO WIRED setting
+    XML sendToWired = xml.addChild("sendToWired");
+    if(controls.wiredToggle.getValue() == 1.0)
+      sendToWired.setContent("true");
+    else
+      sendToWired.setContent("false");
+
+    // save the SEND TO WIRELESS setting
+    XML sendToWireless = xml.addChild("sendToWireless");
+    if(controls.wirelessToggle.getValue() == 1.0)
+      sendToWireless.setContent("true");
+    else
+      sendToWireless.setContent("false");
+
     // write the file
     saveXML(xml, "presets/" + presetName + ".xml");
   }
@@ -185,6 +199,26 @@ class Presets {
     else {
       controls.fastPulseToggle.setValue(false);
       controls.usingFastPulse = false;
+    }
+
+    // restore SEND TO WIRED
+    if(xml.getChild("sendToWired").getContent().contains("true")) {
+      controls.wiredToggle.setValue(true);
+      controls.sendingToWired = true;
+    }
+    else {
+      controls.wiredToggle.setValue(false);
+      controls.sendingToWired = false;
+    }
+
+    // restore SEND TO WIRELESS
+    if(xml.getChild("sendToWireless").getContent().contains("true")) {
+      controls.wirelessToggle.setValue(true);
+      controls.sendingToWireless = true;
+    }
+    else {
+      controls.wirelessToggle.setValue(false);
+      controls.sendingToWireless = false;
     }
   }
 }
