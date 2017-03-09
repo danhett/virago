@@ -54,6 +54,8 @@ class Interface {
   Toggle wirelessToggle;
   Boolean sendingToWireless = true;
 
+  int colHeight = 30;
+
   Interface(Virago ref) {
     println("[Interface]");
 
@@ -293,8 +295,16 @@ class Interface {
 
     // draw the active selection
     if(activePosition > 0) {
-      fill(255,255,255);
-      rect(760, (25*activePosition)-5, 20, 20);
+      // col 1
+      if(activePosition < colHeight) {
+        fill(255,255,255);
+        rect(760, (25*activePosition)-5, 20, 20);
+      }
+      // col 2
+      else {
+        fill(255,255,255);
+        rect(1015, 20 + (((activePosition-1)-colHeight)*25), 20, 20);
+      }
     }
 
     drawColorPreview();
@@ -443,25 +453,76 @@ class Interface {
       "SAFETY",
       "W0PULSE",
       "FOOTWORK",
-      "W0FKA"
+      "W0FKA",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME",
+      "NO NAME"
     };
 
     for (int i = 0; i < cueNames.length; i++) {
-      cp5.addButton("cue"+(i+1)).setPosition(780, 20 + (i*25))
-        .setCaptionLabel((i+1) + ": " + cueNames[i])
-        .setSize(360, 20)
-        .setFont(font)
-        .setColorBackground(color(130, 130, 130))
-        .setColorForeground(color(90, 90, 90))
-        .setColorActive(color(255, 255, 0));
+      if(i < colHeight) {
+        cp5.addButton("cue"+(i+1)).setPosition(780, 20 + (i*25))
+          .setCaptionLabel((i+1) + ": " + cueNames[i])
+          .setSize(200, 20)
+          .setFont(font)
+          .setColorBackground(color(130, 130, 130))
+          .setColorForeground(color(90, 90, 90))
+          .setColorActive(color(255, 255, 0));
 
-      cp5.addButton("save"+(i+1)).setPosition(1145, 20 + (i*25))
-        .setCaptionLabel("SAVE")
-        .setSize(120, 20)
-        .setFont(font)
-        .setColorBackground(color(0, 155, 0))
-        .setColorForeground(color(0, 100, 0))
-        .setColorActive(color(0, 255, 0));
+        cp5.addButton("save"+(i+1)).setPosition(985, 20 + (i*25))
+          .setCaptionLabel("S")
+          .setSize(20, 20)
+          .setFont(font)
+          .setColorBackground(color(0, 155, 0))
+          .setColorForeground(color(0, 100, 0))
+          .setColorActive(color(0, 255, 0));
+      }
+
+      else {
+        cp5.addButton("cue"+(i+1)).setPosition(1040, 20 + ((i-colHeight)*25))
+          .setCaptionLabel((i+1) + ": " + cueNames[i])
+          .setSize(200, 20)
+          .setFont(font)
+          .setColorBackground(color(130, 130, 130))
+          .setColorForeground(color(90, 90, 90))
+          .setColorActive(color(255, 255, 0));
+
+        cp5.addButton("save"+(i+1)).setPosition(1245, 20 + ((i-colHeight)*25))
+          .setCaptionLabel("S")
+          .setSize(20, 20)
+          .setFont(font)
+          .setColorBackground(color(0, 155, 0))
+          .setColorForeground(color(0, 100, 0))
+          .setColorActive(color(0, 255, 0));
+      }
     }
   }
 
