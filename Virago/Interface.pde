@@ -65,10 +65,31 @@ class Interface {
 
   public void init() {
     buildSelectionControls();
+    buildTargetControls();
     buildPresetMenu();
     buildColorControls();
     buildAudioControls();
     buildModeControls();
+  }
+
+  void buildTargetControls() {
+    Toggle wiredToggle = cp5.addToggle("WIREDTOGGLE").setPosition(20, 20)
+      .setSize(350, 80)
+      .setFont(font)
+      .setCaptionLabel("WIRED")
+      .setState(true)
+      .setColorBackground(color(255, 0, 0))
+      .setColorForeground(color(155, 0, 0))
+      .setColorActive(color(0, 255, 0));
+
+    Toggle wirelessToggle = cp5.addToggle("WIRELESSTOGGLE").setPosition(380, 20)
+      .setSize(350, 80)
+      .setFont(font)
+      .setCaptionLabel("WIRELESS")
+      .setState(true)
+      .setColorBackground(color(255, 0, 0))
+      .setColorForeground(color(155, 0, 0))
+      .setColorActive(color(0, 255, 0));
   }
 
   /**
@@ -92,7 +113,7 @@ class Interface {
     };
     // create the free lights
     for (int i = 0; i < 9; i++) {
-      Button button = cp5.addButton("wireless"+i).setPosition(20 + (i * 80), 20)
+      Button button = cp5.addButton("wireless"+i).setPosition(20 + (i * 80), 160)
         .setSize(70, 70)
         .setCaptionLabel(wirelessNames[i])
         .setColorBackground(color(125, 0, 0))
@@ -103,14 +124,14 @@ class Interface {
     }
 
 
-    cp5.addButton("fadeon").setPosition(20, 100)
+    cp5.addButton("fadeon").setPosition(20, 250)
       .setCaptionLabel("FADE ON")
       .setSize(95, 50)
       .setFont(font)
       .setColorBackground(color(0, 155, 0))
       .setColorForeground(color(0, 100, 0))
       .setColorActive(color(0, 255, 0));
-    cp5.addButton("fadeoff").setPosition(125, 100)
+    cp5.addButton("fadeoff").setPosition(125, 250)
       .setCaptionLabel("FADE OFF")
       .setSize(95, 50)
       .setFont(font)
@@ -118,14 +139,14 @@ class Interface {
       .setColorForeground(color(0, 100, 0))
       .setColorActive(color(0, 255, 0));
 
-    cp5.addButton("instaon").setPosition(300, 100)
+    cp5.addButton("instaon").setPosition(300, 250)
       .setCaptionLabel("INSTA ON")
       .setSize(95, 50)
       .setFont(font)
       .setColorBackground(color(0, 155, 0))
       .setColorForeground(color(0, 100, 0))
       .setColorActive(color(0, 255, 0));
-    cp5.addButton("instaoff").setPosition(405, 100)
+    cp5.addButton("instaoff").setPosition(405, 250)
       .setCaptionLabel("INSTA OFF")
       .setSize(95, 50)
       .setFont(font)
@@ -141,7 +162,7 @@ class Interface {
    */
   public void buildColorControls() {
     red = cp5.addSlider("RED")
-         .setPosition(20, 280)
+         .setPosition(20, 350)
          .setSize(400, 50)
          .setColorBackground(color(55, 0, 0))
          .setColorActive(color(255, 0, 0))
@@ -151,7 +172,7 @@ class Interface {
          .setColorCaptionLabel(color(255,255,255));
 
      green = cp5.addSlider("GREEN")
-            .setPosition(20, 340)
+            .setPosition(20, 410)
             .setSize(400, 50)
             .setColorBackground(color(0, 55, 0))
             .setColorActive(color(0, 255, 0))
@@ -161,7 +182,7 @@ class Interface {
             .setColorCaptionLabel(color(255,255,255));
 
     blue = cp5.addSlider("BLUE")
-           .setPosition(20, 400)
+           .setPosition(20, 470)
            .setSize(400, 50)
            .setColorBackground(color(0, 0, 55))
            .setColorActive(color(0, 0, 255))
@@ -171,7 +192,7 @@ class Interface {
            .setColorCaptionLabel(color(255,255,255));
 
       brightness = cp5.addSlider("BRIGHTNESS")
-              .setPosition(20, 460)
+              .setPosition(20, 530)
               .setSize(400, 50)
               .setColorBackground(color(55, 55, 55))
               .setColorActive(color(255, 255, 255))
@@ -248,9 +269,10 @@ class Interface {
 
     // draw the dividing lines
     stroke(125);
-    line(20, 610, 720, 610);
-    line(20, 710, 720, 710);
-    line(20, 250, 720, 250);
+    line(20, 610, 730, 610);
+    line(20, 710, 730, 710);
+    line(20, 320, 730, 320);
+    line(20, 140, 730, 140);
 
     // draw the active selection
     if(activePosition > 0) {
@@ -293,7 +315,7 @@ class Interface {
     fill(red.getValue() * brightness.getValue(),
          green.getValue() * brightness.getValue(),
          blue.getValue() * brightness.getValue());
-    rect(500, 280, 200, 230);
+    rect(500, 350, 200, 230);
   }
 
   public void updateColorValues() {
