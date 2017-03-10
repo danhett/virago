@@ -46,7 +46,9 @@ class DataManager {
     handshake();
   }
 
-  // called on startup, says hello to all our connected devices
+  /**
+   * Called on startup, says hello to our connected devices.
+   */
   void handshake() {
     if(WIRED_LIVE) {
       strip = new Serial(virago, "/dev/ttyACM0", 115200);
@@ -57,6 +59,10 @@ class DataManager {
     }
   }
 
+
+  /**
+   * Tick
+   */
   void update() {
     if(frameCount % frameCountRate == 0)
       transmit();
@@ -66,8 +72,20 @@ class DataManager {
    * Sends the instructions to the lights
    */
   void transmit() {
+    getBrightnessSetting();
+    applyColours();
 
-    // if we're not using live audio, check the reading on the dial
+    if(WIRED_LIVE) {
+      sendWired();
+    }
+  }
+
+  /**
+   * Gets the correct input for brightness, from audio
+   * input or animation sources, or the slider.
+   */
+  void getBrightnessSetting() {
+    // if we're not using live audio, use the reading on the dial
     if(!controls.usingLiveAudio) {
       brightness = controls.brightness.getValue();
     }
@@ -88,12 +106,15 @@ class DataManager {
     if(controls.usingFastPulse) {
       brightness = anim.fast * controls.limiterSlider.getValue();
     }
+  }
 
-    applyColours();
-
-    if(WIRED_LIVE) {
-      sendWired();
-    }
+  /**
+   * Adds the brightness modifier to the three colour channels.
+   */
+  void applyColours() {
+    red = str(round(controls.red.getValue() * brightness));
+    green = str(round(controls.green.getValue() * brightness));
+    blue = str(round(controls.blue.getValue() * brightness));
   }
 
   void proxySendWireless(Boolean ignoreBrightness) {
@@ -104,7 +125,6 @@ class DataManager {
 
   void setWirelessMode(String cmd) {
     wirelessMode = int(cmd.replace("wireless", ""));
-    println(wirelessMode);
   }
 
   /**
@@ -153,11 +173,5 @@ class DataManager {
       wireless.write(wirelessCommand);
       wireless.write(10);
     }
-  }
-
-  void applyColours() {
-    red = str(round(controls.red.getValue() * brightness));
-    green = str(round(controls.green.getValue() * brightness));
-    blue = str(round(controls.blue.getValue() * brightness));
   }
 }

@@ -13,8 +13,6 @@ class Interface {
   ControlP5 cp5;
   Virago virago;
   ControlFont font;
-  ArrayList<Toggle> staticToggles;
-  ArrayList<Toggle> freeToggles;
   Slider red;
   Slider green;
   Slider blue;
@@ -59,9 +57,6 @@ class Interface {
   Interface(Virago ref) {
     println("[Interface]");
 
-    staticToggles = new ArrayList<Toggle>();
-    freeToggles = new ArrayList<Toggle>();
-
     virago = ref;
 
     minim = new Minim(virago);
@@ -71,14 +66,28 @@ class Interface {
   }
 
   public void init() {
-    buildSelectionControls();
+    setupControlP5();
+
     buildTargetControls();
+    buildSelectionControls();
     buildPresetMenu();
     buildColorControls();
     buildAudioControls();
     buildModeControls();
   }
 
+  /**
+   * Init ControlP5 and create a custom font in advance.
+   */
+  void setupControlP5() {
+    cp5 = new ControlP5(virago);
+    PFont pfont = createFont("Courier",14,true); // use true/false for smooth/no-smooth
+    font = new ControlFont(pfont,16);
+  }
+
+  /**
+   * Builds two large filter buttons for WIRES and WIRELSS transmission.
+   */
   void buildTargetControls() {
     wiredToggle = cp5.addToggle("WIREDTOGGLE").setPosition(20, 20)
       .setSize(350, 80)
@@ -98,13 +107,9 @@ class Interface {
   }
 
   /**
-   * Creates the light selection panel
+   * Creates the wireless mode selection panel
    */
   public void buildSelectionControls() {
-    cp5 = new ControlP5(virago);
-    PFont pfont = createFont("Courier",14,true); // use true/false for smooth/no-smooth
-    font = new ControlFont(pfont,16);
-
     String[] wirelessNames = {
       "ALL",
       "W1",
@@ -124,10 +129,7 @@ class Interface {
         .setColorBackground(color(125, 0, 0))
         .setColorForeground(color(100, 0, 0))
         .setColorActive(color(0, 255, 0));
-
-      //freeToggles.add(toggle);
     }
-
 
     cp5.addButton("fadeon").setPosition(20, 250)
       .setCaptionLabel("FADE ON")
@@ -160,7 +162,6 @@ class Interface {
       .setColorActive(color(0, 255, 0));
 
   }
-
 
   /**
    * Creates sliders to control our colors
@@ -196,18 +197,21 @@ class Interface {
            .setValue(targetBlue)
            .setColorCaptionLabel(color(255,255,255));
 
-      brightness = cp5.addSlider("BRIGHTNESS")
-              .setPosition(20, 530)
-              .setSize(400, 50)
-              .setColorBackground(color(55, 55, 55))
-              .setColorActive(color(255, 255, 255))
-              .setColorForeground(color(255, 255, 255))
-              .setRange(0.0, 1)
-              .setValue(targetBrightness)
-              .setColorCaptionLabel(color(255,255,255));
+    brightness = cp5.addSlider("BRIGHTNESS")
+            .setPosition(20, 530)
+            .setSize(400, 50)
+            .setColorBackground(color(55, 55, 55))
+            .setColorActive(color(255, 255, 255))
+            .setColorForeground(color(255, 255, 255))
+            .setRange(0.0, 1)
+            .setValue(targetBrightness)
+            .setColorCaptionLabel(color(255,255,255));
   }
 
-
+  /**
+   * Creates checkboxes for audio controls, allowing the use of audio
+   * input and animation. Also creates a top-end limiter slider.
+   */
   void buildAudioControls() {
     audioToggle = cp5.addToggle("AUDIO").setPosition(20, 630)
       .setCaptionLabel("AUDIO REACT")
@@ -248,41 +252,36 @@ class Interface {
        .setColorActive(color(0, 255, 0));
   }
 
+  /**
+   * Quick update handlers for our checkboxes
+   */
+  void updateAudioSetting() {
+    usingLiveAudio = !usingLiveAudio;
+  }
+
   void updateRandomSetting() {
-    if(randomToggle.getValue() == 1.0)
-      usingRandomness = true;
-    else
-      usingRandomness = false;
+    usingRandomness = !usingRandomness;
   }
 
   void updateSlowPulseSetting() {
-    if(slowPulseToggle.getValue() == 1.0)
-      usingSlowPulse = true;
-    else
-      usingSlowPulse = false;
+    usingSlowPulse = !usingSlowPulse;
   }
 
   void updateFastPulseSetting() {
-    if(fastPulseToggle.getValue() == 1.0)
-      usingFastPulse = true;
-    else
-      usingFastPulse = false;
+    usingFastPulse = !usingFastPulse;
   }
 
   void updateSendToWired() {
-    if(wiredToggle.getValue() == 1.0)
-      sendingToWired = true;
-    else
-      sendingToWired = false;
+    sendingToWired = !sendingToWired;
   }
 
   void updateSendToWireless() {
-    if(wirelessToggle.getValue() == 1.0)
-      sendingToWireless = true;
-    else
-      sendingToWireless = false;
+    sendingToWireless = !sendingToWireless;
   }
 
+  /**
+   * Tick
+   */
   void update() {
     background(30);
 
@@ -334,10 +333,6 @@ class Interface {
     return mic.left.level();
   }
 
-  void toggleAudio() {
-    usingLiveAudio = !usingLiveAudio;
-  }
-
   void drawColorPreview() {
     fill(red.getValue() * brightness.getValue(),
          green.getValue() * brightness.getValue(),
@@ -345,6 +340,10 @@ class Interface {
     rect(500, 350, 200, 230);
   }
 
+  /**
+   * Pushes our controllers towards their targets,
+   * so we get a nice fade when changing presets.
+   */
   public void updateColorValues() {
     if(!dragging) {
       if(red.getValue() < targetRed)
@@ -390,10 +389,10 @@ class Interface {
    * Instantly turn on and off
    */
   public void forceAllDown() {
-
+    // TODO
   }
   public void forceAllUp() {
-
+    // TODO
   }
 
   public void buildModeControls() {

@@ -24,9 +24,6 @@ void setup() {
   controls = new Interface(this);
   data = new DataManager(this, controls, anim);
   presets = new Presets(this, controls, data);
-
-  //presets.loadPreset("cue1");
-  //controls.setActiveCue("cue1");
 }
 
 /**
@@ -67,7 +64,7 @@ public void controlEvent(ControlEvent e) {
         data.proxySendWireless(false);
         break;
       case "AUDIO":
-        controls.toggleAudio();
+        controls.updateAudioSetting();
         break;
       case "MODE1":
         data.mode = 0;
