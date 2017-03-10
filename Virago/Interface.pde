@@ -53,6 +53,7 @@ class Interface {
   Boolean sendingToWireless = true;
 
   int colHeight = 30;
+  String[] cueNames;
 
   Interface(Virago ref) {
     println("[Interface]");
@@ -423,7 +424,8 @@ class Interface {
    * Creates the preset list
    */
   public void buildPresetMenu() {
-    String[] cueNames = {
+
+    String[] cueList = {
       "CONVO1",
       "CONVO2",
       "CONVO3",
@@ -452,39 +454,10 @@ class Interface {
       "SAFETY",
       "W0PULSE",
       "FOOTWORK",
-      "W0FKA",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME",
-      "NO NAME"
+      "W0FKA"
     };
+
+    cueNames = cueList;
 
     for (int i = 0; i < cueNames.length; i++) {
       if(i < colHeight) {

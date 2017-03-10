@@ -10,6 +10,8 @@ class Presets {
   Virago virago;
   Interface controls;
   DataManager data;
+  String presetName;
+  int presetNumber;
 
   Presets(Virago ref, Interface controlsRef, DataManager dataRef) {
     println("[Presets]");
@@ -22,7 +24,9 @@ class Presets {
   /**
    * Save an XML for the specified preset.
    */
-  public void savePreset(String presetName) {
+  public void savePreset(String presetIndex) {
+    presetName = formCorrectPresetName(presetIndex);
+
     XML xml = new XML("settings");
 
     // save the R/G/B, brightness and limiter
@@ -98,8 +102,11 @@ class Presets {
   /**
    * Load the preset back in, and update the interface
    */
-  public void loadPreset(String presetName) {
-    XML xml = loadXML("presets/" + presetName.replace("cue", "save") + ".xml");
+  public void loadPreset(String presetIndex) {
+    String presetLoadString = presetIndex.replace("cue", "save");
+    presetName = formCorrectPresetName(presetLoadString);
+
+    XML xml = loadXML("presets/" + presetName + ".xml");
 
     controls.targetRed = float(xml.getChild("red").getContent());
     controls.targetGreen = float(xml.getChild("green").getContent());
@@ -172,5 +179,11 @@ class Presets {
       controls.wirelessToggle.setValue(false);
       controls.sendingToWireless = false;
     }
+  }
+
+  String formCorrectPresetName(String presetIndex) {
+    presetNumber = int(presetIndex.replace("save", ""));
+
+    return "cue" + presetNumber + "-"+controls.cueNames[presetNumber-1];
   }
 }
