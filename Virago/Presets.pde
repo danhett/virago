@@ -184,6 +184,6 @@ class Presets {
   String formCorrectPresetName(String presetIndex) {
     presetNumber = int(presetIndex.replace("save", ""));
 
-    return "cue" + presetNumber + "-"+controls.cueNames[presetNumber-1];
+    return controls.cueNames[presetNumber-1];
   }
 }

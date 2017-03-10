@@ -296,7 +296,7 @@ class Interface {
     // draw the active selection
     if(activePosition > 0) {
       // col 1
-      if(activePosition < colHeight) {
+      if(activePosition < (colHeight+1)) {
         fill(255,255,255);
         rect(760, (25*activePosition)-5, 20, 20);
       }
@@ -448,12 +448,12 @@ class Interface {
       "W0PINK",
       "W3TEAL",
       "W8KILL",
-      "TABLAVOX",
+      "TABLAVOX1",
       "TABLAVOXPAIR1",
       "TABLAVOXPAIR2",
       "TABLAVOXPAIR3",
       "TABLAVOXPAIR4",
-      "TABLAVOX",
+      "TABLAVOX2",
       "PAIRCHATTER1",
       "PAIRCHATTER2",
       "PAIRCHATTER3",
@@ -481,8 +481,7 @@ class Interface {
       "L4FK",
       "L3FK",
       "L2FK",
-      "L1FK",
-      "L0FK"
+      "L1FK"
     };
 
     cueNames = cueList;
