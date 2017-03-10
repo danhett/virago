@@ -50,7 +50,7 @@ void loop() {
     _RED = Serial.parseInt();
     _GREEN = Serial.parseInt();
     _BLUE = Serial.parseInt();
-    
+
     if (Serial.read() == '\n') {
       doLights();
     }
@@ -61,9 +61,9 @@ void doLights() {
 
   //Runway ColorWipe
   if(MODE == 900) {
-    colorWipe(_RED, _GREEN, _BLUE, 20);
+    colorWipe(212, 74, 4, 20);
   }
-  
+
 
   // All the lights on
   if(MODE == 0) {
@@ -88,11 +88,76 @@ void doLights() {
     off(10);
     off(11);
   }
-  
-  //Individual lights numbered 101-112
+
+
+//Individual lights for Qs 2/3/6/8
+
+
+  if(MODE == 62) {
+    off(0);
+    on(1);
+    off(2);
+    off(3);
+    off(4);
+    off(5);
+    off(6);
+    off(7);
+    off(8);
+    off(9);
+    off(10);
+    off(11);
+  }
+
+  if(MODE == 66) {
+    off(0);
+    off(1);
+    off(2);
+    off(3);
+    off(4);
+    on(5);
+    off(6);
+    off(7);
+    off(8);
+    off(9);
+    off(10);
+    off(11);
+  }
+
+  if(MODE == 64) {
+    off(0);
+    off(1);
+    off(2);
+    on(3);
+    off(4);
+    off(5);
+    off(6);
+    off(7);
+    off(8);
+    off(9);
+    off(10);
+    off(11);
+  }
+
+
+  if(MODE == 61) {
+    on(0);
+    off(1);
+    off(2);
+    off(3);
+    off(4);
+    off(5);
+    off(6);
+    off(7);
+    off(8);
+    off(9);
+    off(10);
+    off(11);
+  }
+
+  //Individual lights numbered 101-112 for reverse runway thing at end
 
   if(MODE == 101) {
-    on(0);
+    off(0);
     off(1);
     off(2);
     off(3);
@@ -107,8 +172,8 @@ void doLights() {
   }
 
     if(MODE == 102) {
-    off(0);
-    on(1);
+    on(0);
+    off(1);
     off(2);
     off(3);
     off(4);
@@ -122,9 +187,9 @@ void doLights() {
   }
 
     if(MODE == 103) {
-    off(0);
-    off(1);
-    on(2);
+    on(0);
+    on(1);
+    off(2);
     off(3);
     off(4);
     off(5);
@@ -137,10 +202,10 @@ void doLights() {
   }
 
     if(MODE == 104) {
-    off(0);
-    off(1);
-    off(2);
-    on(3);
+    on(0);
+    on(1);
+    on(2);
+    off(3);
     off(4);
     off(5);
     off(6);
@@ -152,10 +217,10 @@ void doLights() {
   }
 
     if(MODE == 105) {
-    off(0);
-    off(1);
-    off(2);
-    off(3);
+    on(0);
+    on(1);
+    on(2);
+    on(3);
     on(4);
     off(5);
     off(6);
@@ -167,12 +232,12 @@ void doLights() {
   }
 
     if(MODE == 106) {
-    off(0);
-    off(1);
-    off(2);
-    off(3);
-    off(4);
-    on(5);
+    on(0);
+    on(1);
+    on(2);
+    on(3);
+    on(4);
+    off(5);
     off(6);
     off(7);
     off(8);
@@ -182,13 +247,13 @@ void doLights() {
   }
 
     if(MODE == 107) {
-    off(0);
-    off(1);
-    off(2);
-    off(3);
-    off(4);
-    off(5);
-    on(6);
+    on(0);
+    on(1);
+    on(2);
+    on(3);
+    on(4);
+    on(5);
+    off(6);
     off(7);
     off(8);
     off(9);
@@ -197,13 +262,28 @@ void doLights() {
   }
 
     if(MODE == 108) {
-    off(0);
-    off(1);
-    off(2);
-    off(3);
-    off(4);
-    off(5);
-    off(6);
+    on(0);
+    on(1);
+    on(2);
+    on(3);
+    on(4);
+    on(5);
+    on(6);
+    off(7);
+    off(8);
+    off(9);
+    off(10);
+    off(11);
+  }
+
+   if(MODE == 109) {
+    on(0);
+    on(1);
+    on(2);
+    on(3);
+    on(4);
+    on(5);
+    on(6);
     on(7);
     off(8);
     off(9);
@@ -211,69 +291,54 @@ void doLights() {
     off(11);
   }
 
-    if(MODE == 109) {
-    off(0);
-    off(1);
-    off(2);
-    off(3);
-    off(4);
-    off(5);
-    off(6);
-    off(7);
+    if(MODE == 110) {
+    on(0);
+    on(1);
+    on(2);
+    on(3);
+    on(4);
+    on(5);
+    on(6);
+    on(7);
     on(8);
     off(9);
     off(10);
     off(11);
   }
 
-    if(MODE == 110) {
-    off(0);
-    off(1);
-    off(2);
-    off(3);
-    off(4);
-    off(5);
-    off(6);
-    off(7);
-    off(8);
+    if(MODE == 111) {
+    on(0);
+    on(1);
+    on(2);
+    on(3);
+    on(4);
+    on(5);
+    on(6);
+    on(7);
+    on(8);
     on(9);
     off(10);
     off(11);
   }
 
-    if(MODE == 111) {
-    off(0);
-    off(1);
-    off(2);
-    off(3);
-    off(4);
-    off(5);
-    off(6);
-    off(7);
-    off(8);
-    off(9);
+    if(MODE == 112) {
+    on(0);
+    on(1);
+    on(2);
+    on(3);
+    on(4);
+    on(5);
+    on(6);
+    on(7);
+    on(8);
+    on(9);
     on(10);
     off(11);
   }
 
-    if(MODE == 112) {
-    off(0);
-    off(1);
-    off(2);
-    off(3);
-    off(4);
-    off(5);
-    off(6);
-    off(7);
-    off(8);
-    off(9);
-    off(10);
-    on(11);
-  }
-
   //Specific pairs
 
-  
+
     if(MODE == 201) {
     off(0);
     off(1);
@@ -288,7 +353,7 @@ void doLights() {
     off(10);
     off(11);
   }
-  
+
     if(MODE == 202) {
     off(0);
     off(1);
@@ -303,7 +368,7 @@ void doLights() {
     off(10);
     off(11);
   }
-    
+
     if(MODE == 203) {
     off(0);
     off(1);
@@ -318,7 +383,7 @@ void doLights() {
     off(10);
     off(11);
   }
-    
+
     if(MODE == 204) {
     on(0);
     on(1);
@@ -333,7 +398,7 @@ void doLights() {
     off(10);
     off(11);
   }
-    
+
     if(MODE == 205) {
     off(0);
     off(1);
@@ -348,7 +413,52 @@ void doLights() {
     on(10);
     off(11);
   }
-  
+
+   if(MODE == 206) {
+    off(0);
+    off(1);
+    off(2);
+    on(3);
+    on(4);
+    off(5);
+    off(6);
+    off(7);
+    off(8);
+    off(9);
+    off(10);
+    off(11);
+  }
+
+    if(MODE == 207) {
+    off(0);
+    off(1);
+    off(2);
+    off(3);
+    on(4);
+    on(5);
+    off(6);
+    off(7);
+    off(8);
+    off(9);
+    off(10);
+    off(11);
+  }
+
+    if(MODE == 208) {
+    off(0);
+    off(1);
+    off(2);
+    off(3);
+    off(4);
+    on(5);
+    on(6);
+    off(7);
+    off(8);
+    off(9);
+    off(10);
+    off(11);
+  }
+
   // Specific strips
   if(MODE == 1) {
     off(0);
@@ -364,7 +474,7 @@ void doLights() {
     off(10);
     on(11);
   }
-  
+
   // Pairs
   if(MODE == 2) {
     on(0);
@@ -394,26 +504,26 @@ void off(int id) {
 }
 
 
-/** 
+/**
  * Return either a given value, or a randomised version of it
  */
 
 int RED() {
   if(RANDOM == 1)
     return random(_RED);
-     
+
   return _RED;
 }
 int GREEN() {
   if(RANDOM == 1)
     return random(_GREEN);
-  
+
   return _GREEN;
 }
 int BLUE() {
   if(RANDOM == 1)
     return random(_BLUE);
-  
+
   return _BLUE;
 }
 
@@ -436,4 +546,3 @@ void colorWipe(int r, int g, int b, uint8_t wait) {
     delay(wait);
   }
 }
-
