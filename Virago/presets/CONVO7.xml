@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+  <red>255.0</red>
+  <green>182.325</green>
+  <blue>255.0</blue>
+  <brightness>0.78499997</brightness>
+  <limiter>1.0</limiter>
+  <audio>true</audio>
+  <mode>61</mode>
+  <wirelessMode>0</wirelessMode>
+  <random>false</random>
+  <slowPulse>false</slowPulse>
+  <fastPulse>false</fastPulse>
+  <sendToWired>true</sendToWired>
+  <sendToWireless>false</sendToWireless>
+</settings>
