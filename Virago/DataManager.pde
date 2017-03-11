@@ -51,11 +51,13 @@ class DataManager {
    */
   void handshake() {
     if(WIRED_LIVE) {
-      strip = new Serial(virago, "/dev/ttyACM0", 115200);
+        strip = new Serial(virago, "/dev/ttyACM0", 115200);
+          //strip = new Serial(virago, "/dev/tty.usbmodem14211", 115200);
     }
 
     if(WIRELESS_LIVE) {
-      wireless = new Serial(virago, "/dev/ttyUSB0", 115200);
+        wireless = new Serial(virago, "/dev/ttyUSB0", 115200);
+        //  wireless = new Serial(virago, "/dev/tty.usbserial-DN02LFHX", 115200);
     }
   }
 

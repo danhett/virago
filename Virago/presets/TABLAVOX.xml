@@ -4,7 +4,7 @@
   <green>255.0</green>
   <blue>180.0</blue>
   <brightness>0.79999954</brightness>
-  <limiter>1.0</limiter>
+  <limiter>1</limiter>
   <audio>true</audio>
   <mode>0</mode>
   <wirelessMode>0</wirelessMode>

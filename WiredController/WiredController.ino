@@ -221,7 +221,7 @@ void doLights() {
     on(1);
     on(2);
     on(3);
-    on(4);
+    off(4);
     off(5);
     off(6);
     off(7);

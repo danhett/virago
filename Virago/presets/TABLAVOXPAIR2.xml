@@ -3,14 +3,14 @@
   <red>24.0</red>
   <green>255.0</green>
   <blue>180.0</blue>
-  <brightness>0.8</brightness>
-  <limiter>1.0</limiter>
+  <brightness>0.7924997</brightness>
+  <limiter>1</limiter>
   <audio>true</audio>
   <mode>206</mode>
   <wirelessMode>0</wirelessMode>
   <random>true</random>
   <slowPulse>false</slowPulse>
-  <fastPulse>true</fastPulse>
+  <fastPulse>false</fastPulse>
   <sendToWired>true</sendToWired>
   <sendToWireless>false</sendToWireless>
 </settings>
