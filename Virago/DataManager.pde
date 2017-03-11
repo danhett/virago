@@ -6,8 +6,8 @@
  */
 class DataManager {
 
-  Boolean WIRED_LIVE = true;
-  Boolean WIRELESS_LIVE = true;
+  Boolean WIRED_LIVE = false;
+  Boolean WIRELESS_LIVE = false;
   int frameCountRate = 5;
 
   Virago virago;

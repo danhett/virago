@@ -426,7 +426,7 @@ class Interface {
   public void buildPresetMenu() {
 
     String[] cueList = {
-      "ALLOFF",
+
       "CONVO1",
       "CONVO2",
       "CONVO3W",
@@ -435,7 +435,6 @@ class Interface {
       "CONVO6W",
       "CONVO7",
       "CONVO8W",
-      "W6PINK",
       "LRUNWAY",
       "W1FADEUP",
       "W2FADEUP",
@@ -444,13 +443,10 @@ class Interface {
       "W5FADEUP",
       "ALL_LOW_ORANGE",
       "W0TEAL",
-      "SAFETY1",
-      "SAFETY2",
-      "SAFETY3",
-      "SAFETY4",
-      "SAFETY5",
       "W0ORANGE",
+      "W0TEAL",
       "W0PINK",
+      "SAFETY3",
       "W3WHITE",
       "W8KILL",
       "TABLAVOX",
@@ -472,6 +468,7 @@ class Interface {
       "FOOTWORK",
       "FOOTWORKFADE",
       "W0KFA",
+      "W0PULSE",
       "FOOTWORKFADE",
       "L12FK",
       "L11FK",
@@ -485,6 +482,7 @@ class Interface {
       "L3FK",
       "L2FK",
       "L1FK",
+      "ALLOFF",
       "ALLOFFL"
     };
 
